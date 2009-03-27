@@ -1,0 +1,71 @@
+<project name="junitconverter" default="compile">
+	<property name="jars-dir" value="lib"/>
+	<property name="src" value="src"/>
+	<property name="build" value="build"/>
+	<property name="dist" value="dist"/>
+	<property name="grammar-file" value="${src}/junitconverter/Java.g"/>
+	<property name="grammar-java-file" value="${src}/junitconverter/JavaParser.java"/>
+	
+	<path id="classpath.antlr">
+		<pathelement location="${jars-dir}/antlr-2.7.7.jar"/>
+		<pathelement location="${jars-dir}/antlr-3.0.1.jar"/>
+		<pathelement location="${jars-dir}/stringtemplate-3.1b1.jar"/>
+		<pathelement location="${jars-dir}/junit-4.3.1.jar"/>
+	</path>
+	<path id="classpath.base">
+		<path refid="classpath.antlr"/>
+		<pathelement location="${build}" />
+	</path>
+	<path id="classpath.test">
+		<pathelement location="${jars-dir}/easymock2.3.jar"/>
+		<path refid="classpath.base"/>
+	</path>
+	
+	<target name="compile" depends="compile-grammar">
+		<javac srcdir="${src}" destdir="${build}">
+			<classpath refid="classpath.test"/>
+		</javac>
+	</target>
+	
+	<target name="compile-grammar" depends="-check_grammar_needs_compile" 
+			if="grammarBuildRequired">
+		<java classname="org.antlr.Tool" failonerror="true">
+			<arg value="${grammar-file}"/>
+			<classpath refid="classpath.antlr"/>
+		</java>
+	</target>
+	
+    <target name="-check_grammar_needs_compile">
+		<uptodate property="grammarBuildRequired" targetfile="${grammar-file}" 
+			srcfile="${grammar-java-file}"/>
+    </target>
+
+	
+	<target name="test" depends="compile">
+		<junit fork="true" haltonfailure="true" printsummary="on">
+			<classpath>
+				<pathelement path="${build}"/>
+				<path refid="classpath.test"/>
+			</classpath>
+			<test name="tests.junitconverter.AllTests"/>
+		</junit>
+	</target>
+		
+	<target name="clean">
+		<delete>
+			<fileset dir="${build}">
+	    		<include name="**/*.class"/>
+			</fileset>
+		</delete>
+	</target>
+
+	<target name="dist" depends="test">
+		<jar destfile="${dist}/junitconverter.jar">
+			<zipfileset src="${jars-dir}/antlr-2.7.7.jar"/>
+			<zipfileset src="${jars-dir}/antlr-3.0.1.jar"/>
+			<zipfileset src="${jars-dir}/stringtemplate-3.1b1.jar"/>
+			<zipfileset src="${jars-dir}/junit-4.3.1.jar"/>
+			<fileset dir="${build}"/>
+		</jar>
+	</target>
+</project>
