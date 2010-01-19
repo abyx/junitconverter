@@ -15,6 +15,9 @@ import junitconverter.testcase.TestCaseMethod;
  */
 public class SimpleCoderEditor implements CodeEditor {
 
+	/** */
+	private static final String PACKAGE_PREFIX = "package ";
+
 	private static final String IMPORT_PREFIX = "import ";
 	
 	private final ClassWriter classWriter;
@@ -40,7 +43,7 @@ public class SimpleCoderEditor implements CodeEditor {
 	 */
 	public void importClass(TestCaseClass testCaseClass, Class<?> klass) {
 		classWriter.insertLine(testCaseClass, 
-				findFirstImport(testCaseClass.getLines()), 
+				indexForInsertingImports(testCaseClass.getLines()), 
 				IMPORT_PREFIX + klass.getName() + ";");
 	}
 
@@ -63,7 +66,7 @@ public class SimpleCoderEditor implements CodeEditor {
 	 */
 	public void importStaticClass(TestCaseClass testCaseClass, Class<?> klass) {
 		classWriter.insertLine(testCaseClass, 
-				findFirstImport(testCaseClass.getLines()), 
+				indexForInsertingImports(testCaseClass.getLines()), 
 				IMPORT_PREFIX + "static " + klass.getName() + ".*;");
 	}
 
@@ -84,14 +87,40 @@ public class SimpleCoderEditor implements CodeEditor {
 
 	/* --- Helper Methods --- */
 	
+	private int indexForInsertingImports(List<String> lines) {
+		int index = findFirstImport(lines);
+		if (index != -1) {
+			return index;
+		}
+		
+		index = findPackageLine(lines);
+		if (index != -1) {
+			return index;
+		}
+		
+		return 0;
+	}
+
+	private int findPackageLine(List<String> lines) {
+		int line = findFirstLineThatStartsWith(PACKAGE_PREFIX, lines);
+		if (line != -1) {
+			return line + 1;
+		}
+		return -1;
+	}
+
 	private int findFirstImport(List<String> lines) {
+		return findFirstLineThatStartsWith(IMPORT_PREFIX, lines);
+	}
+
+	private int findFirstLineThatStartsWith(String prefix, List<String> lines) {
 		for (int i = 0; i < lines.size(); i++) {
-			if (lines.get(i).startsWith(IMPORT_PREFIX)) {
+			if (lines.get(i).startsWith(prefix)) {
 				return i;
 			}
 		}
 		
-		throw new IllegalArgumentException("Class doesn't contain imports");
+		return -1;
 	}
 	
 	/**

@@ -19,8 +19,9 @@ import org.junit.*;
  */
 public class SimpleCodeEditorTest {
 
-	/** */
 	private static final String IMPORT_PREFIX = "import ";
+	
+	private static final String PACKAGE_PREFIX = "package ";
 
 	private static final Class<?>[] classes = 
 		{ Test.class, Before.class, After.class };
@@ -78,6 +79,21 @@ public class SimpleCodeEditorTest {
 	}
 	
 	@Test
+	public void addingImportWithNoOtherImports() {
+		List<String> lines = getEmptyLines();
+
+		TestCaseClass testCaseClass = new TestCaseClass(lines);
+		
+		Class<?> importedClass = randomClass();
+		mock.insertLine(testCaseClass, 0, 
+				IMPORT_PREFIX + importedClass.getName() + ";");
+		replay(mock);
+		
+		codeEditor.importClass(testCaseClass, importedClass);
+		verify(mock);
+	}
+	
+	@Test
 	public void addingStaticImport() {
 		List<String> lines = getEmptyLines();
 		int firstImport = insertImports(lines);
@@ -92,7 +108,38 @@ public class SimpleCodeEditorTest {
 		codeEditor.importStaticClass(testCaseClass, importedClass);
 		verify(mock);
 	}
+	
+	@Test
+	public void addingStaticImportWithNoOtherImports() {
+		List<String> lines = getEmptyLines();
+		
+		TestCaseClass testCaseClass = new TestCaseClass(lines);
+		Class<?> importedClass = Assert.class;
+		mock.insertLine(testCaseClass, 0, 
+				IMPORT_PREFIX + "static " + importedClass.getName() + ".*;");
+		
+		replay(mock);
+		
+		codeEditor.importStaticClass(testCaseClass, importedClass);
+		verify(mock);
+	}
 
+	@Test
+	public void addingStaticImportWithNoOtherImportsAndPackage() {
+		List<String> lines = getEmptyLines();
+
+		lines.add(0, PACKAGE_PREFIX + "something;");
+		TestCaseClass testCaseClass = new TestCaseClass(lines);
+		Class<?> importedClass = Assert.class;
+		mock.insertLine(testCaseClass, 1, 
+				IMPORT_PREFIX + "static " + importedClass.getName() + ".*;");
+		
+		replay(mock);
+		
+		codeEditor.importStaticClass(testCaseClass, importedClass);
+		verify(mock);
+	}
+	
 	@Test
 	public void changingVisibility() {
 		List<String> lines = getEmptyLines();
