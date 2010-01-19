@@ -64,7 +64,9 @@
 			<zipfileset src="${jars-dir}/antlr-2.7.7.jar"/>
 			<zipfileset src="${jars-dir}/antlr-3.0.1.jar"/>
 			<zipfileset src="${jars-dir}/stringtemplate-3.1b1.jar"/>
-			<zipfileset src="${jars-dir}/junit-4.3.1.jar"/>
+			<zipfileset src="${jars-dir}/junit-4.3.1.jar">
+				<exclude name="**/*ECLIPSE*"/>
+			</zipfileset>
 			<fileset dir="${build}"/>
 		</jar>
 	</target>
