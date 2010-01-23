@@ -58,6 +58,7 @@ public class TestClassConverter {
 
 	private List<String> runConversion(File inputFile, JavaParser parser)
 			throws FileNotFoundException, IOException {
+                System.out.println("Running on: " + inputFile);
 		List<String> lines = readLines(inputFile);
 		
 		TestCaseClass testCaseClass = buildTestCaseClass(parser, lines);

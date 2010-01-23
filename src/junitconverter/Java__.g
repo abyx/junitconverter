@@ -103,24 +103,24 @@ T111 : '~' ;
 T112 : '!' ;
 T113 : 'new' ;
 
-// $ANTLR src "src/junitconverter/Java.g" 999
+// $ANTLR src "/home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g" 1021
 HexLiteral : '0' ('x'|'X') HexDigit+ IntegerTypeSuffix? {addString(getText());};
 
-// $ANTLR src "src/junitconverter/Java.g" 1001
+// $ANTLR src "/home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g" 1023
 DecimalLiteral : ('0' | '1'..'9' '0'..'9'*) IntegerTypeSuffix?  {addString(getText());};
 
-// $ANTLR src "src/junitconverter/Java.g" 1003
+// $ANTLR src "/home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g" 1025
 OctalLiteral : '0' ('0'..'7')+ IntegerTypeSuffix?  {addString(getText());};
 
-// $ANTLR src "src/junitconverter/Java.g" 1005
+// $ANTLR src "/home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g" 1027
 fragment
 HexDigit : ('0'..'9'|'a'..'f'|'A'..'F') ;
 
-// $ANTLR src "src/junitconverter/Java.g" 1008
+// $ANTLR src "/home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g" 1030
 fragment
 IntegerTypeSuffix : ('l'|'L') ;
 
-// $ANTLR src "src/junitconverter/Java.g" 1011
+// $ANTLR src "/home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g" 1033
 FloatingPointLiteral
     :   ('0'..'9')+ '.' ('0'..'9')* Exponent? FloatTypeSuffix?  {addString(getText());}
     |   '.' ('0'..'9')+ Exponent? FloatTypeSuffix?  {addString(getText());}
@@ -128,25 +128,25 @@ FloatingPointLiteral
     |   ('0'..'9')+ FloatTypeSuffix  {addString(getText());}
     ;
 
-// $ANTLR src "src/junitconverter/Java.g" 1018
+// $ANTLR src "/home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g" 1040
 fragment
 Exponent : ('e'|'E') ('+'|'-')? ('0'..'9')+ ;
 
-// $ANTLR src "src/junitconverter/Java.g" 1021
+// $ANTLR src "/home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g" 1043
 fragment
 FloatTypeSuffix : ('f'|'F'|'d'|'D') ;
 
-// $ANTLR src "src/junitconverter/Java.g" 1024
+// $ANTLR src "/home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g" 1046
 CharacterLiteral
     :   '\'' ( EscapeSequence | ~('\''|'\\') ) '\''  {addString(getText());}
     ;
 
-// $ANTLR src "src/junitconverter/Java.g" 1028
+// $ANTLR src "/home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g" 1050
 StringLiteral
     :  '"' ( EscapeSequence | ~('\\'|'"') )* '"'  {addString(getText());}
     ;
 
-// $ANTLR src "src/junitconverter/Java.g" 1032
+// $ANTLR src "/home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g" 1054
 fragment
 EscapeSequence
     :   '\\' ('b'|'t'|'n'|'f'|'r'|'\"'|'\''|'\\')
@@ -154,7 +154,7 @@ EscapeSequence
     |   OctalEscape
     ;
 
-// $ANTLR src "src/junitconverter/Java.g" 1039
+// $ANTLR src "/home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g" 1061
 fragment
 OctalEscape
     :   '\\' ('0'..'3') ('0'..'7') ('0'..'7')
@@ -162,27 +162,27 @@ OctalEscape
     |   '\\' ('0'..'7')
     ;
 
-// $ANTLR src "src/junitconverter/Java.g" 1046
+// $ANTLR src "/home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g" 1068
 fragment
 UnicodeEscape
     :   '\\' 'u' HexDigit HexDigit HexDigit HexDigit
     ;
 
-// $ANTLR src "src/junitconverter/Java.g" 1051
+// $ANTLR src "/home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g" 1073
 ENUM:   'enum' {if (!enumIsKeyword) $type=Identifier;  {addString(getText());}}
     ;
     
-// $ANTLR src "src/junitconverter/Java.g" 1054
+// $ANTLR src "/home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g" 1076
 ASSERT
     :   'assert' {if (!assertIsKeyword) $type=Identifier;  {addString(getText());}}
     ;
     
-// $ANTLR src "src/junitconverter/Java.g" 1058
+// $ANTLR src "/home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g" 1080
 Identifier 
     :   Letter (Letter|JavaIDDigit)*  {addString(getText());}
     ;
 
-// $ANTLR src "src/junitconverter/Java.g" 1062
+// $ANTLR src "/home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g" 1084
 /**I found this char range in JavaCC's grammar, but Letter and Digit overlap.
    Still works, but...
  */
@@ -203,7 +203,7 @@ Letter
        '\uf900'..'\ufaff'
     ;
 
-// $ANTLR src "src/junitconverter/Java.g" 1082
+// $ANTLR src "/home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g" 1104
 fragment
 JavaIDDigit
     :  '\u0030'..'\u0039' |
@@ -223,16 +223,16 @@ JavaIDDigit
        '\u1040'..'\u1049'
    ;
 
-// $ANTLR src "src/junitconverter/Java.g" 1101
+// $ANTLR src "/home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g" 1123
 WS  :  (' '|'\r'|'\t'|'\u000C'|'\n') {$channel=HIDDEN; addString(getText());}
     ;
 
-// $ANTLR src "src/junitconverter/Java.g" 1104
+// $ANTLR src "/home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g" 1126
 COMMENT
     :   '/*' ( options {greedy=false;} : . )* '*/' {$channel=HIDDEN; addString(getText());} 
     ;
 
-// $ANTLR src "src/junitconverter/Java.g" 1108
+// $ANTLR src "/home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g" 1130
 LINE_COMMENT
     : '//' ~('\n'|'\r')* '\r'? '\n' {$channel=HIDDEN;  {addString(getText());}}
     ;

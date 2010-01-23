@@ -1,4 +1,4 @@
-// $ANTLR 3.0.1 src/junitconverter/Java.g 2009-03-27 14:27:04
+// $ANTLR 3.0.1 /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g 2010-01-23 22:08:45
 
 package junitconverter;
 
@@ -9,118 +9,118 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class JavaLexer extends Lexer {
-    public static final int T29=29;
-    public static final int HexDigit=13;
-    public static final int T70=70;
-    public static final int T74=74;
-    public static final int T85=85;
-    public static final int T102=102;
-    public static final int Letter=20;
-    public static final int T103=103;
-    public static final int T32=32;
-    public static final int T81=81;
-    public static final int ASSERT=12;
-    public static final int T41=41;
     public static final int FloatTypeSuffix=16;
-    public static final int T113=113;
-    public static final int T62=62;
-    public static final int T109=109;
-    public static final int IntegerTypeSuffix=14;
-    public static final int T68=68;
-    public static final int T73=73;
-    public static final int T84=84;
-    public static final int T33=33;
-    public static final int Identifier=4;
-    public static final int T78=78;
-    public static final int WS=22;
-    public static final int T42=42;
-    public static final int T96=96;
-    public static final int T71=71;
-    public static final int LINE_COMMENT=24;
-    public static final int T72=72;
-    public static final int T94=94;
-    public static final int T76=76;
-    public static final int UnicodeEscape=18;
-    public static final int HexLiteral=9;
-    public static final int T75=75;
-    public static final int T89=89;
-    public static final int DecimalLiteral=11;
-    public static final int T67=67;
-    public static final int T31=31;
-    public static final int T60=60;
-    public static final int T82=82;
-    public static final int T100=100;
-    public static final int T49=49;
-    public static final int T30=30;
-    public static final int T79=79;
     public static final int OctalLiteral=10;
-    public static final int T36=36;
-    public static final int T58=58;
-    public static final int T93=93;
-    public static final int T35=35;
-    public static final int T107=107;
-    public static final int T83=83;
-    public static final int T61=61;
-    public static final int T45=45;
-    public static final int T34=34;
-    public static final int T101=101;
-    public static final int T64=64;
-    public static final int T25=25;
-    public static final int T91=91;
-    public static final int T105=105;
-    public static final int T37=37;
-    public static final int T86=86;
-    public static final int EscapeSequence=17;
-    public static final int T26=26;
-    public static final int T51=51;
-    public static final int T111=111;
-    public static final int T46=46;
-    public static final int T77=77;
-    public static final int T38=38;
-    public static final int FloatingPointLiteral=6;
-    public static final int T106=106;
-    public static final int T112=112;
-    public static final int T69=69;
-    public static final int T39=39;
-    public static final int ENUM=5;
-    public static final int T44=44;
-    public static final int T55=55;
-    public static final int Exponent=15;
-    public static final int T95=95;
-    public static final int T50=50;
-    public static final int T110=110;
-    public static final int T108=108;
-    public static final int CharacterLiteral=7;
-    public static final int T92=92;
-    public static final int T43=43;
+    public static final int T29=29;
     public static final int T28=28;
-    public static final int T40=40;
-    public static final int T66=66;
+    public static final int T27=27;
+    public static final int T26=26;
+    public static final int T25=25;
+    public static final int EOF=-1;
+    public static final int Identifier=4;
+    public static final int T38=38;
+    public static final int T37=37;
+    public static final int T39=39;
+    public static final int T34=34;
     public static final int COMMENT=23;
-    public static final int T88=88;
-    public static final int StringLiteral=8;
-    public static final int T63=63;
-    public static final int T57=57;
-    public static final int T65=65;
-    public static final int T98=98;
-    public static final int T56=56;
-    public static final int T87=87;
-    public static final int T80=80;
+    public static final int T33=33;
+    public static final int T36=36;
+    public static final int T35=35;
+    public static final int T30=30;
+    public static final int T32=32;
+    public static final int T31=31;
+    public static final int LINE_COMMENT=24;
+    public static final int IntegerTypeSuffix=14;
+    public static final int T49=49;
+    public static final int T48=48;
+    public static final int T100=100;
+    public static final int T43=43;
+    public static final int T42=42;
+    public static final int T102=102;
+    public static final int T41=41;
+    public static final int ASSERT=12;
+    public static final int T101=101;
+    public static final int T40=40;
+    public static final int T47=47;
+    public static final int T46=46;
+    public static final int T45=45;
+    public static final int T44=44;
+    public static final int T109=109;
+    public static final int T107=107;
+    public static final int T108=108;
+    public static final int T105=105;
+    public static final int WS=22;
+    public static final int T106=106;
+    public static final int T103=103;
+    public static final int T104=104;
+    public static final int T50=50;
+    public static final int FloatingPointLiteral=6;
     public static final int JavaIDDigit=21;
     public static final int T59=59;
-    public static final int T97=97;
-    public static final int T48=48;
-    public static final int T54=54;
-    public static final int EOF=-1;
-    public static final int T104=104;
-    public static final int T47=47;
-    public static final int Tokens=114;
-    public static final int T53=53;
-    public static final int OctalEscape=19;
-    public static final int T99=99;
-    public static final int T27=27;
+    public static final int T113=113;
     public static final int T52=52;
+    public static final int T112=112;
+    public static final int T51=51;
+    public static final int T111=111;
+    public static final int T54=54;
+    public static final int T110=110;
+    public static final int EscapeSequence=17;
+    public static final int Letter=20;
+    public static final int T53=53;
+    public static final int T56=56;
+    public static final int T55=55;
+    public static final int T58=58;
+    public static final int T57=57;
+    public static final int T75=75;
+    public static final int T76=76;
+    public static final int T73=73;
+    public static final int T74=74;
+    public static final int T79=79;
+    public static final int T77=77;
+    public static final int T78=78;
+    public static final int CharacterLiteral=7;
+    public static final int Exponent=15;
+    public static final int HexDigit=13;
+    public static final int T72=72;
+    public static final int T71=71;
+    public static final int T70=70;
+    public static final int T62=62;
+    public static final int T63=63;
+    public static final int T64=64;
+    public static final int T65=65;
+    public static final int T66=66;
+    public static final int T67=67;
+    public static final int T68=68;
+    public static final int T69=69;
+    public static final int T61=61;
+    public static final int T60=60;
+    public static final int HexLiteral=9;
+    public static final int T99=99;
+    public static final int T97=97;
+    public static final int T98=98;
+    public static final int T95=95;
+    public static final int T96=96;
+    public static final int T94=94;
+    public static final int Tokens=114;
+    public static final int T93=93;
+    public static final int DecimalLiteral=11;
+    public static final int T92=92;
+    public static final int T91=91;
     public static final int T90=90;
+    public static final int StringLiteral=8;
+    public static final int T88=88;
+    public static final int T89=89;
+    public static final int T84=84;
+    public static final int ENUM=5;
+    public static final int T85=85;
+    public static final int T86=86;
+    public static final int T87=87;
+    public static final int UnicodeEscape=18;
+    public static final int T81=81;
+    public static final int T80=80;
+    public static final int T83=83;
+    public static final int OctalEscape=19;
+    public static final int T82=82;
 
       protected boolean enumIsKeyword = true;
       protected boolean assertIsKeyword = true;
@@ -135,14 +135,14 @@ public class JavaLexer extends Lexer {
     public JavaLexer(CharStream input) {
         super(input);
     }
-    public String getGrammarFileName() { return "src/junitconverter/Java.g"; }
+    public String getGrammarFileName() { return "/home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g"; }
 
     // $ANTLR start T25
     public final void mT25() throws RecognitionException {
         try {
             int _type = T25;
-            // src/junitconverter/Java.g:16:5: ( 'package' )
-            // src/junitconverter/Java.g:16:7: 'package'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:16:5: ( 'package' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:16:7: 'package'
             {
             match("package"); 
 
@@ -160,8 +160,8 @@ public class JavaLexer extends Lexer {
     public final void mT26() throws RecognitionException {
         try {
             int _type = T26;
-            // src/junitconverter/Java.g:17:5: ( ';' )
-            // src/junitconverter/Java.g:17:7: ';'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:17:5: ( ';' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:17:7: ';'
             {
             match(';'); 
 
@@ -178,8 +178,8 @@ public class JavaLexer extends Lexer {
     public final void mT27() throws RecognitionException {
         try {
             int _type = T27;
-            // src/junitconverter/Java.g:18:5: ( 'import' )
-            // src/junitconverter/Java.g:18:7: 'import'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:18:5: ( 'import' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:18:7: 'import'
             {
             match("import"); 
 
@@ -197,8 +197,8 @@ public class JavaLexer extends Lexer {
     public final void mT28() throws RecognitionException {
         try {
             int _type = T28;
-            // src/junitconverter/Java.g:19:5: ( 'static' )
-            // src/junitconverter/Java.g:19:7: 'static'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:19:5: ( 'static' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:19:7: 'static'
             {
             match("static"); 
 
@@ -216,8 +216,8 @@ public class JavaLexer extends Lexer {
     public final void mT29() throws RecognitionException {
         try {
             int _type = T29;
-            // src/junitconverter/Java.g:20:5: ( '.' )
-            // src/junitconverter/Java.g:20:7: '.'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:20:5: ( '.' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:20:7: '.'
             {
             match('.'); 
 
@@ -234,8 +234,8 @@ public class JavaLexer extends Lexer {
     public final void mT30() throws RecognitionException {
         try {
             int _type = T30;
-            // src/junitconverter/Java.g:21:5: ( '*' )
-            // src/junitconverter/Java.g:21:7: '*'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:21:5: ( '*' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:21:7: '*'
             {
             match('*'); 
 
@@ -252,8 +252,8 @@ public class JavaLexer extends Lexer {
     public final void mT31() throws RecognitionException {
         try {
             int _type = T31;
-            // src/junitconverter/Java.g:22:5: ( 'public' )
-            // src/junitconverter/Java.g:22:7: 'public'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:22:5: ( 'public' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:22:7: 'public'
             {
             match("public"); 
 
@@ -271,8 +271,8 @@ public class JavaLexer extends Lexer {
     public final void mT32() throws RecognitionException {
         try {
             int _type = T32;
-            // src/junitconverter/Java.g:23:5: ( 'protected' )
-            // src/junitconverter/Java.g:23:7: 'protected'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:23:5: ( 'protected' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:23:7: 'protected'
             {
             match("protected"); 
 
@@ -290,8 +290,8 @@ public class JavaLexer extends Lexer {
     public final void mT33() throws RecognitionException {
         try {
             int _type = T33;
-            // src/junitconverter/Java.g:24:5: ( 'private' )
-            // src/junitconverter/Java.g:24:7: 'private'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:24:5: ( 'private' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:24:7: 'private'
             {
             match("private"); 
 
@@ -309,8 +309,8 @@ public class JavaLexer extends Lexer {
     public final void mT34() throws RecognitionException {
         try {
             int _type = T34;
-            // src/junitconverter/Java.g:25:5: ( 'abstract' )
-            // src/junitconverter/Java.g:25:7: 'abstract'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:25:5: ( 'abstract' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:25:7: 'abstract'
             {
             match("abstract"); 
 
@@ -328,8 +328,8 @@ public class JavaLexer extends Lexer {
     public final void mT35() throws RecognitionException {
         try {
             int _type = T35;
-            // src/junitconverter/Java.g:26:5: ( 'final' )
-            // src/junitconverter/Java.g:26:7: 'final'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:26:5: ( 'final' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:26:7: 'final'
             {
             match("final"); 
 
@@ -347,8 +347,8 @@ public class JavaLexer extends Lexer {
     public final void mT36() throws RecognitionException {
         try {
             int _type = T36;
-            // src/junitconverter/Java.g:27:5: ( 'strictfp' )
-            // src/junitconverter/Java.g:27:7: 'strictfp'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:27:5: ( 'strictfp' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:27:7: 'strictfp'
             {
             match("strictfp"); 
 
@@ -366,8 +366,8 @@ public class JavaLexer extends Lexer {
     public final void mT37() throws RecognitionException {
         try {
             int _type = T37;
-            // src/junitconverter/Java.g:28:5: ( 'class' )
-            // src/junitconverter/Java.g:28:7: 'class'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:28:5: ( 'class' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:28:7: 'class'
             {
             match("class"); 
 
@@ -385,8 +385,8 @@ public class JavaLexer extends Lexer {
     public final void mT38() throws RecognitionException {
         try {
             int _type = T38;
-            // src/junitconverter/Java.g:29:5: ( 'extends' )
-            // src/junitconverter/Java.g:29:7: 'extends'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:29:5: ( 'extends' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:29:7: 'extends'
             {
             match("extends"); 
 
@@ -404,8 +404,8 @@ public class JavaLexer extends Lexer {
     public final void mT39() throws RecognitionException {
         try {
             int _type = T39;
-            // src/junitconverter/Java.g:30:5: ( 'implements' )
-            // src/junitconverter/Java.g:30:7: 'implements'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:30:5: ( 'implements' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:30:7: 'implements'
             {
             match("implements"); 
 
@@ -423,8 +423,8 @@ public class JavaLexer extends Lexer {
     public final void mT40() throws RecognitionException {
         try {
             int _type = T40;
-            // src/junitconverter/Java.g:31:5: ( '<' )
-            // src/junitconverter/Java.g:31:7: '<'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:31:5: ( '<' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:31:7: '<'
             {
             match('<'); 
 
@@ -441,8 +441,8 @@ public class JavaLexer extends Lexer {
     public final void mT41() throws RecognitionException {
         try {
             int _type = T41;
-            // src/junitconverter/Java.g:32:5: ( ',' )
-            // src/junitconverter/Java.g:32:7: ','
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:32:5: ( ',' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:32:7: ','
             {
             match(','); 
 
@@ -459,8 +459,8 @@ public class JavaLexer extends Lexer {
     public final void mT42() throws RecognitionException {
         try {
             int _type = T42;
-            // src/junitconverter/Java.g:33:5: ( '>' )
-            // src/junitconverter/Java.g:33:7: '>'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:33:5: ( '>' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:33:7: '>'
             {
             match('>'); 
 
@@ -477,8 +477,8 @@ public class JavaLexer extends Lexer {
     public final void mT43() throws RecognitionException {
         try {
             int _type = T43;
-            // src/junitconverter/Java.g:34:5: ( '&' )
-            // src/junitconverter/Java.g:34:7: '&'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:34:5: ( '&' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:34:7: '&'
             {
             match('&'); 
 
@@ -495,8 +495,8 @@ public class JavaLexer extends Lexer {
     public final void mT44() throws RecognitionException {
         try {
             int _type = T44;
-            // src/junitconverter/Java.g:35:5: ( '{' )
-            // src/junitconverter/Java.g:35:7: '{'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:35:5: ( '{' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:35:7: '{'
             {
             match('{'); 
 
@@ -513,8 +513,8 @@ public class JavaLexer extends Lexer {
     public final void mT45() throws RecognitionException {
         try {
             int _type = T45;
-            // src/junitconverter/Java.g:36:5: ( '}' )
-            // src/junitconverter/Java.g:36:7: '}'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:36:5: ( '}' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:36:7: '}'
             {
             match('}'); 
 
@@ -531,8 +531,8 @@ public class JavaLexer extends Lexer {
     public final void mT46() throws RecognitionException {
         try {
             int _type = T46;
-            // src/junitconverter/Java.g:37:5: ( 'interface' )
-            // src/junitconverter/Java.g:37:7: 'interface'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:37:5: ( 'interface' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:37:7: 'interface'
             {
             match("interface"); 
 
@@ -550,8 +550,8 @@ public class JavaLexer extends Lexer {
     public final void mT47() throws RecognitionException {
         try {
             int _type = T47;
-            // src/junitconverter/Java.g:38:5: ( 'void' )
-            // src/junitconverter/Java.g:38:7: 'void'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:38:5: ( 'void' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:38:7: 'void'
             {
             match("void"); 
 
@@ -569,8 +569,8 @@ public class JavaLexer extends Lexer {
     public final void mT48() throws RecognitionException {
         try {
             int _type = T48;
-            // src/junitconverter/Java.g:39:5: ( '[' )
-            // src/junitconverter/Java.g:39:7: '['
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:39:5: ( '[' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:39:7: '['
             {
             match('['); 
 
@@ -587,8 +587,8 @@ public class JavaLexer extends Lexer {
     public final void mT49() throws RecognitionException {
         try {
             int _type = T49;
-            // src/junitconverter/Java.g:40:5: ( ']' )
-            // src/junitconverter/Java.g:40:7: ']'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:40:5: ( ']' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:40:7: ']'
             {
             match(']'); 
 
@@ -605,8 +605,8 @@ public class JavaLexer extends Lexer {
     public final void mT50() throws RecognitionException {
         try {
             int _type = T50;
-            // src/junitconverter/Java.g:41:5: ( 'throws' )
-            // src/junitconverter/Java.g:41:7: 'throws'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:41:5: ( 'throws' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:41:7: 'throws'
             {
             match("throws"); 
 
@@ -624,8 +624,8 @@ public class JavaLexer extends Lexer {
     public final void mT51() throws RecognitionException {
         try {
             int _type = T51;
-            // src/junitconverter/Java.g:42:5: ( '=' )
-            // src/junitconverter/Java.g:42:7: '='
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:42:5: ( '=' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:42:7: '='
             {
             match('='); 
 
@@ -642,8 +642,8 @@ public class JavaLexer extends Lexer {
     public final void mT52() throws RecognitionException {
         try {
             int _type = T52;
-            // src/junitconverter/Java.g:43:5: ( 'native' )
-            // src/junitconverter/Java.g:43:7: 'native'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:43:5: ( 'native' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:43:7: 'native'
             {
             match("native"); 
 
@@ -661,8 +661,8 @@ public class JavaLexer extends Lexer {
     public final void mT53() throws RecognitionException {
         try {
             int _type = T53;
-            // src/junitconverter/Java.g:44:5: ( 'synchronized' )
-            // src/junitconverter/Java.g:44:7: 'synchronized'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:44:5: ( 'synchronized' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:44:7: 'synchronized'
             {
             match("synchronized"); 
 
@@ -680,8 +680,8 @@ public class JavaLexer extends Lexer {
     public final void mT54() throws RecognitionException {
         try {
             int _type = T54;
-            // src/junitconverter/Java.g:45:5: ( 'transient' )
-            // src/junitconverter/Java.g:45:7: 'transient'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:45:5: ( 'transient' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:45:7: 'transient'
             {
             match("transient"); 
 
@@ -699,8 +699,8 @@ public class JavaLexer extends Lexer {
     public final void mT55() throws RecognitionException {
         try {
             int _type = T55;
-            // src/junitconverter/Java.g:46:5: ( 'volatile' )
-            // src/junitconverter/Java.g:46:7: 'volatile'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:46:5: ( 'volatile' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:46:7: 'volatile'
             {
             match("volatile"); 
 
@@ -718,8 +718,8 @@ public class JavaLexer extends Lexer {
     public final void mT56() throws RecognitionException {
         try {
             int _type = T56;
-            // src/junitconverter/Java.g:47:5: ( 'boolean' )
-            // src/junitconverter/Java.g:47:7: 'boolean'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:47:5: ( 'boolean' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:47:7: 'boolean'
             {
             match("boolean"); 
 
@@ -737,8 +737,8 @@ public class JavaLexer extends Lexer {
     public final void mT57() throws RecognitionException {
         try {
             int _type = T57;
-            // src/junitconverter/Java.g:48:5: ( 'char' )
-            // src/junitconverter/Java.g:48:7: 'char'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:48:5: ( 'char' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:48:7: 'char'
             {
             match("char"); 
 
@@ -756,8 +756,8 @@ public class JavaLexer extends Lexer {
     public final void mT58() throws RecognitionException {
         try {
             int _type = T58;
-            // src/junitconverter/Java.g:49:5: ( 'byte' )
-            // src/junitconverter/Java.g:49:7: 'byte'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:49:5: ( 'byte' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:49:7: 'byte'
             {
             match("byte"); 
 
@@ -775,8 +775,8 @@ public class JavaLexer extends Lexer {
     public final void mT59() throws RecognitionException {
         try {
             int _type = T59;
-            // src/junitconverter/Java.g:50:5: ( 'short' )
-            // src/junitconverter/Java.g:50:7: 'short'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:50:5: ( 'short' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:50:7: 'short'
             {
             match("short"); 
 
@@ -794,8 +794,8 @@ public class JavaLexer extends Lexer {
     public final void mT60() throws RecognitionException {
         try {
             int _type = T60;
-            // src/junitconverter/Java.g:51:5: ( 'int' )
-            // src/junitconverter/Java.g:51:7: 'int'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:51:5: ( 'int' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:51:7: 'int'
             {
             match("int"); 
 
@@ -813,8 +813,8 @@ public class JavaLexer extends Lexer {
     public final void mT61() throws RecognitionException {
         try {
             int _type = T61;
-            // src/junitconverter/Java.g:52:5: ( 'long' )
-            // src/junitconverter/Java.g:52:7: 'long'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:52:5: ( 'long' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:52:7: 'long'
             {
             match("long"); 
 
@@ -832,8 +832,8 @@ public class JavaLexer extends Lexer {
     public final void mT62() throws RecognitionException {
         try {
             int _type = T62;
-            // src/junitconverter/Java.g:53:5: ( 'float' )
-            // src/junitconverter/Java.g:53:7: 'float'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:53:5: ( 'float' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:53:7: 'float'
             {
             match("float"); 
 
@@ -851,8 +851,8 @@ public class JavaLexer extends Lexer {
     public final void mT63() throws RecognitionException {
         try {
             int _type = T63;
-            // src/junitconverter/Java.g:54:5: ( 'double' )
-            // src/junitconverter/Java.g:54:7: 'double'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:54:5: ( 'double' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:54:7: 'double'
             {
             match("double"); 
 
@@ -870,8 +870,8 @@ public class JavaLexer extends Lexer {
     public final void mT64() throws RecognitionException {
         try {
             int _type = T64;
-            // src/junitconverter/Java.g:55:5: ( '?' )
-            // src/junitconverter/Java.g:55:7: '?'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:55:5: ( '?' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:55:7: '?'
             {
             match('?'); 
 
@@ -888,8 +888,8 @@ public class JavaLexer extends Lexer {
     public final void mT65() throws RecognitionException {
         try {
             int _type = T65;
-            // src/junitconverter/Java.g:56:5: ( 'super' )
-            // src/junitconverter/Java.g:56:7: 'super'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:56:5: ( 'super' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:56:7: 'super'
             {
             match("super"); 
 
@@ -907,8 +907,8 @@ public class JavaLexer extends Lexer {
     public final void mT66() throws RecognitionException {
         try {
             int _type = T66;
-            // src/junitconverter/Java.g:57:5: ( '(' )
-            // src/junitconverter/Java.g:57:7: '('
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:57:5: ( '(' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:57:7: '('
             {
             match('('); 
 
@@ -925,8 +925,8 @@ public class JavaLexer extends Lexer {
     public final void mT67() throws RecognitionException {
         try {
             int _type = T67;
-            // src/junitconverter/Java.g:58:5: ( ')' )
-            // src/junitconverter/Java.g:58:7: ')'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:58:5: ( ')' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:58:7: ')'
             {
             match(')'); 
 
@@ -943,8 +943,8 @@ public class JavaLexer extends Lexer {
     public final void mT68() throws RecognitionException {
         try {
             int _type = T68;
-            // src/junitconverter/Java.g:59:5: ( '...' )
-            // src/junitconverter/Java.g:59:7: '...'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:59:5: ( '...' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:59:7: '...'
             {
             match("..."); 
 
@@ -962,8 +962,8 @@ public class JavaLexer extends Lexer {
     public final void mT69() throws RecognitionException {
         try {
             int _type = T69;
-            // src/junitconverter/Java.g:60:5: ( 'this' )
-            // src/junitconverter/Java.g:60:7: 'this'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:60:5: ( 'this' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:60:7: 'this'
             {
             match("this"); 
 
@@ -981,8 +981,8 @@ public class JavaLexer extends Lexer {
     public final void mT70() throws RecognitionException {
         try {
             int _type = T70;
-            // src/junitconverter/Java.g:61:5: ( 'null' )
-            // src/junitconverter/Java.g:61:7: 'null'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:61:5: ( 'null' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:61:7: 'null'
             {
             match("null"); 
 
@@ -1000,8 +1000,8 @@ public class JavaLexer extends Lexer {
     public final void mT71() throws RecognitionException {
         try {
             int _type = T71;
-            // src/junitconverter/Java.g:62:5: ( 'true' )
-            // src/junitconverter/Java.g:62:7: 'true'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:62:5: ( 'true' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:62:7: 'true'
             {
             match("true"); 
 
@@ -1019,8 +1019,8 @@ public class JavaLexer extends Lexer {
     public final void mT72() throws RecognitionException {
         try {
             int _type = T72;
-            // src/junitconverter/Java.g:63:5: ( 'false' )
-            // src/junitconverter/Java.g:63:7: 'false'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:63:5: ( 'false' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:63:7: 'false'
             {
             match("false"); 
 
@@ -1038,8 +1038,8 @@ public class JavaLexer extends Lexer {
     public final void mT73() throws RecognitionException {
         try {
             int _type = T73;
-            // src/junitconverter/Java.g:64:5: ( '@' )
-            // src/junitconverter/Java.g:64:7: '@'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:64:5: ( '@' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:64:7: '@'
             {
             match('@'); 
 
@@ -1056,8 +1056,8 @@ public class JavaLexer extends Lexer {
     public final void mT74() throws RecognitionException {
         try {
             int _type = T74;
-            // src/junitconverter/Java.g:65:5: ( 'default' )
-            // src/junitconverter/Java.g:65:7: 'default'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:65:5: ( 'default' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:65:7: 'default'
             {
             match("default"); 
 
@@ -1075,8 +1075,8 @@ public class JavaLexer extends Lexer {
     public final void mT75() throws RecognitionException {
         try {
             int _type = T75;
-            // src/junitconverter/Java.g:66:5: ( ':' )
-            // src/junitconverter/Java.g:66:7: ':'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:66:5: ( ':' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:66:7: ':'
             {
             match(':'); 
 
@@ -1093,8 +1093,8 @@ public class JavaLexer extends Lexer {
     public final void mT76() throws RecognitionException {
         try {
             int _type = T76;
-            // src/junitconverter/Java.g:67:5: ( 'if' )
-            // src/junitconverter/Java.g:67:7: 'if'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:67:5: ( 'if' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:67:7: 'if'
             {
             match("if"); 
 
@@ -1112,8 +1112,8 @@ public class JavaLexer extends Lexer {
     public final void mT77() throws RecognitionException {
         try {
             int _type = T77;
-            // src/junitconverter/Java.g:68:5: ( 'else' )
-            // src/junitconverter/Java.g:68:7: 'else'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:68:5: ( 'else' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:68:7: 'else'
             {
             match("else"); 
 
@@ -1131,8 +1131,8 @@ public class JavaLexer extends Lexer {
     public final void mT78() throws RecognitionException {
         try {
             int _type = T78;
-            // src/junitconverter/Java.g:69:5: ( 'for' )
-            // src/junitconverter/Java.g:69:7: 'for'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:69:5: ( 'for' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:69:7: 'for'
             {
             match("for"); 
 
@@ -1150,8 +1150,8 @@ public class JavaLexer extends Lexer {
     public final void mT79() throws RecognitionException {
         try {
             int _type = T79;
-            // src/junitconverter/Java.g:70:5: ( 'while' )
-            // src/junitconverter/Java.g:70:7: 'while'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:70:5: ( 'while' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:70:7: 'while'
             {
             match("while"); 
 
@@ -1169,8 +1169,8 @@ public class JavaLexer extends Lexer {
     public final void mT80() throws RecognitionException {
         try {
             int _type = T80;
-            // src/junitconverter/Java.g:71:5: ( 'do' )
-            // src/junitconverter/Java.g:71:7: 'do'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:71:5: ( 'do' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:71:7: 'do'
             {
             match("do"); 
 
@@ -1188,8 +1188,8 @@ public class JavaLexer extends Lexer {
     public final void mT81() throws RecognitionException {
         try {
             int _type = T81;
-            // src/junitconverter/Java.g:72:5: ( 'try' )
-            // src/junitconverter/Java.g:72:7: 'try'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:72:5: ( 'try' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:72:7: 'try'
             {
             match("try"); 
 
@@ -1207,8 +1207,8 @@ public class JavaLexer extends Lexer {
     public final void mT82() throws RecognitionException {
         try {
             int _type = T82;
-            // src/junitconverter/Java.g:73:5: ( 'finally' )
-            // src/junitconverter/Java.g:73:7: 'finally'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:73:5: ( 'finally' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:73:7: 'finally'
             {
             match("finally"); 
 
@@ -1226,8 +1226,8 @@ public class JavaLexer extends Lexer {
     public final void mT83() throws RecognitionException {
         try {
             int _type = T83;
-            // src/junitconverter/Java.g:74:5: ( 'switch' )
-            // src/junitconverter/Java.g:74:7: 'switch'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:74:5: ( 'switch' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:74:7: 'switch'
             {
             match("switch"); 
 
@@ -1245,8 +1245,8 @@ public class JavaLexer extends Lexer {
     public final void mT84() throws RecognitionException {
         try {
             int _type = T84;
-            // src/junitconverter/Java.g:75:5: ( 'return' )
-            // src/junitconverter/Java.g:75:7: 'return'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:75:5: ( 'return' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:75:7: 'return'
             {
             match("return"); 
 
@@ -1264,8 +1264,8 @@ public class JavaLexer extends Lexer {
     public final void mT85() throws RecognitionException {
         try {
             int _type = T85;
-            // src/junitconverter/Java.g:76:5: ( 'throw' )
-            // src/junitconverter/Java.g:76:7: 'throw'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:76:5: ( 'throw' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:76:7: 'throw'
             {
             match("throw"); 
 
@@ -1283,8 +1283,8 @@ public class JavaLexer extends Lexer {
     public final void mT86() throws RecognitionException {
         try {
             int _type = T86;
-            // src/junitconverter/Java.g:77:5: ( 'break' )
-            // src/junitconverter/Java.g:77:7: 'break'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:77:5: ( 'break' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:77:7: 'break'
             {
             match("break"); 
 
@@ -1302,8 +1302,8 @@ public class JavaLexer extends Lexer {
     public final void mT87() throws RecognitionException {
         try {
             int _type = T87;
-            // src/junitconverter/Java.g:78:5: ( 'continue' )
-            // src/junitconverter/Java.g:78:7: 'continue'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:78:5: ( 'continue' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:78:7: 'continue'
             {
             match("continue"); 
 
@@ -1321,8 +1321,8 @@ public class JavaLexer extends Lexer {
     public final void mT88() throws RecognitionException {
         try {
             int _type = T88;
-            // src/junitconverter/Java.g:79:5: ( 'catch' )
-            // src/junitconverter/Java.g:79:7: 'catch'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:79:5: ( 'catch' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:79:7: 'catch'
             {
             match("catch"); 
 
@@ -1340,8 +1340,8 @@ public class JavaLexer extends Lexer {
     public final void mT89() throws RecognitionException {
         try {
             int _type = T89;
-            // src/junitconverter/Java.g:80:5: ( 'case' )
-            // src/junitconverter/Java.g:80:7: 'case'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:80:5: ( 'case' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:80:7: 'case'
             {
             match("case"); 
 
@@ -1359,8 +1359,8 @@ public class JavaLexer extends Lexer {
     public final void mT90() throws RecognitionException {
         try {
             int _type = T90;
-            // src/junitconverter/Java.g:81:5: ( '+=' )
-            // src/junitconverter/Java.g:81:7: '+='
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:81:5: ( '+=' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:81:7: '+='
             {
             match("+="); 
 
@@ -1378,8 +1378,8 @@ public class JavaLexer extends Lexer {
     public final void mT91() throws RecognitionException {
         try {
             int _type = T91;
-            // src/junitconverter/Java.g:82:5: ( '-=' )
-            // src/junitconverter/Java.g:82:7: '-='
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:82:5: ( '-=' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:82:7: '-='
             {
             match("-="); 
 
@@ -1397,8 +1397,8 @@ public class JavaLexer extends Lexer {
     public final void mT92() throws RecognitionException {
         try {
             int _type = T92;
-            // src/junitconverter/Java.g:83:5: ( '*=' )
-            // src/junitconverter/Java.g:83:7: '*='
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:83:5: ( '*=' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:83:7: '*='
             {
             match("*="); 
 
@@ -1416,8 +1416,8 @@ public class JavaLexer extends Lexer {
     public final void mT93() throws RecognitionException {
         try {
             int _type = T93;
-            // src/junitconverter/Java.g:84:5: ( '/=' )
-            // src/junitconverter/Java.g:84:7: '/='
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:84:5: ( '/=' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:84:7: '/='
             {
             match("/="); 
 
@@ -1435,8 +1435,8 @@ public class JavaLexer extends Lexer {
     public final void mT94() throws RecognitionException {
         try {
             int _type = T94;
-            // src/junitconverter/Java.g:85:5: ( '&=' )
-            // src/junitconverter/Java.g:85:7: '&='
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:85:5: ( '&=' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:85:7: '&='
             {
             match("&="); 
 
@@ -1454,8 +1454,8 @@ public class JavaLexer extends Lexer {
     public final void mT95() throws RecognitionException {
         try {
             int _type = T95;
-            // src/junitconverter/Java.g:86:5: ( '|=' )
-            // src/junitconverter/Java.g:86:7: '|='
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:86:5: ( '|=' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:86:7: '|='
             {
             match("|="); 
 
@@ -1473,8 +1473,8 @@ public class JavaLexer extends Lexer {
     public final void mT96() throws RecognitionException {
         try {
             int _type = T96;
-            // src/junitconverter/Java.g:87:5: ( '^=' )
-            // src/junitconverter/Java.g:87:7: '^='
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:87:5: ( '^=' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:87:7: '^='
             {
             match("^="); 
 
@@ -1492,8 +1492,8 @@ public class JavaLexer extends Lexer {
     public final void mT97() throws RecognitionException {
         try {
             int _type = T97;
-            // src/junitconverter/Java.g:88:5: ( '%=' )
-            // src/junitconverter/Java.g:88:7: '%='
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:88:5: ( '%=' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:88:7: '%='
             {
             match("%="); 
 
@@ -1511,8 +1511,8 @@ public class JavaLexer extends Lexer {
     public final void mT98() throws RecognitionException {
         try {
             int _type = T98;
-            // src/junitconverter/Java.g:89:5: ( '||' )
-            // src/junitconverter/Java.g:89:7: '||'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:89:5: ( '||' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:89:7: '||'
             {
             match("||"); 
 
@@ -1530,8 +1530,8 @@ public class JavaLexer extends Lexer {
     public final void mT99() throws RecognitionException {
         try {
             int _type = T99;
-            // src/junitconverter/Java.g:90:5: ( '&&' )
-            // src/junitconverter/Java.g:90:7: '&&'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:90:5: ( '&&' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:90:7: '&&'
             {
             match("&&"); 
 
@@ -1549,8 +1549,8 @@ public class JavaLexer extends Lexer {
     public final void mT100() throws RecognitionException {
         try {
             int _type = T100;
-            // src/junitconverter/Java.g:91:6: ( '|' )
-            // src/junitconverter/Java.g:91:8: '|'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:91:6: ( '|' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:91:8: '|'
             {
             match('|'); 
 
@@ -1567,8 +1567,8 @@ public class JavaLexer extends Lexer {
     public final void mT101() throws RecognitionException {
         try {
             int _type = T101;
-            // src/junitconverter/Java.g:92:6: ( '^' )
-            // src/junitconverter/Java.g:92:8: '^'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:92:6: ( '^' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:92:8: '^'
             {
             match('^'); 
 
@@ -1585,8 +1585,8 @@ public class JavaLexer extends Lexer {
     public final void mT102() throws RecognitionException {
         try {
             int _type = T102;
-            // src/junitconverter/Java.g:93:6: ( '==' )
-            // src/junitconverter/Java.g:93:8: '=='
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:93:6: ( '==' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:93:8: '=='
             {
             match("=="); 
 
@@ -1604,8 +1604,8 @@ public class JavaLexer extends Lexer {
     public final void mT103() throws RecognitionException {
         try {
             int _type = T103;
-            // src/junitconverter/Java.g:94:6: ( '!=' )
-            // src/junitconverter/Java.g:94:8: '!='
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:94:6: ( '!=' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:94:8: '!='
             {
             match("!="); 
 
@@ -1623,8 +1623,8 @@ public class JavaLexer extends Lexer {
     public final void mT104() throws RecognitionException {
         try {
             int _type = T104;
-            // src/junitconverter/Java.g:95:6: ( 'instanceof' )
-            // src/junitconverter/Java.g:95:8: 'instanceof'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:95:6: ( 'instanceof' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:95:8: 'instanceof'
             {
             match("instanceof"); 
 
@@ -1642,8 +1642,8 @@ public class JavaLexer extends Lexer {
     public final void mT105() throws RecognitionException {
         try {
             int _type = T105;
-            // src/junitconverter/Java.g:96:6: ( '+' )
-            // src/junitconverter/Java.g:96:8: '+'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:96:6: ( '+' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:96:8: '+'
             {
             match('+'); 
 
@@ -1660,8 +1660,8 @@ public class JavaLexer extends Lexer {
     public final void mT106() throws RecognitionException {
         try {
             int _type = T106;
-            // src/junitconverter/Java.g:97:6: ( '-' )
-            // src/junitconverter/Java.g:97:8: '-'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:97:6: ( '-' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:97:8: '-'
             {
             match('-'); 
 
@@ -1678,8 +1678,8 @@ public class JavaLexer extends Lexer {
     public final void mT107() throws RecognitionException {
         try {
             int _type = T107;
-            // src/junitconverter/Java.g:98:6: ( '/' )
-            // src/junitconverter/Java.g:98:8: '/'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:98:6: ( '/' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:98:8: '/'
             {
             match('/'); 
 
@@ -1696,8 +1696,8 @@ public class JavaLexer extends Lexer {
     public final void mT108() throws RecognitionException {
         try {
             int _type = T108;
-            // src/junitconverter/Java.g:99:6: ( '%' )
-            // src/junitconverter/Java.g:99:8: '%'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:99:6: ( '%' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:99:8: '%'
             {
             match('%'); 
 
@@ -1714,8 +1714,8 @@ public class JavaLexer extends Lexer {
     public final void mT109() throws RecognitionException {
         try {
             int _type = T109;
-            // src/junitconverter/Java.g:100:6: ( '++' )
-            // src/junitconverter/Java.g:100:8: '++'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:100:6: ( '++' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:100:8: '++'
             {
             match("++"); 
 
@@ -1733,8 +1733,8 @@ public class JavaLexer extends Lexer {
     public final void mT110() throws RecognitionException {
         try {
             int _type = T110;
-            // src/junitconverter/Java.g:101:6: ( '--' )
-            // src/junitconverter/Java.g:101:8: '--'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:101:6: ( '--' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:101:8: '--'
             {
             match("--"); 
 
@@ -1752,8 +1752,8 @@ public class JavaLexer extends Lexer {
     public final void mT111() throws RecognitionException {
         try {
             int _type = T111;
-            // src/junitconverter/Java.g:102:6: ( '~' )
-            // src/junitconverter/Java.g:102:8: '~'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:102:6: ( '~' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:102:8: '~'
             {
             match('~'); 
 
@@ -1770,8 +1770,8 @@ public class JavaLexer extends Lexer {
     public final void mT112() throws RecognitionException {
         try {
             int _type = T112;
-            // src/junitconverter/Java.g:103:6: ( '!' )
-            // src/junitconverter/Java.g:103:8: '!'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:103:6: ( '!' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:103:8: '!'
             {
             match('!'); 
 
@@ -1788,8 +1788,8 @@ public class JavaLexer extends Lexer {
     public final void mT113() throws RecognitionException {
         try {
             int _type = T113;
-            // src/junitconverter/Java.g:104:6: ( 'new' )
-            // src/junitconverter/Java.g:104:8: 'new'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:104:6: ( 'new' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:104:8: 'new'
             {
             match("new"); 
 
@@ -1807,8 +1807,8 @@ public class JavaLexer extends Lexer {
     public final void mHexLiteral() throws RecognitionException {
         try {
             int _type = HexLiteral;
-            // src/junitconverter/Java.g:999:12: ( '0' ( 'x' | 'X' ) ( HexDigit )+ ( IntegerTypeSuffix )? )
-            // src/junitconverter/Java.g:999:14: '0' ( 'x' | 'X' ) ( HexDigit )+ ( IntegerTypeSuffix )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1021:12: ( '0' ( 'x' | 'X' ) ( HexDigit )+ ( IntegerTypeSuffix )? )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1021:14: '0' ( 'x' | 'X' ) ( HexDigit )+ ( IntegerTypeSuffix )?
             {
             match('0'); 
             if ( input.LA(1)=='X'||input.LA(1)=='x' ) {
@@ -1821,7 +1821,7 @@ public class JavaLexer extends Lexer {
                 recover(mse);    throw mse;
             }
 
-            // src/junitconverter/Java.g:999:28: ( HexDigit )+
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1021:28: ( HexDigit )+
             int cnt1=0;
             loop1:
             do {
@@ -1835,7 +1835,7 @@ public class JavaLexer extends Lexer {
 
                 switch (alt1) {
             	case 1 :
-            	    // src/junitconverter/Java.g:999:28: HexDigit
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1021:28: HexDigit
             	    {
             	    mHexDigit(); 
 
@@ -1851,7 +1851,7 @@ public class JavaLexer extends Lexer {
                 cnt1++;
             } while (true);
 
-            // src/junitconverter/Java.g:999:38: ( IntegerTypeSuffix )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1021:38: ( IntegerTypeSuffix )?
             int alt2=2;
             int LA2_0 = input.LA(1);
 
@@ -1860,7 +1860,7 @@ public class JavaLexer extends Lexer {
             }
             switch (alt2) {
                 case 1 :
-                    // src/junitconverter/Java.g:999:38: IntegerTypeSuffix
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1021:38: IntegerTypeSuffix
                     {
                     mIntegerTypeSuffix(); 
 
@@ -1884,10 +1884,10 @@ public class JavaLexer extends Lexer {
     public final void mDecimalLiteral() throws RecognitionException {
         try {
             int _type = DecimalLiteral;
-            // src/junitconverter/Java.g:1001:16: ( ( '0' | '1' .. '9' ( '0' .. '9' )* ) ( IntegerTypeSuffix )? )
-            // src/junitconverter/Java.g:1001:18: ( '0' | '1' .. '9' ( '0' .. '9' )* ) ( IntegerTypeSuffix )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1023:16: ( ( '0' | '1' .. '9' ( '0' .. '9' )* ) ( IntegerTypeSuffix )? )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1023:18: ( '0' | '1' .. '9' ( '0' .. '9' )* ) ( IntegerTypeSuffix )?
             {
-            // src/junitconverter/Java.g:1001:18: ( '0' | '1' .. '9' ( '0' .. '9' )* )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1023:18: ( '0' | '1' .. '9' ( '0' .. '9' )* )
             int alt4=2;
             int LA4_0 = input.LA(1);
 
@@ -1899,23 +1899,23 @@ public class JavaLexer extends Lexer {
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("1001:18: ( '0' | '1' .. '9' ( '0' .. '9' )* )", 4, 0, input);
+                    new NoViableAltException("1023:18: ( '0' | '1' .. '9' ( '0' .. '9' )* )", 4, 0, input);
 
                 throw nvae;
             }
             switch (alt4) {
                 case 1 :
-                    // src/junitconverter/Java.g:1001:19: '0'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1023:19: '0'
                     {
                     match('0'); 
 
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:1001:25: '1' .. '9' ( '0' .. '9' )*
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1023:25: '1' .. '9' ( '0' .. '9' )*
                     {
                     matchRange('1','9'); 
-                    // src/junitconverter/Java.g:1001:34: ( '0' .. '9' )*
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1023:34: ( '0' .. '9' )*
                     loop3:
                     do {
                         int alt3=2;
@@ -1928,7 +1928,7 @@ public class JavaLexer extends Lexer {
 
                         switch (alt3) {
                     	case 1 :
-                    	    // src/junitconverter/Java.g:1001:34: '0' .. '9'
+                    	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1023:34: '0' .. '9'
                     	    {
                     	    matchRange('0','9'); 
 
@@ -1946,7 +1946,7 @@ public class JavaLexer extends Lexer {
 
             }
 
-            // src/junitconverter/Java.g:1001:45: ( IntegerTypeSuffix )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1023:45: ( IntegerTypeSuffix )?
             int alt5=2;
             int LA5_0 = input.LA(1);
 
@@ -1955,7 +1955,7 @@ public class JavaLexer extends Lexer {
             }
             switch (alt5) {
                 case 1 :
-                    // src/junitconverter/Java.g:1001:45: IntegerTypeSuffix
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1023:45: IntegerTypeSuffix
                     {
                     mIntegerTypeSuffix(); 
 
@@ -1979,11 +1979,11 @@ public class JavaLexer extends Lexer {
     public final void mOctalLiteral() throws RecognitionException {
         try {
             int _type = OctalLiteral;
-            // src/junitconverter/Java.g:1003:14: ( '0' ( '0' .. '7' )+ ( IntegerTypeSuffix )? )
-            // src/junitconverter/Java.g:1003:16: '0' ( '0' .. '7' )+ ( IntegerTypeSuffix )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1025:14: ( '0' ( '0' .. '7' )+ ( IntegerTypeSuffix )? )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1025:16: '0' ( '0' .. '7' )+ ( IntegerTypeSuffix )?
             {
             match('0'); 
-            // src/junitconverter/Java.g:1003:20: ( '0' .. '7' )+
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1025:20: ( '0' .. '7' )+
             int cnt6=0;
             loop6:
             do {
@@ -1997,7 +1997,7 @@ public class JavaLexer extends Lexer {
 
                 switch (alt6) {
             	case 1 :
-            	    // src/junitconverter/Java.g:1003:21: '0' .. '7'
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1025:21: '0' .. '7'
             	    {
             	    matchRange('0','7'); 
 
@@ -2013,7 +2013,7 @@ public class JavaLexer extends Lexer {
                 cnt6++;
             } while (true);
 
-            // src/junitconverter/Java.g:1003:32: ( IntegerTypeSuffix )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1025:32: ( IntegerTypeSuffix )?
             int alt7=2;
             int LA7_0 = input.LA(1);
 
@@ -2022,7 +2022,7 @@ public class JavaLexer extends Lexer {
             }
             switch (alt7) {
                 case 1 :
-                    // src/junitconverter/Java.g:1003:32: IntegerTypeSuffix
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1025:32: IntegerTypeSuffix
                     {
                     mIntegerTypeSuffix(); 
 
@@ -2045,8 +2045,8 @@ public class JavaLexer extends Lexer {
     // $ANTLR start HexDigit
     public final void mHexDigit() throws RecognitionException {
         try {
-            // src/junitconverter/Java.g:1006:10: ( ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' ) )
-            // src/junitconverter/Java.g:1006:12: ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1028:10: ( ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' ) )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1028:12: ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' )
             {
             if ( (input.LA(1)>='0' && input.LA(1)<='9')||(input.LA(1)>='A' && input.LA(1)<='F')||(input.LA(1)>='a' && input.LA(1)<='f') ) {
                 input.consume();
@@ -2070,8 +2070,8 @@ public class JavaLexer extends Lexer {
     // $ANTLR start IntegerTypeSuffix
     public final void mIntegerTypeSuffix() throws RecognitionException {
         try {
-            // src/junitconverter/Java.g:1009:19: ( ( 'l' | 'L' ) )
-            // src/junitconverter/Java.g:1009:21: ( 'l' | 'L' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1031:19: ( ( 'l' | 'L' ) )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1031:21: ( 'l' | 'L' )
             {
             if ( input.LA(1)=='L'||input.LA(1)=='l' ) {
                 input.consume();
@@ -2096,14 +2096,14 @@ public class JavaLexer extends Lexer {
     public final void mFloatingPointLiteral() throws RecognitionException {
         try {
             int _type = FloatingPointLiteral;
-            // src/junitconverter/Java.g:1012:5: ( ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( Exponent )? ( FloatTypeSuffix )? | '.' ( '0' .. '9' )+ ( Exponent )? ( FloatTypeSuffix )? | ( '0' .. '9' )+ Exponent ( FloatTypeSuffix )? | ( '0' .. '9' )+ FloatTypeSuffix )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1034:5: ( ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( Exponent )? ( FloatTypeSuffix )? | '.' ( '0' .. '9' )+ ( Exponent )? ( FloatTypeSuffix )? | ( '0' .. '9' )+ Exponent ( FloatTypeSuffix )? | ( '0' .. '9' )+ FloatTypeSuffix )
             int alt18=4;
             alt18 = dfa18.predict(input);
             switch (alt18) {
                 case 1 :
-                    // src/junitconverter/Java.g:1012:9: ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( Exponent )? ( FloatTypeSuffix )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1034:9: ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( Exponent )? ( FloatTypeSuffix )?
                     {
-                    // src/junitconverter/Java.g:1012:9: ( '0' .. '9' )+
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1034:9: ( '0' .. '9' )+
                     int cnt8=0;
                     loop8:
                     do {
@@ -2117,7 +2117,7 @@ public class JavaLexer extends Lexer {
 
                         switch (alt8) {
                     	case 1 :
-                    	    // src/junitconverter/Java.g:1012:10: '0' .. '9'
+                    	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1034:10: '0' .. '9'
                     	    {
                     	    matchRange('0','9'); 
 
@@ -2134,7 +2134,7 @@ public class JavaLexer extends Lexer {
                     } while (true);
 
                     match('.'); 
-                    // src/junitconverter/Java.g:1012:25: ( '0' .. '9' )*
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1034:25: ( '0' .. '9' )*
                     loop9:
                     do {
                         int alt9=2;
@@ -2147,7 +2147,7 @@ public class JavaLexer extends Lexer {
 
                         switch (alt9) {
                     	case 1 :
-                    	    // src/junitconverter/Java.g:1012:26: '0' .. '9'
+                    	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1034:26: '0' .. '9'
                     	    {
                     	    matchRange('0','9'); 
 
@@ -2159,7 +2159,7 @@ public class JavaLexer extends Lexer {
                         }
                     } while (true);
 
-                    // src/junitconverter/Java.g:1012:37: ( Exponent )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1034:37: ( Exponent )?
                     int alt10=2;
                     int LA10_0 = input.LA(1);
 
@@ -2168,7 +2168,7 @@ public class JavaLexer extends Lexer {
                     }
                     switch (alt10) {
                         case 1 :
-                            // src/junitconverter/Java.g:1012:37: Exponent
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1034:37: Exponent
                             {
                             mExponent(); 
 
@@ -2177,7 +2177,7 @@ public class JavaLexer extends Lexer {
 
                     }
 
-                    // src/junitconverter/Java.g:1012:47: ( FloatTypeSuffix )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1034:47: ( FloatTypeSuffix )?
                     int alt11=2;
                     int LA11_0 = input.LA(1);
 
@@ -2186,7 +2186,7 @@ public class JavaLexer extends Lexer {
                     }
                     switch (alt11) {
                         case 1 :
-                            // src/junitconverter/Java.g:1012:47: FloatTypeSuffix
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1034:47: FloatTypeSuffix
                             {
                             mFloatTypeSuffix(); 
 
@@ -2200,10 +2200,10 @@ public class JavaLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:1013:9: '.' ( '0' .. '9' )+ ( Exponent )? ( FloatTypeSuffix )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1035:9: '.' ( '0' .. '9' )+ ( Exponent )? ( FloatTypeSuffix )?
                     {
                     match('.'); 
-                    // src/junitconverter/Java.g:1013:13: ( '0' .. '9' )+
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1035:13: ( '0' .. '9' )+
                     int cnt12=0;
                     loop12:
                     do {
@@ -2217,7 +2217,7 @@ public class JavaLexer extends Lexer {
 
                         switch (alt12) {
                     	case 1 :
-                    	    // src/junitconverter/Java.g:1013:14: '0' .. '9'
+                    	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1035:14: '0' .. '9'
                     	    {
                     	    matchRange('0','9'); 
 
@@ -2233,7 +2233,7 @@ public class JavaLexer extends Lexer {
                         cnt12++;
                     } while (true);
 
-                    // src/junitconverter/Java.g:1013:25: ( Exponent )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1035:25: ( Exponent )?
                     int alt13=2;
                     int LA13_0 = input.LA(1);
 
@@ -2242,7 +2242,7 @@ public class JavaLexer extends Lexer {
                     }
                     switch (alt13) {
                         case 1 :
-                            // src/junitconverter/Java.g:1013:25: Exponent
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1035:25: Exponent
                             {
                             mExponent(); 
 
@@ -2251,7 +2251,7 @@ public class JavaLexer extends Lexer {
 
                     }
 
-                    // src/junitconverter/Java.g:1013:35: ( FloatTypeSuffix )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1035:35: ( FloatTypeSuffix )?
                     int alt14=2;
                     int LA14_0 = input.LA(1);
 
@@ -2260,7 +2260,7 @@ public class JavaLexer extends Lexer {
                     }
                     switch (alt14) {
                         case 1 :
-                            // src/junitconverter/Java.g:1013:35: FloatTypeSuffix
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1035:35: FloatTypeSuffix
                             {
                             mFloatTypeSuffix(); 
 
@@ -2274,9 +2274,9 @@ public class JavaLexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // src/junitconverter/Java.g:1014:9: ( '0' .. '9' )+ Exponent ( FloatTypeSuffix )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1036:9: ( '0' .. '9' )+ Exponent ( FloatTypeSuffix )?
                     {
-                    // src/junitconverter/Java.g:1014:9: ( '0' .. '9' )+
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1036:9: ( '0' .. '9' )+
                     int cnt15=0;
                     loop15:
                     do {
@@ -2290,7 +2290,7 @@ public class JavaLexer extends Lexer {
 
                         switch (alt15) {
                     	case 1 :
-                    	    // src/junitconverter/Java.g:1014:10: '0' .. '9'
+                    	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1036:10: '0' .. '9'
                     	    {
                     	    matchRange('0','9'); 
 
@@ -2307,7 +2307,7 @@ public class JavaLexer extends Lexer {
                     } while (true);
 
                     mExponent(); 
-                    // src/junitconverter/Java.g:1014:30: ( FloatTypeSuffix )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1036:30: ( FloatTypeSuffix )?
                     int alt16=2;
                     int LA16_0 = input.LA(1);
 
@@ -2316,7 +2316,7 @@ public class JavaLexer extends Lexer {
                     }
                     switch (alt16) {
                         case 1 :
-                            // src/junitconverter/Java.g:1014:30: FloatTypeSuffix
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1036:30: FloatTypeSuffix
                             {
                             mFloatTypeSuffix(); 
 
@@ -2330,9 +2330,9 @@ public class JavaLexer extends Lexer {
                     }
                     break;
                 case 4 :
-                    // src/junitconverter/Java.g:1015:9: ( '0' .. '9' )+ FloatTypeSuffix
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1037:9: ( '0' .. '9' )+ FloatTypeSuffix
                     {
-                    // src/junitconverter/Java.g:1015:9: ( '0' .. '9' )+
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1037:9: ( '0' .. '9' )+
                     int cnt17=0;
                     loop17:
                     do {
@@ -2346,7 +2346,7 @@ public class JavaLexer extends Lexer {
 
                         switch (alt17) {
                     	case 1 :
-                    	    // src/junitconverter/Java.g:1015:10: '0' .. '9'
+                    	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1037:10: '0' .. '9'
                     	    {
                     	    matchRange('0','9'); 
 
@@ -2379,8 +2379,8 @@ public class JavaLexer extends Lexer {
     // $ANTLR start Exponent
     public final void mExponent() throws RecognitionException {
         try {
-            // src/junitconverter/Java.g:1019:10: ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )
-            // src/junitconverter/Java.g:1019:12: ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1041:10: ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1041:12: ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+
             {
             if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
                 input.consume();
@@ -2392,7 +2392,7 @@ public class JavaLexer extends Lexer {
                 recover(mse);    throw mse;
             }
 
-            // src/junitconverter/Java.g:1019:22: ( '+' | '-' )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1041:22: ( '+' | '-' )?
             int alt19=2;
             int LA19_0 = input.LA(1);
 
@@ -2401,7 +2401,7 @@ public class JavaLexer extends Lexer {
             }
             switch (alt19) {
                 case 1 :
-                    // src/junitconverter/Java.g:
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:
                     {
                     if ( input.LA(1)=='+'||input.LA(1)=='-' ) {
                         input.consume();
@@ -2419,7 +2419,7 @@ public class JavaLexer extends Lexer {
 
             }
 
-            // src/junitconverter/Java.g:1019:33: ( '0' .. '9' )+
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1041:33: ( '0' .. '9' )+
             int cnt20=0;
             loop20:
             do {
@@ -2433,7 +2433,7 @@ public class JavaLexer extends Lexer {
 
                 switch (alt20) {
             	case 1 :
-            	    // src/junitconverter/Java.g:1019:34: '0' .. '9'
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1041:34: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -2461,8 +2461,8 @@ public class JavaLexer extends Lexer {
     // $ANTLR start FloatTypeSuffix
     public final void mFloatTypeSuffix() throws RecognitionException {
         try {
-            // src/junitconverter/Java.g:1022:17: ( ( 'f' | 'F' | 'd' | 'D' ) )
-            // src/junitconverter/Java.g:1022:19: ( 'f' | 'F' | 'd' | 'D' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1044:17: ( ( 'f' | 'F' | 'd' | 'D' ) )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1044:19: ( 'f' | 'F' | 'd' | 'D' )
             {
             if ( input.LA(1)=='D'||input.LA(1)=='F'||input.LA(1)=='d'||input.LA(1)=='f' ) {
                 input.consume();
@@ -2487,11 +2487,11 @@ public class JavaLexer extends Lexer {
     public final void mCharacterLiteral() throws RecognitionException {
         try {
             int _type = CharacterLiteral;
-            // src/junitconverter/Java.g:1025:5: ( '\\'' ( EscapeSequence | ~ ( '\\'' | '\\\\' ) ) '\\'' )
-            // src/junitconverter/Java.g:1025:9: '\\'' ( EscapeSequence | ~ ( '\\'' | '\\\\' ) ) '\\''
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1047:5: ( '\\'' ( EscapeSequence | ~ ( '\\'' | '\\\\' ) ) '\\'' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1047:9: '\\'' ( EscapeSequence | ~ ( '\\'' | '\\\\' ) ) '\\''
             {
             match('\''); 
-            // src/junitconverter/Java.g:1025:14: ( EscapeSequence | ~ ( '\\'' | '\\\\' ) )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1047:14: ( EscapeSequence | ~ ( '\\'' | '\\\\' ) )
             int alt21=2;
             int LA21_0 = input.LA(1);
 
@@ -2503,20 +2503,20 @@ public class JavaLexer extends Lexer {
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("1025:14: ( EscapeSequence | ~ ( '\\'' | '\\\\' ) )", 21, 0, input);
+                    new NoViableAltException("1047:14: ( EscapeSequence | ~ ( '\\'' | '\\\\' ) )", 21, 0, input);
 
                 throw nvae;
             }
             switch (alt21) {
                 case 1 :
-                    // src/junitconverter/Java.g:1025:16: EscapeSequence
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1047:16: EscapeSequence
                     {
                     mEscapeSequence(); 
 
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:1025:33: ~ ( '\\'' | '\\\\' )
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1047:33: ~ ( '\\'' | '\\\\' )
                     {
                     if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFE') ) {
                         input.consume();
@@ -2550,11 +2550,11 @@ public class JavaLexer extends Lexer {
     public final void mStringLiteral() throws RecognitionException {
         try {
             int _type = StringLiteral;
-            // src/junitconverter/Java.g:1029:5: ( '\"' ( EscapeSequence | ~ ( '\\\\' | '\"' ) )* '\"' )
-            // src/junitconverter/Java.g:1029:8: '\"' ( EscapeSequence | ~ ( '\\\\' | '\"' ) )* '\"'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1051:5: ( '\"' ( EscapeSequence | ~ ( '\\\\' | '\"' ) )* '\"' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1051:8: '\"' ( EscapeSequence | ~ ( '\\\\' | '\"' ) )* '\"'
             {
             match('\"'); 
-            // src/junitconverter/Java.g:1029:12: ( EscapeSequence | ~ ( '\\\\' | '\"' ) )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1051:12: ( EscapeSequence | ~ ( '\\\\' | '\"' ) )*
             loop22:
             do {
                 int alt22=3;
@@ -2570,14 +2570,14 @@ public class JavaLexer extends Lexer {
 
                 switch (alt22) {
             	case 1 :
-            	    // src/junitconverter/Java.g:1029:14: EscapeSequence
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1051:14: EscapeSequence
             	    {
             	    mEscapeSequence(); 
 
             	    }
             	    break;
             	case 2 :
-            	    // src/junitconverter/Java.g:1029:31: ~ ( '\\\\' | '\"' )
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1051:31: ~ ( '\\\\' | '\"' )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFE') ) {
             	        input.consume();
@@ -2613,12 +2613,17 @@ public class JavaLexer extends Lexer {
     // $ANTLR start EscapeSequence
     public final void mEscapeSequence() throws RecognitionException {
         try {
-            // src/junitconverter/Java.g:1034:5: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' ) | UnicodeEscape | OctalEscape )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1056:5: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' ) | UnicodeEscape | OctalEscape )
             int alt23=3;
             int LA23_0 = input.LA(1);
 
             if ( (LA23_0=='\\') ) {
                 switch ( input.LA(2) ) {
+                case 'u':
+                    {
+                    alt23=2;
+                    }
+                    break;
                 case '\"':
                 case '\'':
                 case '\\':
@@ -2629,11 +2634,6 @@ public class JavaLexer extends Lexer {
                 case 't':
                     {
                     alt23=1;
-                    }
-                    break;
-                case 'u':
-                    {
-                    alt23=2;
                     }
                     break;
                 case '0':
@@ -2650,7 +2650,7 @@ public class JavaLexer extends Lexer {
                     break;
                 default:
                     NoViableAltException nvae =
-                        new NoViableAltException("1032:1: fragment EscapeSequence : ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' ) | UnicodeEscape | OctalEscape );", 23, 1, input);
+                        new NoViableAltException("1054:1: fragment EscapeSequence : ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' ) | UnicodeEscape | OctalEscape );", 23, 1, input);
 
                     throw nvae;
                 }
@@ -2658,13 +2658,13 @@ public class JavaLexer extends Lexer {
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("1032:1: fragment EscapeSequence : ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' ) | UnicodeEscape | OctalEscape );", 23, 0, input);
+                    new NoViableAltException("1054:1: fragment EscapeSequence : ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' ) | UnicodeEscape | OctalEscape );", 23, 0, input);
 
                 throw nvae;
             }
             switch (alt23) {
                 case 1 :
-                    // src/junitconverter/Java.g:1034:9: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' )
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1056:9: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' )
                     {
                     match('\\'); 
                     if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
@@ -2681,14 +2681,14 @@ public class JavaLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:1035:9: UnicodeEscape
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1057:9: UnicodeEscape
                     {
                     mUnicodeEscape(); 
 
                     }
                     break;
                 case 3 :
-                    // src/junitconverter/Java.g:1036:9: OctalEscape
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1058:9: OctalEscape
                     {
                     mOctalEscape(); 
 
@@ -2705,7 +2705,7 @@ public class JavaLexer extends Lexer {
     // $ANTLR start OctalEscape
     public final void mOctalEscape() throws RecognitionException {
         try {
-            // src/junitconverter/Java.g:1041:5: ( '\\\\' ( '0' .. '3' ) ( '0' .. '7' ) ( '0' .. '7' ) | '\\\\' ( '0' .. '7' ) ( '0' .. '7' ) | '\\\\' ( '0' .. '7' ) )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1063:5: ( '\\\\' ( '0' .. '3' ) ( '0' .. '7' ) ( '0' .. '7' ) | '\\\\' ( '0' .. '7' ) ( '0' .. '7' ) | '\\\\' ( '0' .. '7' ) )
             int alt24=3;
             int LA24_0 = input.LA(1);
 
@@ -2738,38 +2738,38 @@ public class JavaLexer extends Lexer {
                 }
                 else {
                     NoViableAltException nvae =
-                        new NoViableAltException("1039:1: fragment OctalEscape : ( '\\\\' ( '0' .. '3' ) ( '0' .. '7' ) ( '0' .. '7' ) | '\\\\' ( '0' .. '7' ) ( '0' .. '7' ) | '\\\\' ( '0' .. '7' ) );", 24, 1, input);
+                        new NoViableAltException("1061:1: fragment OctalEscape : ( '\\\\' ( '0' .. '3' ) ( '0' .. '7' ) ( '0' .. '7' ) | '\\\\' ( '0' .. '7' ) ( '0' .. '7' ) | '\\\\' ( '0' .. '7' ) );", 24, 1, input);
 
                     throw nvae;
                 }
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("1039:1: fragment OctalEscape : ( '\\\\' ( '0' .. '3' ) ( '0' .. '7' ) ( '0' .. '7' ) | '\\\\' ( '0' .. '7' ) ( '0' .. '7' ) | '\\\\' ( '0' .. '7' ) );", 24, 0, input);
+                    new NoViableAltException("1061:1: fragment OctalEscape : ( '\\\\' ( '0' .. '3' ) ( '0' .. '7' ) ( '0' .. '7' ) | '\\\\' ( '0' .. '7' ) ( '0' .. '7' ) | '\\\\' ( '0' .. '7' ) );", 24, 0, input);
 
                 throw nvae;
             }
             switch (alt24) {
                 case 1 :
-                    // src/junitconverter/Java.g:1041:9: '\\\\' ( '0' .. '3' ) ( '0' .. '7' ) ( '0' .. '7' )
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1063:9: '\\\\' ( '0' .. '3' ) ( '0' .. '7' ) ( '0' .. '7' )
                     {
                     match('\\'); 
-                    // src/junitconverter/Java.g:1041:14: ( '0' .. '3' )
-                    // src/junitconverter/Java.g:1041:15: '0' .. '3'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1063:14: ( '0' .. '3' )
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1063:15: '0' .. '3'
                     {
                     matchRange('0','3'); 
 
                     }
 
-                    // src/junitconverter/Java.g:1041:25: ( '0' .. '7' )
-                    // src/junitconverter/Java.g:1041:26: '0' .. '7'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1063:25: ( '0' .. '7' )
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1063:26: '0' .. '7'
                     {
                     matchRange('0','7'); 
 
                     }
 
-                    // src/junitconverter/Java.g:1041:36: ( '0' .. '7' )
-                    // src/junitconverter/Java.g:1041:37: '0' .. '7'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1063:36: ( '0' .. '7' )
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1063:37: '0' .. '7'
                     {
                     matchRange('0','7'); 
 
@@ -2779,18 +2779,18 @@ public class JavaLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:1042:9: '\\\\' ( '0' .. '7' ) ( '0' .. '7' )
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1064:9: '\\\\' ( '0' .. '7' ) ( '0' .. '7' )
                     {
                     match('\\'); 
-                    // src/junitconverter/Java.g:1042:14: ( '0' .. '7' )
-                    // src/junitconverter/Java.g:1042:15: '0' .. '7'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1064:14: ( '0' .. '7' )
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1064:15: '0' .. '7'
                     {
                     matchRange('0','7'); 
 
                     }
 
-                    // src/junitconverter/Java.g:1042:25: ( '0' .. '7' )
-                    // src/junitconverter/Java.g:1042:26: '0' .. '7'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1064:25: ( '0' .. '7' )
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1064:26: '0' .. '7'
                     {
                     matchRange('0','7'); 
 
@@ -2800,11 +2800,11 @@ public class JavaLexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // src/junitconverter/Java.g:1043:9: '\\\\' ( '0' .. '7' )
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1065:9: '\\\\' ( '0' .. '7' )
                     {
                     match('\\'); 
-                    // src/junitconverter/Java.g:1043:14: ( '0' .. '7' )
-                    // src/junitconverter/Java.g:1043:15: '0' .. '7'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1065:14: ( '0' .. '7' )
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1065:15: '0' .. '7'
                     {
                     matchRange('0','7'); 
 
@@ -2824,8 +2824,8 @@ public class JavaLexer extends Lexer {
     // $ANTLR start UnicodeEscape
     public final void mUnicodeEscape() throws RecognitionException {
         try {
-            // src/junitconverter/Java.g:1048:5: ( '\\\\' 'u' HexDigit HexDigit HexDigit HexDigit )
-            // src/junitconverter/Java.g:1048:9: '\\\\' 'u' HexDigit HexDigit HexDigit HexDigit
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1070:5: ( '\\\\' 'u' HexDigit HexDigit HexDigit HexDigit )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1070:9: '\\\\' 'u' HexDigit HexDigit HexDigit HexDigit
             {
             match('\\'); 
             match('u'); 
@@ -2846,8 +2846,8 @@ public class JavaLexer extends Lexer {
     public final void mENUM() throws RecognitionException {
         try {
             int _type = ENUM;
-            // src/junitconverter/Java.g:1051:5: ( 'enum' )
-            // src/junitconverter/Java.g:1051:9: 'enum'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1073:5: ( 'enum' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1073:9: 'enum'
             {
             match("enum"); 
 
@@ -2866,8 +2866,8 @@ public class JavaLexer extends Lexer {
     public final void mASSERT() throws RecognitionException {
         try {
             int _type = ASSERT;
-            // src/junitconverter/Java.g:1055:5: ( 'assert' )
-            // src/junitconverter/Java.g:1055:9: 'assert'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1077:5: ( 'assert' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1077:9: 'assert'
             {
             match("assert"); 
 
@@ -2886,11 +2886,11 @@ public class JavaLexer extends Lexer {
     public final void mIdentifier() throws RecognitionException {
         try {
             int _type = Identifier;
-            // src/junitconverter/Java.g:1059:5: ( Letter ( Letter | JavaIDDigit )* )
-            // src/junitconverter/Java.g:1059:9: Letter ( Letter | JavaIDDigit )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1081:5: ( Letter ( Letter | JavaIDDigit )* )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1081:9: Letter ( Letter | JavaIDDigit )*
             {
             mLetter(); 
-            // src/junitconverter/Java.g:1059:16: ( Letter | JavaIDDigit )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1081:16: ( Letter | JavaIDDigit )*
             loop25:
             do {
                 int alt25=2;
@@ -2903,7 +2903,7 @@ public class JavaLexer extends Lexer {
 
                 switch (alt25) {
             	case 1 :
-            	    // src/junitconverter/Java.g:
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:
             	    {
             	    if ( input.LA(1)=='$'||(input.LA(1)>='0' && input.LA(1)<='9')||(input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z')||(input.LA(1)>='\u00C0' && input.LA(1)<='\u00D6')||(input.LA(1)>='\u00D8' && input.LA(1)<='\u00F6')||(input.LA(1)>='\u00F8' && input.LA(1)<='\u1FFF')||(input.LA(1)>='\u3040' && input.LA(1)<='\u318F')||(input.LA(1)>='\u3300' && input.LA(1)<='\u337F')||(input.LA(1)>='\u3400' && input.LA(1)<='\u3D2D')||(input.LA(1)>='\u4E00' && input.LA(1)<='\u9FFF')||(input.LA(1)>='\uF900' && input.LA(1)<='\uFAFF') ) {
             	        input.consume();
@@ -2938,8 +2938,8 @@ public class JavaLexer extends Lexer {
     // $ANTLR start Letter
     public final void mLetter() throws RecognitionException {
         try {
-            // src/junitconverter/Java.g:1067:5: ( '\\u0024' | '\\u0041' .. '\\u005a' | '\\u005f' | '\\u0061' .. '\\u007a' | '\\u00c0' .. '\\u00d6' | '\\u00d8' .. '\\u00f6' | '\\u00f8' .. '\\u00ff' | '\\u0100' .. '\\u1fff' | '\\u3040' .. '\\u318f' | '\\u3300' .. '\\u337f' | '\\u3400' .. '\\u3d2d' | '\\u4e00' .. '\\u9fff' | '\\uf900' .. '\\ufaff' )
-            // src/junitconverter/Java.g:
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1089:5: ( '\\u0024' | '\\u0041' .. '\\u005a' | '\\u005f' | '\\u0061' .. '\\u007a' | '\\u00c0' .. '\\u00d6' | '\\u00d8' .. '\\u00f6' | '\\u00f8' .. '\\u00ff' | '\\u0100' .. '\\u1fff' | '\\u3040' .. '\\u318f' | '\\u3300' .. '\\u337f' | '\\u3400' .. '\\u3d2d' | '\\u4e00' .. '\\u9fff' | '\\uf900' .. '\\ufaff' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:
             {
             if ( input.LA(1)=='$'||(input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z')||(input.LA(1)>='\u00C0' && input.LA(1)<='\u00D6')||(input.LA(1)>='\u00D8' && input.LA(1)<='\u00F6')||(input.LA(1)>='\u00F8' && input.LA(1)<='\u1FFF')||(input.LA(1)>='\u3040' && input.LA(1)<='\u318F')||(input.LA(1)>='\u3300' && input.LA(1)<='\u337F')||(input.LA(1)>='\u3400' && input.LA(1)<='\u3D2D')||(input.LA(1)>='\u4E00' && input.LA(1)<='\u9FFF')||(input.LA(1)>='\uF900' && input.LA(1)<='\uFAFF') ) {
                 input.consume();
@@ -2963,8 +2963,8 @@ public class JavaLexer extends Lexer {
     // $ANTLR start JavaIDDigit
     public final void mJavaIDDigit() throws RecognitionException {
         try {
-            // src/junitconverter/Java.g:1084:5: ( '\\u0030' .. '\\u0039' | '\\u0660' .. '\\u0669' | '\\u06f0' .. '\\u06f9' | '\\u0966' .. '\\u096f' | '\\u09e6' .. '\\u09ef' | '\\u0a66' .. '\\u0a6f' | '\\u0ae6' .. '\\u0aef' | '\\u0b66' .. '\\u0b6f' | '\\u0be7' .. '\\u0bef' | '\\u0c66' .. '\\u0c6f' | '\\u0ce6' .. '\\u0cef' | '\\u0d66' .. '\\u0d6f' | '\\u0e50' .. '\\u0e59' | '\\u0ed0' .. '\\u0ed9' | '\\u1040' .. '\\u1049' )
-            // src/junitconverter/Java.g:
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1106:5: ( '\\u0030' .. '\\u0039' | '\\u0660' .. '\\u0669' | '\\u06f0' .. '\\u06f9' | '\\u0966' .. '\\u096f' | '\\u09e6' .. '\\u09ef' | '\\u0a66' .. '\\u0a6f' | '\\u0ae6' .. '\\u0aef' | '\\u0b66' .. '\\u0b6f' | '\\u0be7' .. '\\u0bef' | '\\u0c66' .. '\\u0c6f' | '\\u0ce6' .. '\\u0cef' | '\\u0d66' .. '\\u0d6f' | '\\u0e50' .. '\\u0e59' | '\\u0ed0' .. '\\u0ed9' | '\\u1040' .. '\\u1049' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:
             {
             if ( (input.LA(1)>='0' && input.LA(1)<='9')||(input.LA(1)>='\u0660' && input.LA(1)<='\u0669')||(input.LA(1)>='\u06F0' && input.LA(1)<='\u06F9')||(input.LA(1)>='\u0966' && input.LA(1)<='\u096F')||(input.LA(1)>='\u09E6' && input.LA(1)<='\u09EF')||(input.LA(1)>='\u0A66' && input.LA(1)<='\u0A6F')||(input.LA(1)>='\u0AE6' && input.LA(1)<='\u0AEF')||(input.LA(1)>='\u0B66' && input.LA(1)<='\u0B6F')||(input.LA(1)>='\u0BE7' && input.LA(1)<='\u0BEF')||(input.LA(1)>='\u0C66' && input.LA(1)<='\u0C6F')||(input.LA(1)>='\u0CE6' && input.LA(1)<='\u0CEF')||(input.LA(1)>='\u0D66' && input.LA(1)<='\u0D6F')||(input.LA(1)>='\u0E50' && input.LA(1)<='\u0E59')||(input.LA(1)>='\u0ED0' && input.LA(1)<='\u0ED9')||(input.LA(1)>='\u1040' && input.LA(1)<='\u1049') ) {
                 input.consume();
@@ -2989,8 +2989,8 @@ public class JavaLexer extends Lexer {
     public final void mWS() throws RecognitionException {
         try {
             int _type = WS;
-            // src/junitconverter/Java.g:1101:5: ( ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' ) )
-            // src/junitconverter/Java.g:1101:8: ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1123:5: ( ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' ) )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1123:8: ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' )
             {
             if ( (input.LA(1)>='\t' && input.LA(1)<='\n')||(input.LA(1)>='\f' && input.LA(1)<='\r')||input.LA(1)==' ' ) {
                 input.consume();
@@ -3017,12 +3017,12 @@ public class JavaLexer extends Lexer {
     public final void mCOMMENT() throws RecognitionException {
         try {
             int _type = COMMENT;
-            // src/junitconverter/Java.g:1105:5: ( '/*' ( options {greedy=false; } : . )* '*/' )
-            // src/junitconverter/Java.g:1105:9: '/*' ( options {greedy=false; } : . )* '*/'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1127:5: ( '/*' ( options {greedy=false; } : . )* '*/' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1127:9: '/*' ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
-            // src/junitconverter/Java.g:1105:14: ( options {greedy=false; } : . )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1127:14: ( options {greedy=false; } : . )*
             loop26:
             do {
                 int alt26=2;
@@ -3047,7 +3047,7 @@ public class JavaLexer extends Lexer {
 
                 switch (alt26) {
             	case 1 :
-            	    // src/junitconverter/Java.g:1105:42: .
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1127:42: .
             	    {
             	    matchAny(); 
 
@@ -3076,12 +3076,12 @@ public class JavaLexer extends Lexer {
     public final void mLINE_COMMENT() throws RecognitionException {
         try {
             int _type = LINE_COMMENT;
-            // src/junitconverter/Java.g:1109:5: ( '//' (~ ( '\\n' | '\\r' ) )* ( '\\r' )? '\\n' )
-            // src/junitconverter/Java.g:1109:7: '//' (~ ( '\\n' | '\\r' ) )* ( '\\r' )? '\\n'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1131:5: ( '//' (~ ( '\\n' | '\\r' ) )* ( '\\r' )? '\\n' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1131:7: '//' (~ ( '\\n' | '\\r' ) )* ( '\\r' )? '\\n'
             {
             match("//"); 
 
-            // src/junitconverter/Java.g:1109:12: (~ ( '\\n' | '\\r' ) )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1131:12: (~ ( '\\n' | '\\r' ) )*
             loop27:
             do {
                 int alt27=2;
@@ -3094,7 +3094,7 @@ public class JavaLexer extends Lexer {
 
                 switch (alt27) {
             	case 1 :
-            	    // src/junitconverter/Java.g:1109:12: ~ ( '\\n' | '\\r' )
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1131:12: ~ ( '\\n' | '\\r' )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFE') ) {
             	        input.consume();
@@ -3115,7 +3115,7 @@ public class JavaLexer extends Lexer {
                 }
             } while (true);
 
-            // src/junitconverter/Java.g:1109:26: ( '\\r' )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1131:26: ( '\\r' )?
             int alt28=2;
             int LA28_0 = input.LA(1);
 
@@ -3124,7 +3124,7 @@ public class JavaLexer extends Lexer {
             }
             switch (alt28) {
                 case 1 :
-                    // src/junitconverter/Java.g:1109:26: '\\r'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1131:26: '\\r'
                     {
                     match('\r'); 
 
@@ -3146,712 +3146,712 @@ public class JavaLexer extends Lexer {
     // $ANTLR end LINE_COMMENT
 
     public void mTokens() throws RecognitionException {
-        // src/junitconverter/Java.g:1:8: ( T25 | T26 | T27 | T28 | T29 | T30 | T31 | T32 | T33 | T34 | T35 | T36 | T37 | T38 | T39 | T40 | T41 | T42 | T43 | T44 | T45 | T46 | T47 | T48 | T49 | T50 | T51 | T52 | T53 | T54 | T55 | T56 | T57 | T58 | T59 | T60 | T61 | T62 | T63 | T64 | T65 | T66 | T67 | T68 | T69 | T70 | T71 | T72 | T73 | T74 | T75 | T76 | T77 | T78 | T79 | T80 | T81 | T82 | T83 | T84 | T85 | T86 | T87 | T88 | T89 | T90 | T91 | T92 | T93 | T94 | T95 | T96 | T97 | T98 | T99 | T100 | T101 | T102 | T103 | T104 | T105 | T106 | T107 | T108 | T109 | T110 | T111 | T112 | T113 | HexLiteral | DecimalLiteral | OctalLiteral | FloatingPointLiteral | CharacterLiteral | StringLiteral | ENUM | ASSERT | Identifier | WS | COMMENT | LINE_COMMENT )
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:8: ( T25 | T26 | T27 | T28 | T29 | T30 | T31 | T32 | T33 | T34 | T35 | T36 | T37 | T38 | T39 | T40 | T41 | T42 | T43 | T44 | T45 | T46 | T47 | T48 | T49 | T50 | T51 | T52 | T53 | T54 | T55 | T56 | T57 | T58 | T59 | T60 | T61 | T62 | T63 | T64 | T65 | T66 | T67 | T68 | T69 | T70 | T71 | T72 | T73 | T74 | T75 | T76 | T77 | T78 | T79 | T80 | T81 | T82 | T83 | T84 | T85 | T86 | T87 | T88 | T89 | T90 | T91 | T92 | T93 | T94 | T95 | T96 | T97 | T98 | T99 | T100 | T101 | T102 | T103 | T104 | T105 | T106 | T107 | T108 | T109 | T110 | T111 | T112 | T113 | HexLiteral | DecimalLiteral | OctalLiteral | FloatingPointLiteral | CharacterLiteral | StringLiteral | ENUM | ASSERT | Identifier | WS | COMMENT | LINE_COMMENT )
         int alt29=101;
         alt29 = dfa29.predict(input);
         switch (alt29) {
             case 1 :
-                // src/junitconverter/Java.g:1:10: T25
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:10: T25
                 {
                 mT25(); 
 
                 }
                 break;
             case 2 :
-                // src/junitconverter/Java.g:1:14: T26
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:14: T26
                 {
                 mT26(); 
 
                 }
                 break;
             case 3 :
-                // src/junitconverter/Java.g:1:18: T27
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:18: T27
                 {
                 mT27(); 
 
                 }
                 break;
             case 4 :
-                // src/junitconverter/Java.g:1:22: T28
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:22: T28
                 {
                 mT28(); 
 
                 }
                 break;
             case 5 :
-                // src/junitconverter/Java.g:1:26: T29
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:26: T29
                 {
                 mT29(); 
 
                 }
                 break;
             case 6 :
-                // src/junitconverter/Java.g:1:30: T30
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:30: T30
                 {
                 mT30(); 
 
                 }
                 break;
             case 7 :
-                // src/junitconverter/Java.g:1:34: T31
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:34: T31
                 {
                 mT31(); 
 
                 }
                 break;
             case 8 :
-                // src/junitconverter/Java.g:1:38: T32
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:38: T32
                 {
                 mT32(); 
 
                 }
                 break;
             case 9 :
-                // src/junitconverter/Java.g:1:42: T33
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:42: T33
                 {
                 mT33(); 
 
                 }
                 break;
             case 10 :
-                // src/junitconverter/Java.g:1:46: T34
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:46: T34
                 {
                 mT34(); 
 
                 }
                 break;
             case 11 :
-                // src/junitconverter/Java.g:1:50: T35
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:50: T35
                 {
                 mT35(); 
 
                 }
                 break;
             case 12 :
-                // src/junitconverter/Java.g:1:54: T36
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:54: T36
                 {
                 mT36(); 
 
                 }
                 break;
             case 13 :
-                // src/junitconverter/Java.g:1:58: T37
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:58: T37
                 {
                 mT37(); 
 
                 }
                 break;
             case 14 :
-                // src/junitconverter/Java.g:1:62: T38
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:62: T38
                 {
                 mT38(); 
 
                 }
                 break;
             case 15 :
-                // src/junitconverter/Java.g:1:66: T39
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:66: T39
                 {
                 mT39(); 
 
                 }
                 break;
             case 16 :
-                // src/junitconverter/Java.g:1:70: T40
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:70: T40
                 {
                 mT40(); 
 
                 }
                 break;
             case 17 :
-                // src/junitconverter/Java.g:1:74: T41
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:74: T41
                 {
                 mT41(); 
 
                 }
                 break;
             case 18 :
-                // src/junitconverter/Java.g:1:78: T42
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:78: T42
                 {
                 mT42(); 
 
                 }
                 break;
             case 19 :
-                // src/junitconverter/Java.g:1:82: T43
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:82: T43
                 {
                 mT43(); 
 
                 }
                 break;
             case 20 :
-                // src/junitconverter/Java.g:1:86: T44
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:86: T44
                 {
                 mT44(); 
 
                 }
                 break;
             case 21 :
-                // src/junitconverter/Java.g:1:90: T45
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:90: T45
                 {
                 mT45(); 
 
                 }
                 break;
             case 22 :
-                // src/junitconverter/Java.g:1:94: T46
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:94: T46
                 {
                 mT46(); 
 
                 }
                 break;
             case 23 :
-                // src/junitconverter/Java.g:1:98: T47
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:98: T47
                 {
                 mT47(); 
 
                 }
                 break;
             case 24 :
-                // src/junitconverter/Java.g:1:102: T48
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:102: T48
                 {
                 mT48(); 
 
                 }
                 break;
             case 25 :
-                // src/junitconverter/Java.g:1:106: T49
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:106: T49
                 {
                 mT49(); 
 
                 }
                 break;
             case 26 :
-                // src/junitconverter/Java.g:1:110: T50
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:110: T50
                 {
                 mT50(); 
 
                 }
                 break;
             case 27 :
-                // src/junitconverter/Java.g:1:114: T51
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:114: T51
                 {
                 mT51(); 
 
                 }
                 break;
             case 28 :
-                // src/junitconverter/Java.g:1:118: T52
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:118: T52
                 {
                 mT52(); 
 
                 }
                 break;
             case 29 :
-                // src/junitconverter/Java.g:1:122: T53
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:122: T53
                 {
                 mT53(); 
 
                 }
                 break;
             case 30 :
-                // src/junitconverter/Java.g:1:126: T54
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:126: T54
                 {
                 mT54(); 
 
                 }
                 break;
             case 31 :
-                // src/junitconverter/Java.g:1:130: T55
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:130: T55
                 {
                 mT55(); 
 
                 }
                 break;
             case 32 :
-                // src/junitconverter/Java.g:1:134: T56
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:134: T56
                 {
                 mT56(); 
 
                 }
                 break;
             case 33 :
-                // src/junitconverter/Java.g:1:138: T57
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:138: T57
                 {
                 mT57(); 
 
                 }
                 break;
             case 34 :
-                // src/junitconverter/Java.g:1:142: T58
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:142: T58
                 {
                 mT58(); 
 
                 }
                 break;
             case 35 :
-                // src/junitconverter/Java.g:1:146: T59
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:146: T59
                 {
                 mT59(); 
 
                 }
                 break;
             case 36 :
-                // src/junitconverter/Java.g:1:150: T60
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:150: T60
                 {
                 mT60(); 
 
                 }
                 break;
             case 37 :
-                // src/junitconverter/Java.g:1:154: T61
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:154: T61
                 {
                 mT61(); 
 
                 }
                 break;
             case 38 :
-                // src/junitconverter/Java.g:1:158: T62
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:158: T62
                 {
                 mT62(); 
 
                 }
                 break;
             case 39 :
-                // src/junitconverter/Java.g:1:162: T63
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:162: T63
                 {
                 mT63(); 
 
                 }
                 break;
             case 40 :
-                // src/junitconverter/Java.g:1:166: T64
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:166: T64
                 {
                 mT64(); 
 
                 }
                 break;
             case 41 :
-                // src/junitconverter/Java.g:1:170: T65
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:170: T65
                 {
                 mT65(); 
 
                 }
                 break;
             case 42 :
-                // src/junitconverter/Java.g:1:174: T66
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:174: T66
                 {
                 mT66(); 
 
                 }
                 break;
             case 43 :
-                // src/junitconverter/Java.g:1:178: T67
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:178: T67
                 {
                 mT67(); 
 
                 }
                 break;
             case 44 :
-                // src/junitconverter/Java.g:1:182: T68
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:182: T68
                 {
                 mT68(); 
 
                 }
                 break;
             case 45 :
-                // src/junitconverter/Java.g:1:186: T69
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:186: T69
                 {
                 mT69(); 
 
                 }
                 break;
             case 46 :
-                // src/junitconverter/Java.g:1:190: T70
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:190: T70
                 {
                 mT70(); 
 
                 }
                 break;
             case 47 :
-                // src/junitconverter/Java.g:1:194: T71
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:194: T71
                 {
                 mT71(); 
 
                 }
                 break;
             case 48 :
-                // src/junitconverter/Java.g:1:198: T72
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:198: T72
                 {
                 mT72(); 
 
                 }
                 break;
             case 49 :
-                // src/junitconverter/Java.g:1:202: T73
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:202: T73
                 {
                 mT73(); 
 
                 }
                 break;
             case 50 :
-                // src/junitconverter/Java.g:1:206: T74
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:206: T74
                 {
                 mT74(); 
 
                 }
                 break;
             case 51 :
-                // src/junitconverter/Java.g:1:210: T75
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:210: T75
                 {
                 mT75(); 
 
                 }
                 break;
             case 52 :
-                // src/junitconverter/Java.g:1:214: T76
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:214: T76
                 {
                 mT76(); 
 
                 }
                 break;
             case 53 :
-                // src/junitconverter/Java.g:1:218: T77
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:218: T77
                 {
                 mT77(); 
 
                 }
                 break;
             case 54 :
-                // src/junitconverter/Java.g:1:222: T78
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:222: T78
                 {
                 mT78(); 
 
                 }
                 break;
             case 55 :
-                // src/junitconverter/Java.g:1:226: T79
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:226: T79
                 {
                 mT79(); 
 
                 }
                 break;
             case 56 :
-                // src/junitconverter/Java.g:1:230: T80
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:230: T80
                 {
                 mT80(); 
 
                 }
                 break;
             case 57 :
-                // src/junitconverter/Java.g:1:234: T81
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:234: T81
                 {
                 mT81(); 
 
                 }
                 break;
             case 58 :
-                // src/junitconverter/Java.g:1:238: T82
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:238: T82
                 {
                 mT82(); 
 
                 }
                 break;
             case 59 :
-                // src/junitconverter/Java.g:1:242: T83
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:242: T83
                 {
                 mT83(); 
 
                 }
                 break;
             case 60 :
-                // src/junitconverter/Java.g:1:246: T84
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:246: T84
                 {
                 mT84(); 
 
                 }
                 break;
             case 61 :
-                // src/junitconverter/Java.g:1:250: T85
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:250: T85
                 {
                 mT85(); 
 
                 }
                 break;
             case 62 :
-                // src/junitconverter/Java.g:1:254: T86
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:254: T86
                 {
                 mT86(); 
 
                 }
                 break;
             case 63 :
-                // src/junitconverter/Java.g:1:258: T87
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:258: T87
                 {
                 mT87(); 
 
                 }
                 break;
             case 64 :
-                // src/junitconverter/Java.g:1:262: T88
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:262: T88
                 {
                 mT88(); 
 
                 }
                 break;
             case 65 :
-                // src/junitconverter/Java.g:1:266: T89
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:266: T89
                 {
                 mT89(); 
 
                 }
                 break;
             case 66 :
-                // src/junitconverter/Java.g:1:270: T90
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:270: T90
                 {
                 mT90(); 
 
                 }
                 break;
             case 67 :
-                // src/junitconverter/Java.g:1:274: T91
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:274: T91
                 {
                 mT91(); 
 
                 }
                 break;
             case 68 :
-                // src/junitconverter/Java.g:1:278: T92
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:278: T92
                 {
                 mT92(); 
 
                 }
                 break;
             case 69 :
-                // src/junitconverter/Java.g:1:282: T93
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:282: T93
                 {
                 mT93(); 
 
                 }
                 break;
             case 70 :
-                // src/junitconverter/Java.g:1:286: T94
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:286: T94
                 {
                 mT94(); 
 
                 }
                 break;
             case 71 :
-                // src/junitconverter/Java.g:1:290: T95
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:290: T95
                 {
                 mT95(); 
 
                 }
                 break;
             case 72 :
-                // src/junitconverter/Java.g:1:294: T96
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:294: T96
                 {
                 mT96(); 
 
                 }
                 break;
             case 73 :
-                // src/junitconverter/Java.g:1:298: T97
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:298: T97
                 {
                 mT97(); 
 
                 }
                 break;
             case 74 :
-                // src/junitconverter/Java.g:1:302: T98
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:302: T98
                 {
                 mT98(); 
 
                 }
                 break;
             case 75 :
-                // src/junitconverter/Java.g:1:306: T99
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:306: T99
                 {
                 mT99(); 
 
                 }
                 break;
             case 76 :
-                // src/junitconverter/Java.g:1:310: T100
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:310: T100
                 {
                 mT100(); 
 
                 }
                 break;
             case 77 :
-                // src/junitconverter/Java.g:1:315: T101
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:315: T101
                 {
                 mT101(); 
 
                 }
                 break;
             case 78 :
-                // src/junitconverter/Java.g:1:320: T102
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:320: T102
                 {
                 mT102(); 
 
                 }
                 break;
             case 79 :
-                // src/junitconverter/Java.g:1:325: T103
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:325: T103
                 {
                 mT103(); 
 
                 }
                 break;
             case 80 :
-                // src/junitconverter/Java.g:1:330: T104
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:330: T104
                 {
                 mT104(); 
 
                 }
                 break;
             case 81 :
-                // src/junitconverter/Java.g:1:335: T105
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:335: T105
                 {
                 mT105(); 
 
                 }
                 break;
             case 82 :
-                // src/junitconverter/Java.g:1:340: T106
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:340: T106
                 {
                 mT106(); 
 
                 }
                 break;
             case 83 :
-                // src/junitconverter/Java.g:1:345: T107
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:345: T107
                 {
                 mT107(); 
 
                 }
                 break;
             case 84 :
-                // src/junitconverter/Java.g:1:350: T108
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:350: T108
                 {
                 mT108(); 
 
                 }
                 break;
             case 85 :
-                // src/junitconverter/Java.g:1:355: T109
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:355: T109
                 {
                 mT109(); 
 
                 }
                 break;
             case 86 :
-                // src/junitconverter/Java.g:1:360: T110
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:360: T110
                 {
                 mT110(); 
 
                 }
                 break;
             case 87 :
-                // src/junitconverter/Java.g:1:365: T111
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:365: T111
                 {
                 mT111(); 
 
                 }
                 break;
             case 88 :
-                // src/junitconverter/Java.g:1:370: T112
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:370: T112
                 {
                 mT112(); 
 
                 }
                 break;
             case 89 :
-                // src/junitconverter/Java.g:1:375: T113
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:375: T113
                 {
                 mT113(); 
 
                 }
                 break;
             case 90 :
-                // src/junitconverter/Java.g:1:380: HexLiteral
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:380: HexLiteral
                 {
                 mHexLiteral(); 
 
                 }
                 break;
             case 91 :
-                // src/junitconverter/Java.g:1:391: DecimalLiteral
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:391: DecimalLiteral
                 {
                 mDecimalLiteral(); 
 
                 }
                 break;
             case 92 :
-                // src/junitconverter/Java.g:1:406: OctalLiteral
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:406: OctalLiteral
                 {
                 mOctalLiteral(); 
 
                 }
                 break;
             case 93 :
-                // src/junitconverter/Java.g:1:419: FloatingPointLiteral
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:419: FloatingPointLiteral
                 {
                 mFloatingPointLiteral(); 
 
                 }
                 break;
             case 94 :
-                // src/junitconverter/Java.g:1:440: CharacterLiteral
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:440: CharacterLiteral
                 {
                 mCharacterLiteral(); 
 
                 }
                 break;
             case 95 :
-                // src/junitconverter/Java.g:1:457: StringLiteral
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:457: StringLiteral
                 {
                 mStringLiteral(); 
 
                 }
                 break;
             case 96 :
-                // src/junitconverter/Java.g:1:471: ENUM
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:471: ENUM
                 {
                 mENUM(); 
 
                 }
                 break;
             case 97 :
-                // src/junitconverter/Java.g:1:476: ASSERT
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:476: ASSERT
                 {
                 mASSERT(); 
 
                 }
                 break;
             case 98 :
-                // src/junitconverter/Java.g:1:483: Identifier
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:483: Identifier
                 {
                 mIdentifier(); 
 
                 }
                 break;
             case 99 :
-                // src/junitconverter/Java.g:1:494: WS
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:494: WS
                 {
                 mWS(); 
 
                 }
                 break;
             case 100 :
-                // src/junitconverter/Java.g:1:497: COMMENT
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:497: COMMENT
                 {
                 mCOMMENT(); 
 
                 }
                 break;
             case 101 :
-                // src/junitconverter/Java.g:1:505: LINE_COMMENT
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1:505: LINE_COMMENT
                 {
                 mLINE_COMMENT(); 
 
@@ -3874,12 +3874,12 @@ public class JavaLexer extends Lexer {
     static final String DFA18_maxS =
         "\1\71\1\146\4\uffff";
     static final String DFA18_acceptS =
-        "\2\uffff\1\2\1\1\1\4\1\3";
+        "\2\uffff\1\2\1\4\1\3\1\1";
     static final String DFA18_specialS =
         "\6\uffff}>";
     static final String[] DFA18_transitionS = {
             "\1\2\1\uffff\12\1",
-            "\1\3\1\uffff\12\1\12\uffff\1\4\1\5\1\4\35\uffff\1\4\1\5\1\4",
+            "\1\5\1\uffff\12\1\12\uffff\1\3\1\4\1\3\35\uffff\1\3\1\4\1\3",
             "",
             "",
             "",
@@ -3916,87 +3916,85 @@ public class JavaLexer extends Lexer {
             this.transition = DFA18_transition;
         }
         public String getDescription() {
-            return "1011:1: FloatingPointLiteral : ( ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( Exponent )? ( FloatTypeSuffix )? | '.' ( '0' .. '9' )+ ( Exponent )? ( FloatTypeSuffix )? | ( '0' .. '9' )+ Exponent ( FloatTypeSuffix )? | ( '0' .. '9' )+ FloatTypeSuffix );";
+            return "1033:1: FloatingPointLiteral : ( ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( Exponent )? ( FloatTypeSuffix )? | '.' ( '0' .. '9' )+ ( Exponent )? ( FloatTypeSuffix )? | ( '0' .. '9' )+ Exponent ( FloatTypeSuffix )? | ( '0' .. '9' )+ FloatTypeSuffix );";
         }
     }
     static final String DFA29_eotS =
-        "\1\uffff\1\55\1\uffff\2\55\1\73\1\76\4\55\3\uffff\1\116\2\uffff"+
+        "\1\uffff\1\55\1\uffff\2\55\1\74\1\76\4\55\3\uffff\1\116\2\uffff"+
         "\1\55\2\uffff\1\55\1\123\4\55\5\uffff\2\55\1\141\1\144\1\150\1\153"+
         "\1\155\1\157\1\161\1\uffff\2\164\4\uffff\5\55\1\175\5\55\5\uffff"+
         "\15\55\3\uffff\3\55\2\uffff\7\55\1\u00a1\3\55\24\uffff\1\u00a5\1"+
-        "\uffff\1\164\5\55\1\u00ad\1\55\1\uffff\12\55\1\u00b9\14\55\1\u00c6"+
-        "\3\55\1\u00ca\7\55\1\uffff\3\55\1\uffff\7\55\1\uffff\13\55\1\uffff"+
-        "\1\55\1\u00e8\3\55\1\u00ec\1\u00ed\1\u00ee\2\55\1\u00f1\1\u00f2"+
-        "\1\uffff\2\55\1\u00f5\1\uffff\1\u00f6\2\55\1\u00f9\1\55\1\u00fb"+
-        "\17\55\1\u010b\1\55\1\u010d\2\55\1\u0111\1\u0112\1\u0113\1\uffff"+
-        "\1\u0114\1\55\1\u0116\3\uffff\2\55\2\uffff\1\55\1\u011b\2\uffff"+
-        "\2\55\1\uffff\1\u011e\1\uffff\2\55\1\u0121\1\55\1\u0123\3\55\1\u0127"+
-        "\4\55\1\u012c\1\55\1\uffff\1\u012e\1\uffff\1\55\1\u0130\1\55\4\uffff"+
-        "\1\55\1\uffff\3\55\1\u0136\1\uffff\1\u0137\1\55\1\uffff\1\u0139"+
-        "\1\55\1\uffff\1\u013b\1\uffff\1\u013c\1\55\1\u013e\1\uffff\4\55"+
-        "\1\uffff\1\55\1\uffff\1\55\1\uffff\1\u0145\1\55\1\u0147\2\55\2\uffff"+
-        "\1\u014a\1\uffff\1\u014b\2\uffff\1\55\1\uffff\3\55\1\u0150\1\55"+
-        "\1\u0152\1\uffff\1\u0153\1\uffff\1\u0154\1\55\2\uffff\1\u0156\1"+
-        "\55\1\u0158\1\55\1\uffff\1\55\3\uffff\1\u015b\1\uffff\1\u015c\1"+
-        "\uffff\1\u015d\1\55\3\uffff\1\55\1\u0160\1\uffff";
+        "\uffff\1\164\5\55\1\u00ad\1\55\1\uffff\12\55\1\u00b9\16\55\1\u00c8"+
+        "\3\55\1\u00cc\5\55\1\uffff\3\55\1\uffff\7\55\1\uffff\13\55\1\uffff"+
+        "\2\55\1\u00e9\1\u00ea\2\55\1\u00ed\1\55\1\u00ef\1\u00f0\2\55\1\u00f3"+
+        "\1\55\1\uffff\1\u00f5\1\55\1\u00f7\1\uffff\1\u00f8\2\55\1\u00fb"+
+        "\17\55\1\u010b\1\u010c\3\55\1\u0111\1\u0112\1\u0113\1\u0114\2\uffff"+
+        "\1\u0115\1\55\1\uffff\1\55\2\uffff\1\55\1\u011a\1\uffff\1\55\1\uffff"+
+        "\1\55\2\uffff\1\55\1\u011e\1\uffff\2\55\1\u0121\4\55\1\u0126\1\u0127"+
+        "\4\55\1\u012c\1\55\2\uffff\1\u012e\1\u012f\2\55\5\uffff\3\55\1\u0135"+
+        "\1\uffff\1\55\1\u0137\1\55\1\uffff\1\u0139\1\55\1\uffff\1\u013b"+
+        "\1\u013c\1\55\1\u013e\2\uffff\4\55\1\uffff\1\55\2\uffff\1\55\1\u0145"+
+        "\1\55\1\u0147\1\55\1\uffff\1\55\1\uffff\1\u014a\1\uffff\1\u014b"+
+        "\2\uffff\1\55\1\uffff\3\55\1\u0150\1\55\1\u0152\1\uffff\1\u0153"+
+        "\1\uffff\1\u0154\1\55\2\uffff\1\u0156\1\55\1\u0158\1\55\1\uffff"+
+        "\1\55\3\uffff\1\u015b\1\uffff\1\u015c\1\uffff\1\u015d\1\55\3\uffff"+
+        "\1\55\1\u0160\1\uffff";
     static final String DFA29_eofS =
         "\u0161\uffff";
     static final String DFA29_minS =
         "\1\11\1\141\1\uffff\1\146\1\150\1\56\1\75\1\142\2\141\1\154\3\uffff"+
         "\1\46\2\uffff\1\157\2\uffff\1\150\1\75\1\141\2\157\1\145\5\uffff"+
-        "\1\150\1\145\1\53\1\55\1\52\4\75\1\uffff\2\56\4\uffff\1\142\1\151"+
-        "\1\143\1\160\1\163\1\44\1\141\1\156\1\160\1\151\1\157\5\uffff\2"+
-        "\163\1\156\1\157\1\162\1\154\2\141\1\156\2\163\1\165\1\164\3\uffff"+
-        "\1\151\1\141\1\151\2\uffff\1\167\1\154\1\164\1\157\1\164\1\145\1"+
-        "\156\1\44\1\146\1\151\1\164\24\uffff\1\56\1\uffff\1\56\1\154\1\166"+
-        "\1\164\1\153\1\154\1\44\1\164\1\uffff\1\151\1\164\1\143\1\145\1"+
-        "\164\1\162\1\164\1\145\2\141\1\44\1\163\1\162\1\163\1\164\1\143"+
-        "\2\145\1\155\1\145\1\141\1\144\1\145\1\44\1\156\1\157\1\163\1\44"+
-        "\1\154\1\151\1\154\1\145\1\141\1\147\1\142\1\uffff\1\141\1\154\1"+
-        "\165\1\uffff\1\151\1\141\1\145\1\141\1\162\1\145\1\162\1\uffff\1"+
-        "\141\1\143\1\151\1\150\1\162\1\143\1\164\2\162\1\154\1\164\1\uffff"+
-        "\1\145\1\44\1\163\1\151\1\150\3\44\1\156\1\164\2\44\1\uffff\1\163"+
-        "\1\167\1\44\1\uffff\1\44\1\166\1\145\1\44\1\153\1\44\1\154\1\165"+
-        "\1\145\1\162\1\143\1\164\1\143\1\147\1\164\1\155\1\146\1\156\1\164"+
-        "\1\143\1\162\1\44\1\150\1\44\1\141\1\164\3\44\1\uffff\1\44\1\156"+
-        "\1\44\3\uffff\1\144\1\151\2\uffff\1\151\1\44\2\uffff\1\145\1\141"+
-        "\1\uffff\1\44\1\uffff\1\145\1\154\1\44\1\156\1\44\1\145\1\164\1"+
-        "\145\1\44\1\145\1\141\1\143\1\146\1\44\1\157\1\uffff\1\44\1\uffff"+
-        "\1\143\1\44\1\171\4\uffff\1\165\1\uffff\1\163\1\154\1\145\1\44\1"+
-        "\uffff\1\44\1\156\1\uffff\1\44\1\164\1\uffff\1\44\1\uffff\1\44\1"+
-        "\145\1\44\1\uffff\1\156\1\143\1\145\1\160\1\uffff\1\156\1\uffff"+
-        "\1\164\1\uffff\1\44\1\145\1\44\1\145\1\156\2\uffff\1\44\1\uffff"+
-        "\1\44\2\uffff\1\144\1\uffff\1\164\1\145\1\157\1\44\1\151\1\44\1"+
-        "\uffff\1\44\1\uffff\1\44\1\164\2\uffff\1\44\1\163\1\44\1\146\1\uffff"+
-        "\1\172\3\uffff\1\44\1\uffff\1\44\1\uffff\1\44\1\145\3\uffff\1\144"+
-        "\1\44\1\uffff";
+        "\1\150\1\145\1\53\1\55\1\52\4\75\1\uffff\2\56\4\uffff\1\143\1\151"+
+        "\1\142\1\160\1\163\1\44\1\141\1\156\1\160\1\157\1\151\5\uffff\2"+
+        "\163\1\156\1\157\1\162\1\154\2\141\1\163\1\156\1\165\1\164\1\163"+
+        "\3\uffff\2\151\1\141\2\uffff\1\164\1\154\1\167\1\164\1\157\1\145"+
+        "\1\156\1\44\1\146\1\151\1\164\24\uffff\1\56\1\uffff\1\56\1\153\1"+
+        "\164\1\166\2\154\1\44\1\164\1\uffff\1\151\1\164\1\143\1\145\1\162"+
+        "\1\164\1\145\1\164\2\141\1\44\2\163\1\162\1\145\1\143\1\164\1\155"+
+        "\2\145\1\144\1\141\1\157\1\163\1\156\1\44\1\145\1\151\1\154\1\44"+
+        "\1\145\1\154\1\141\1\147\1\142\1\uffff\1\141\1\154\1\165\1\uffff"+
+        "\1\141\1\145\1\141\1\151\1\162\1\145\1\162\1\uffff\1\141\1\143\1"+
+        "\151\1\150\1\162\1\164\1\143\2\162\1\154\1\164\1\uffff\1\145\1\163"+
+        "\2\44\1\150\1\151\1\44\1\156\2\44\1\164\1\167\1\44\1\163\1\uffff"+
+        "\1\44\1\166\1\44\1\uffff\1\44\1\145\1\153\1\44\1\154\1\165\1\145"+
+        "\1\162\1\147\1\143\1\164\1\143\1\164\1\155\1\146\1\156\1\164\1\143"+
+        "\1\162\2\44\1\150\1\164\1\141\4\44\2\uffff\1\44\1\156\1\uffff\1"+
+        "\144\2\uffff\1\151\1\44\1\uffff\1\151\1\uffff\1\145\2\uffff\1\141"+
+        "\1\44\1\uffff\1\145\1\154\1\44\1\156\1\145\1\164\1\145\2\44\1\145"+
+        "\1\141\1\143\1\146\1\44\1\157\2\uffff\2\44\1\143\1\171\5\uffff\1"+
+        "\165\1\163\1\154\1\44\1\uffff\1\145\1\44\1\156\1\uffff\1\44\1\164"+
+        "\1\uffff\2\44\1\145\1\44\2\uffff\1\156\1\143\1\145\1\160\1\uffff"+
+        "\1\156\2\uffff\1\164\1\44\1\145\1\44\1\145\1\uffff\1\156\1\uffff"+
+        "\1\44\1\uffff\1\44\2\uffff\1\144\1\uffff\1\164\1\145\1\157\1\44"+
+        "\1\151\1\44\1\uffff\1\44\1\uffff\1\44\1\164\2\uffff\1\44\1\163\1"+
+        "\44\1\146\1\uffff\1\172\3\uffff\1\44\1\uffff\1\44\1\uffff\1\44\1"+
+        "\145\3\uffff\1\144\1\44\1\uffff";
     static final String DFA29_maxS =
         "\1\ufaff\1\165\1\uffff\1\156\1\171\1\71\1\75\1\163\2\157\1\170\3"+
         "\uffff\1\75\2\uffff\1\157\2\uffff\1\162\1\75\1\165\1\171\2\157\5"+
         "\uffff\1\150\1\145\3\75\1\174\3\75\1\uffff\1\170\1\146\4\uffff\1"+
-        "\142\1\157\1\143\1\160\1\164\1\ufaff\1\162\1\156\1\160\1\151\1\157"+
-        "\5\uffff\2\163\1\156\1\157\1\162\1\154\2\141\1\156\1\164\1\163\1"+
-        "\165\1\164\3\uffff\1\154\1\171\1\162\2\uffff\1\167\1\154\1\164\1"+
-        "\157\1\164\1\145\1\156\1\ufaff\1\146\1\151\1\164\24\uffff\1\146"+
-        "\1\uffff\1\146\1\154\1\166\1\164\1\153\1\157\1\ufaff\1\164\1\uffff"+
-        "\1\151\1\164\1\143\1\145\1\164\1\162\1\164\1\145\2\141\1\ufaff\1"+
-        "\163\1\162\1\163\1\164\1\143\2\145\1\155\1\145\1\141\1\144\1\145"+
-        "\1\ufaff\1\156\1\157\1\163\1\ufaff\1\154\1\151\1\154\1\145\1\141"+
-        "\1\147\1\142\1\uffff\1\141\1\154\1\165\1\uffff\1\151\1\141\1\145"+
-        "\1\141\1\162\1\145\1\162\1\uffff\1\141\1\143\1\151\1\150\1\162\1"+
-        "\143\1\164\2\162\1\154\1\164\1\uffff\1\145\1\ufaff\1\163\1\151\1"+
-        "\150\3\ufaff\1\156\1\164\2\ufaff\1\uffff\1\163\1\167\1\ufaff\1\uffff"+
-        "\1\ufaff\1\166\1\145\1\ufaff\1\153\1\ufaff\1\154\1\165\1\145\1\162"+
-        "\1\143\1\164\1\143\1\147\1\164\1\155\1\146\1\156\1\164\1\143\1\162"+
-        "\1\ufaff\1\150\1\ufaff\1\141\1\164\3\ufaff\1\uffff\1\ufaff\1\156"+
-        "\1\ufaff\3\uffff\1\144\1\151\2\uffff\1\151\1\ufaff\2\uffff\1\145"+
-        "\1\141\1\uffff\1\ufaff\1\uffff\1\145\1\154\1\ufaff\1\156\1\ufaff"+
-        "\1\145\1\164\1\145\1\ufaff\1\145\1\141\1\143\1\146\1\ufaff\1\157"+
-        "\1\uffff\1\ufaff\1\uffff\1\143\1\ufaff\1\171\4\uffff\1\165\1\uffff"+
-        "\1\163\1\154\1\145\1\ufaff\1\uffff\1\ufaff\1\156\1\uffff\1\ufaff"+
-        "\1\164\1\uffff\1\ufaff\1\uffff\1\ufaff\1\145\1\ufaff\1\uffff\1\156"+
-        "\1\143\1\145\1\160\1\uffff\1\156\1\uffff\1\164\1\uffff\1\ufaff\1"+
-        "\145\1\ufaff\1\145\1\156\2\uffff\1\ufaff\1\uffff\1\ufaff\2\uffff"+
+        "\143\1\157\1\142\1\160\1\164\1\ufaff\1\162\1\156\1\160\1\157\1\151"+
+        "\5\uffff\2\163\1\156\1\157\1\162\1\154\2\141\1\164\1\156\1\165\1"+
+        "\164\1\163\3\uffff\1\154\1\162\1\171\2\uffff\1\164\1\154\1\167\1"+
+        "\164\1\157\1\145\1\156\1\ufaff\1\146\1\151\1\164\24\uffff\1\146"+
+        "\1\uffff\1\146\1\153\1\164\1\166\1\154\1\157\1\ufaff\1\164\1\uffff"+
+        "\1\151\1\164\1\143\1\145\1\162\1\164\1\145\1\164\2\141\1\ufaff\2"+
+        "\163\1\162\1\145\1\143\1\164\1\155\2\145\1\144\1\141\1\157\1\163"+
+        "\1\156\1\ufaff\1\145\1\151\1\154\1\ufaff\1\145\1\154\1\141\1\147"+
+        "\1\142\1\uffff\1\141\1\154\1\165\1\uffff\1\141\1\145\1\141\1\151"+
+        "\1\162\1\145\1\162\1\uffff\1\141\1\143\1\151\1\150\1\162\1\164\1"+
+        "\143\2\162\1\154\1\164\1\uffff\1\145\1\163\2\ufaff\1\150\1\151\1"+
+        "\ufaff\1\156\2\ufaff\1\164\1\167\1\ufaff\1\163\1\uffff\1\ufaff\1"+
+        "\166\1\ufaff\1\uffff\1\ufaff\1\145\1\153\1\ufaff\1\154\1\165\1\145"+
+        "\1\162\1\147\1\143\1\164\1\143\1\164\1\155\1\146\1\156\1\164\1\143"+
+        "\1\162\2\ufaff\1\150\1\164\1\141\4\ufaff\2\uffff\1\ufaff\1\156\1"+
+        "\uffff\1\144\2\uffff\1\151\1\ufaff\1\uffff\1\151\1\uffff\1\145\2"+
+        "\uffff\1\141\1\ufaff\1\uffff\1\145\1\154\1\ufaff\1\156\1\145\1\164"+
+        "\1\145\2\ufaff\1\145\1\141\1\143\1\146\1\ufaff\1\157\2\uffff\2\ufaff"+
+        "\1\143\1\171\5\uffff\1\165\1\163\1\154\1\ufaff\1\uffff\1\145\1\ufaff"+
+        "\1\156\1\uffff\1\ufaff\1\164\1\uffff\2\ufaff\1\145\1\ufaff\2\uffff"+
+        "\1\156\1\143\1\145\1\160\1\uffff\1\156\2\uffff\1\164\1\ufaff\1\145"+
+        "\1\ufaff\1\145\1\uffff\1\156\1\uffff\1\ufaff\1\uffff\1\ufaff\2\uffff"+
         "\1\144\1\uffff\1\164\1\145\1\157\1\ufaff\1\151\1\ufaff\1\uffff\1"+
         "\ufaff\1\uffff\1\ufaff\1\164\2\uffff\1\ufaff\1\163\1\ufaff\1\146"+
         "\1\uffff\1\172\3\uffff\1\ufaff\1\uffff\1\ufaff\1\uffff\1\ufaff\1"+
@@ -4004,19 +4002,19 @@ public class JavaLexer extends Lexer {
     static final String DFA29_acceptS =
         "\2\uffff\1\2\10\uffff\1\20\1\21\1\22\1\uffff\1\24\1\25\1\uffff\1"+
         "\30\1\31\6\uffff\1\50\1\52\1\53\1\61\1\63\11\uffff\1\127\2\uffff"+
-        "\1\136\1\137\1\142\1\143\13\uffff\1\54\1\5\1\135\1\104\1\6\15\uffff"+
-        "\1\113\1\106\1\23\3\uffff\1\116\1\33\13\uffff\1\102\1\125\1\121"+
-        "\1\126\1\103\1\122\1\145\1\144\1\105\1\123\1\107\1\112\1\114\1\110"+
+        "\1\136\1\137\1\142\1\143\13\uffff\1\54\1\135\1\5\1\104\1\6\15\uffff"+
+        "\1\106\1\113\1\23\3\uffff\1\116\1\33\13\uffff\1\102\1\125\1\121"+
+        "\1\103\1\126\1\122\1\144\1\145\1\105\1\123\1\112\1\107\1\114\1\110"+
         "\1\115\1\111\1\124\1\117\1\130\1\132\1\uffff\1\133\10\uffff\1\64"+
-        "\43\uffff\1\70\3\uffff\1\134\7\uffff\1\44\13\uffff\1\66\14\uffff"+
-        "\1\71\3\uffff\1\131\35\uffff\1\41\3\uffff\1\101\1\65\1\140\2\uffff"+
-        "\1\27\1\57\2\uffff\1\55\1\56\2\uffff\1\42\1\uffff\1\45\17\uffff"+
-        "\1\51\1\uffff\1\43\3\uffff\1\13\1\46\1\60\1\15\1\uffff\1\100\4\uffff"+
-        "\1\75\2\uffff\1\76\2\uffff\1\67\1\uffff\1\7\3\uffff\1\3\4\uffff"+
-        "\1\4\1\uffff\1\73\1\uffff\1\141\5\uffff\1\32\1\34\1\uffff\1\47\1"+
-        "\uffff\1\74\1\11\1\uffff\1\1\6\uffff\1\72\1\uffff\1\16\2\uffff\1"+
-        "\40\1\62\4\uffff\1\14\1\uffff\1\12\1\77\1\37\1\uffff\1\10\1\uffff"+
-        "\1\26\2\uffff\1\36\1\17\1\120\2\uffff\1\35";
+        "\43\uffff\1\70\3\uffff\1\134\7\uffff\1\44\13\uffff\1\66\16\uffff"+
+        "\1\71\3\uffff\1\131\34\uffff\1\41\1\101\2\uffff\1\140\1\uffff\1"+
+        "\65\1\27\2\uffff\1\55\1\uffff\1\57\1\uffff\1\56\1\42\2\uffff\1\45"+
+        "\17\uffff\1\51\1\43\4\uffff\1\13\1\46\1\60\1\15\1\100\4\uffff\1"+
+        "\75\3\uffff\1\76\2\uffff\1\67\4\uffff\1\7\1\3\4\uffff\1\4\1\uffff"+
+        "\1\73\1\141\5\uffff\1\32\1\uffff\1\34\1\uffff\1\47\1\uffff\1\74"+
+        "\1\1\1\uffff\1\11\6\uffff\1\72\1\uffff\1\16\2\uffff\1\40\1\62\4"+
+        "\uffff\1\14\1\uffff\1\12\1\77\1\37\1\uffff\1\10\1\uffff\1\26\2\uffff"+
+        "\1\36\1\17\1\120\2\uffff\1\35";
     static final String DFA29_specialS =
         "\u0161\uffff}>";
     static final String[] DFA29_transitionS = {
@@ -4028,29 +4026,29 @@ public class JavaLexer extends Lexer {
             "\55\1\17\1\44\1\20\1\50\101\uffff\27\55\1\uffff\37\55\1\uffff"+
             "\u1f08\55\u1040\uffff\u0150\55\u0170\uffff\u0080\55\u0080\uffff"+
             "\u092e\55\u10d2\uffff\u5200\55\u5900\uffff\u0200\55",
-            "\1\61\20\uffff\1\60\2\uffff\1\57",
+            "\1\57\20\uffff\1\60\2\uffff\1\61",
             "",
             "\1\64\6\uffff\1\62\1\63",
-            "\1\71\13\uffff\1\65\1\67\1\uffff\1\70\1\uffff\1\66",
-            "\1\72\1\uffff\12\74",
+            "\1\70\13\uffff\1\65\1\67\1\uffff\1\71\1\uffff\1\66",
+            "\1\72\1\uffff\12\73",
             "\1\75",
-            "\1\77\20\uffff\1\100",
+            "\1\100\20\uffff\1\77",
             "\1\104\7\uffff\1\101\2\uffff\1\102\2\uffff\1\103",
-            "\1\110\6\uffff\1\105\3\uffff\1\106\2\uffff\1\107",
-            "\1\111\1\uffff\1\112\11\uffff\1\113",
+            "\1\107\6\uffff\1\106\3\uffff\1\105\2\uffff\1\110",
+            "\1\113\1\uffff\1\111\11\uffff\1\112",
             "",
             "",
             "",
-            "\1\114\26\uffff\1\115",
+            "\1\115\26\uffff\1\114",
             "",
             "",
             "\1\117",
             "",
             "",
-            "\1\121\11\uffff\1\120",
+            "\1\120\11\uffff\1\121",
             "\1\122",
-            "\1\126\3\uffff\1\124\17\uffff\1\125",
-            "\1\127\2\uffff\1\131\6\uffff\1\130",
+            "\1\124\3\uffff\1\126\17\uffff\1\125",
+            "\1\130\2\uffff\1\131\6\uffff\1\127",
             "\1\132",
             "\1\134\11\uffff\1\133",
             "",
@@ -4061,22 +4059,22 @@ public class JavaLexer extends Lexer {
             "\1\135",
             "\1\136",
             "\1\140\21\uffff\1\137",
-            "\1\142\17\uffff\1\143",
-            "\1\146\4\uffff\1\145\15\uffff\1\147",
-            "\1\151\76\uffff\1\152",
+            "\1\143\17\uffff\1\142",
+            "\1\145\4\uffff\1\146\15\uffff\1\147",
+            "\1\152\76\uffff\1\151",
             "\1\154",
             "\1\156",
             "\1\160",
             "",
-            "\1\74\1\uffff\10\163\2\74\12\uffff\3\74\21\uffff\1\162\13\uffff"+
-            "\3\74\21\uffff\1\162",
-            "\1\74\1\uffff\12\165\12\uffff\3\74\35\uffff\3\74",
+            "\1\73\1\uffff\10\163\2\73\12\uffff\3\73\21\uffff\1\162\13\uffff"+
+            "\3\73\21\uffff\1\162",
+            "\1\73\1\uffff\12\165\12\uffff\3\73\35\uffff\3\73",
             "",
             "",
             "",
             "",
             "\1\166",
-            "\1\167\5\uffff\1\170",
+            "\1\170\5\uffff\1\167",
             "\1\171",
             "\1\172",
             "\1\174\1\173",
@@ -4102,17 +4100,17 @@ public class JavaLexer extends Lexer {
             "\1\u0089",
             "\1\u008a",
             "\1\u008b",
-            "\1\u008c",
-            "\1\u008e\1\u008d",
+            "\1\u008c\1\u008d",
+            "\1\u008e",
             "\1\u008f",
             "\1\u0090",
             "\1\u0091",
             "",
             "",
             "",
-            "\1\u0093\2\uffff\1\u0092",
-            "\1\u0096\23\uffff\1\u0094\3\uffff\1\u0095",
-            "\1\u0098\10\uffff\1\u0097",
+            "\1\u0092\2\uffff\1\u0093",
+            "\1\u0095\10\uffff\1\u0094",
+            "\1\u0096\23\uffff\1\u0098\3\uffff\1\u0097",
             "",
             "",
             "\1\u0099",
@@ -4149,9 +4147,9 @@ public class JavaLexer extends Lexer {
             "",
             "",
             "",
-            "\1\74\1\uffff\10\163\2\74\12\uffff\3\74\35\uffff\3\74",
+            "\1\73\1\uffff\10\163\2\73\12\uffff\3\73\35\uffff\3\73",
             "",
-            "\1\74\1\uffff\12\165\12\uffff\3\74\35\uffff\3\74",
+            "\1\73\1\uffff\12\165\12\uffff\3\73\35\uffff\3\73",
             "\1\u00a6",
             "\1\u00a7",
             "\1\u00a8",
@@ -4189,19 +4187,19 @@ public class JavaLexer extends Lexer {
             "\1\u00c3",
             "\1\u00c4",
             "\1\u00c5",
-            "\1\55\13\uffff\12\55\7\uffff\32\55\4\uffff\1\55\1\uffff\32\55"+
-            "\105\uffff\27\55\1\uffff\37\55\1\uffff\u1f08\55\u1040\uffff"+
-            "\u0150\55\u0170\uffff\u0080\55\u0080\uffff\u092e\55\u10d2\uffff"+
-            "\u5200\55\u5900\uffff\u0200\55",
+            "\1\u00c6",
             "\1\u00c7",
-            "\1\u00c8",
-            "\1\u00c9",
             "\1\55\13\uffff\12\55\7\uffff\32\55\4\uffff\1\55\1\uffff\32\55"+
             "\105\uffff\27\55\1\uffff\37\55\1\uffff\u1f08\55\u1040\uffff"+
             "\u0150\55\u0170\uffff\u0080\55\u0080\uffff\u092e\55\u10d2\uffff"+
             "\u5200\55\u5900\uffff\u0200\55",
+            "\1\u00c9",
+            "\1\u00ca",
             "\1\u00cb",
-            "\1\u00cc",
+            "\1\55\13\uffff\12\55\7\uffff\32\55\4\uffff\1\55\1\uffff\32\55"+
+            "\105\uffff\27\55\1\uffff\37\55\1\uffff\u1f08\55\u1040\uffff"+
+            "\u0150\55\u0170\uffff\u0080\55\u0080\uffff\u092e\55\u10d2\uffff"+
+            "\u5200\55\u5900\uffff\u0200\55",
             "\1\u00cd",
             "\1\u00ce",
             "\1\u00cf",
@@ -4233,13 +4231,22 @@ public class JavaLexer extends Lexer {
             "\1\u00e6",
             "",
             "\1\u00e7",
+            "\1\u00e8",
             "\1\55\13\uffff\12\55\7\uffff\32\55\4\uffff\1\55\1\uffff\32\55"+
             "\105\uffff\27\55\1\uffff\37\55\1\uffff\u1f08\55\u1040\uffff"+
             "\u0150\55\u0170\uffff\u0080\55\u0080\uffff\u092e\55\u10d2\uffff"+
             "\u5200\55\u5900\uffff\u0200\55",
-            "\1\u00e9",
-            "\1\u00ea",
+            "\1\55\13\uffff\12\55\7\uffff\32\55\4\uffff\1\55\1\uffff\32\55"+
+            "\105\uffff\27\55\1\uffff\37\55\1\uffff\u1f08\55\u1040\uffff"+
+            "\u0150\55\u0170\uffff\u0080\55\u0080\uffff\u092e\55\u10d2\uffff"+
+            "\u5200\55\u5900\uffff\u0200\55",
             "\1\u00eb",
+            "\1\u00ec",
+            "\1\55\13\uffff\12\55\7\uffff\32\55\4\uffff\1\55\1\uffff\32\55"+
+            "\105\uffff\27\55\1\uffff\37\55\1\uffff\u1f08\55\u1040\uffff"+
+            "\u0150\55\u0170\uffff\u0080\55\u0080\uffff\u092e\55\u10d2\uffff"+
+            "\u5200\55\u5900\uffff\u0200\55",
+            "\1\u00ee",
             "\1\55\13\uffff\12\55\7\uffff\32\55\4\uffff\1\55\1\uffff\32\55"+
             "\105\uffff\27\55\1\uffff\37\55\1\uffff\u1f08\55\u1040\uffff"+
             "\u0150\55\u0170\uffff\u0080\55\u0080\uffff\u092e\55\u10d2\uffff"+
@@ -4248,23 +4255,19 @@ public class JavaLexer extends Lexer {
             "\105\uffff\27\55\1\uffff\37\55\1\uffff\u1f08\55\u1040\uffff"+
             "\u0150\55\u0170\uffff\u0080\55\u0080\uffff\u092e\55\u10d2\uffff"+
             "\u5200\55\u5900\uffff\u0200\55",
+            "\1\u00f1",
+            "\1\u00f2",
             "\1\55\13\uffff\12\55\7\uffff\32\55\4\uffff\1\55\1\uffff\32\55"+
             "\105\uffff\27\55\1\uffff\37\55\1\uffff\u1f08\55\u1040\uffff"+
             "\u0150\55\u0170\uffff\u0080\55\u0080\uffff\u092e\55\u10d2\uffff"+
             "\u5200\55\u5900\uffff\u0200\55",
-            "\1\u00ef",
-            "\1\u00f0",
-            "\1\55\13\uffff\12\55\7\uffff\32\55\4\uffff\1\55\1\uffff\32\55"+
-            "\105\uffff\27\55\1\uffff\37\55\1\uffff\u1f08\55\u1040\uffff"+
-            "\u0150\55\u0170\uffff\u0080\55\u0080\uffff\u092e\55\u10d2\uffff"+
-            "\u5200\55\u5900\uffff\u0200\55",
-            "\1\55\13\uffff\12\55\7\uffff\32\55\4\uffff\1\55\1\uffff\32\55"+
-            "\105\uffff\27\55\1\uffff\37\55\1\uffff\u1f08\55\u1040\uffff"+
-            "\u0150\55\u0170\uffff\u0080\55\u0080\uffff\u092e\55\u10d2\uffff"+
-            "\u5200\55\u5900\uffff\u0200\55",
-            "",
-            "\1\u00f3",
             "\1\u00f4",
+            "",
+            "\1\55\13\uffff\12\55\7\uffff\32\55\4\uffff\1\55\1\uffff\32\55"+
+            "\105\uffff\27\55\1\uffff\37\55\1\uffff\u1f08\55\u1040\uffff"+
+            "\u0150\55\u0170\uffff\u0080\55\u0080\uffff\u092e\55\u10d2\uffff"+
+            "\u5200\55\u5900\uffff\u0200\55",
+            "\1\u00f6",
             "\1\55\13\uffff\12\55\7\uffff\32\55\4\uffff\1\55\1\uffff\32\55"+
             "\105\uffff\27\55\1\uffff\37\55\1\uffff\u1f08\55\u1040\uffff"+
             "\u0150\55\u0170\uffff\u0080\55\u0080\uffff\u092e\55\u10d2\uffff"+
@@ -4274,12 +4277,7 @@ public class JavaLexer extends Lexer {
             "\105\uffff\27\55\1\uffff\37\55\1\uffff\u1f08\55\u1040\uffff"+
             "\u0150\55\u0170\uffff\u0080\55\u0080\uffff\u092e\55\u10d2\uffff"+
             "\u5200\55\u5900\uffff\u0200\55",
-            "\1\u00f7",
-            "\1\u00f8",
-            "\1\55\13\uffff\12\55\7\uffff\32\55\4\uffff\1\55\1\uffff\32\55"+
-            "\105\uffff\27\55\1\uffff\37\55\1\uffff\u1f08\55\u1040\uffff"+
-            "\u0150\55\u0170\uffff\u0080\55\u0080\uffff\u092e\55\u10d2\uffff"+
-            "\u5200\55\u5900\uffff\u0200\55",
+            "\1\u00f9",
             "\1\u00fa",
             "\1\55\13\uffff\12\55\7\uffff\32\55\4\uffff\1\55\1\uffff\32\55"+
             "\105\uffff\27\55\1\uffff\37\55\1\uffff\u1f08\55\u1040\uffff"+
@@ -4304,11 +4302,11 @@ public class JavaLexer extends Lexer {
             "\105\uffff\27\55\1\uffff\37\55\1\uffff\u1f08\55\u1040\uffff"+
             "\u0150\55\u0170\uffff\u0080\55\u0080\uffff\u092e\55\u10d2\uffff"+
             "\u5200\55\u5900\uffff\u0200\55",
-            "\1\u010c",
             "\1\55\13\uffff\12\55\7\uffff\32\55\4\uffff\1\55\1\uffff\32\55"+
             "\105\uffff\27\55\1\uffff\37\55\1\uffff\u1f08\55\u1040\uffff"+
             "\u0150\55\u0170\uffff\u0080\55\u0080\uffff\u092e\55\u10d2\uffff"+
             "\u5200\55\u5900\uffff\u0200\55",
+            "\1\u010d",
             "\1\u010e",
             "\1\u010f",
             "\1\55\13\uffff\12\55\7\uffff\32\55\4\uffff\1\55\1\uffff\13\55"+
@@ -4323,33 +4321,33 @@ public class JavaLexer extends Lexer {
             "\105\uffff\27\55\1\uffff\37\55\1\uffff\u1f08\55\u1040\uffff"+
             "\u0150\55\u0170\uffff\u0080\55\u0080\uffff\u092e\55\u10d2\uffff"+
             "\u5200\55\u5900\uffff\u0200\55",
-            "",
-            "\1\55\13\uffff\12\55\7\uffff\32\55\4\uffff\1\55\1\uffff\32\55"+
-            "\105\uffff\27\55\1\uffff\37\55\1\uffff\u1f08\55\u1040\uffff"+
-            "\u0150\55\u0170\uffff\u0080\55\u0080\uffff\u092e\55\u10d2\uffff"+
-            "\u5200\55\u5900\uffff\u0200\55",
-            "\1\u0115",
             "\1\55\13\uffff\12\55\7\uffff\32\55\4\uffff\1\55\1\uffff\32\55"+
             "\105\uffff\27\55\1\uffff\37\55\1\uffff\u1f08\55\u1040\uffff"+
             "\u0150\55\u0170\uffff\u0080\55\u0080\uffff\u092e\55\u10d2\uffff"+
             "\u5200\55\u5900\uffff\u0200\55",
             "",
             "",
+            "\1\55\13\uffff\12\55\7\uffff\32\55\4\uffff\1\55\1\uffff\32\55"+
+            "\105\uffff\27\55\1\uffff\37\55\1\uffff\u1f08\55\u1040\uffff"+
+            "\u0150\55\u0170\uffff\u0080\55\u0080\uffff\u092e\55\u10d2\uffff"+
+            "\u5200\55\u5900\uffff\u0200\55",
+            "\1\u0116",
             "",
             "\1\u0117",
+            "",
+            "",
             "\1\u0118",
-            "",
-            "",
-            "\1\u0119",
             "\1\55\13\uffff\12\55\7\uffff\32\55\4\uffff\1\55\1\uffff\22\55"+
-            "\1\u011a\7\55\105\uffff\27\55\1\uffff\37\55\1\uffff\u1f08\55"+
+            "\1\u0119\7\55\105\uffff\27\55\1\uffff\37\55\1\uffff\u1f08\55"+
             "\u1040\uffff\u0150\55\u0170\uffff\u0080\55\u0080\uffff\u092e"+
             "\55\u10d2\uffff\u5200\55\u5900\uffff\u0200\55",
             "",
+            "\1\u011b",
             "",
             "\1\u011c",
-            "\1\u011d",
             "",
+            "",
+            "\1\u011d",
             "\1\55\13\uffff\12\55\7\uffff\32\55\4\uffff\1\55\1\uffff\32\55"+
             "\105\uffff\27\55\1\uffff\37\55\1\uffff\u1f08\55\u1040\uffff"+
             "\u0150\55\u0170\uffff\u0080\55\u0080\uffff\u092e\55\u10d2\uffff"+
@@ -4362,13 +4360,13 @@ public class JavaLexer extends Lexer {
             "\u0150\55\u0170\uffff\u0080\55\u0080\uffff\u092e\55\u10d2\uffff"+
             "\u5200\55\u5900\uffff\u0200\55",
             "\1\u0122",
+            "\1\u0123",
+            "\1\u0124",
+            "\1\u0125",
             "\1\55\13\uffff\12\55\7\uffff\32\55\4\uffff\1\55\1\uffff\32\55"+
             "\105\uffff\27\55\1\uffff\37\55\1\uffff\u1f08\55\u1040\uffff"+
             "\u0150\55\u0170\uffff\u0080\55\u0080\uffff\u092e\55\u10d2\uffff"+
             "\u5200\55\u5900\uffff\u0200\55",
-            "\1\u0124",
-            "\1\u0125",
-            "\1\u0126",
             "\1\55\13\uffff\12\55\7\uffff\32\55\4\uffff\1\55\1\uffff\32\55"+
             "\105\uffff\27\55\1\uffff\37\55\1\uffff\u1f08\55\u1040\uffff"+
             "\u0150\55\u0170\uffff\u0080\55\u0080\uffff\u092e\55\u10d2\uffff"+
@@ -4383,31 +4381,31 @@ public class JavaLexer extends Lexer {
             "\u5200\55\u5900\uffff\u0200\55",
             "\1\u012d",
             "",
-            "\1\55\13\uffff\12\55\7\uffff\32\55\4\uffff\1\55\1\uffff\32\55"+
-            "\105\uffff\27\55\1\uffff\37\55\1\uffff\u1f08\55\u1040\uffff"+
-            "\u0150\55\u0170\uffff\u0080\55\u0080\uffff\u092e\55\u10d2\uffff"+
-            "\u5200\55\u5900\uffff\u0200\55",
             "",
-            "\1\u012f",
             "\1\55\13\uffff\12\55\7\uffff\32\55\4\uffff\1\55\1\uffff\32\55"+
             "\105\uffff\27\55\1\uffff\37\55\1\uffff\u1f08\55\u1040\uffff"+
             "\u0150\55\u0170\uffff\u0080\55\u0080\uffff\u092e\55\u10d2\uffff"+
             "\u5200\55\u5900\uffff\u0200\55",
+            "\1\55\13\uffff\12\55\7\uffff\32\55\4\uffff\1\55\1\uffff\32\55"+
+            "\105\uffff\27\55\1\uffff\37\55\1\uffff\u1f08\55\u1040\uffff"+
+            "\u0150\55\u0170\uffff\u0080\55\u0080\uffff\u092e\55\u10d2\uffff"+
+            "\u5200\55\u5900\uffff\u0200\55",
+            "\1\u0130",
             "\1\u0131",
             "",
             "",
             "",
             "",
-            "\1\u0132",
             "",
+            "\1\u0132",
             "\1\u0133",
             "\1\u0134",
-            "\1\u0135",
             "\1\55\13\uffff\12\55\7\uffff\32\55\4\uffff\1\55\1\uffff\32\55"+
             "\105\uffff\27\55\1\uffff\37\55\1\uffff\u1f08\55\u1040\uffff"+
             "\u0150\55\u0170\uffff\u0080\55\u0080\uffff\u092e\55\u10d2\uffff"+
             "\u5200\55\u5900\uffff\u0200\55",
             "",
+            "\1\u0136",
             "\1\55\13\uffff\12\55\7\uffff\32\55\4\uffff\1\55\1\uffff\32\55"+
             "\105\uffff\27\55\1\uffff\37\55\1\uffff\u1f08\55\u1040\uffff"+
             "\u0150\55\u0170\uffff\u0080\55\u0080\uffff\u092e\55\u10d2\uffff"+
@@ -4424,7 +4422,6 @@ public class JavaLexer extends Lexer {
             "\105\uffff\27\55\1\uffff\37\55\1\uffff\u1f08\55\u1040\uffff"+
             "\u0150\55\u0170\uffff\u0080\55\u0080\uffff\u092e\55\u10d2\uffff"+
             "\u5200\55\u5900\uffff\u0200\55",
-            "",
             "\1\55\13\uffff\12\55\7\uffff\32\55\4\uffff\1\55\1\uffff\32\55"+
             "\105\uffff\27\55\1\uffff\37\55\1\uffff\u1f08\55\u1040\uffff"+
             "\u0150\55\u0170\uffff\u0080\55\u0080\uffff\u092e\55\u10d2\uffff"+
@@ -4435,6 +4432,7 @@ public class JavaLexer extends Lexer {
             "\u0150\55\u0170\uffff\u0080\55\u0080\uffff\u092e\55\u10d2\uffff"+
             "\u5200\55\u5900\uffff\u0200\55",
             "",
+            "",
             "\1\u013f",
             "\1\u0140",
             "\1\u0141",
@@ -4442,8 +4440,8 @@ public class JavaLexer extends Lexer {
             "",
             "\1\u0143",
             "",
-            "\1\u0144",
             "",
+            "\1\u0144",
             "\1\55\13\uffff\12\55\7\uffff\32\55\4\uffff\1\55\1\uffff\32\55"+
             "\105\uffff\27\55\1\uffff\37\55\1\uffff\u1f08\55\u1040\uffff"+
             "\u0150\55\u0170\uffff\u0080\55\u0080\uffff\u092e\55\u10d2\uffff"+
@@ -4454,8 +4452,8 @@ public class JavaLexer extends Lexer {
             "\u0150\55\u0170\uffff\u0080\55\u0080\uffff\u092e\55\u10d2\uffff"+
             "\u5200\55\u5900\uffff\u0200\55",
             "\1\u0148",
-            "\1\u0149",
             "",
+            "\1\u0149",
             "",
             "\1\55\13\uffff\12\55\7\uffff\32\55\4\uffff\1\55\1\uffff\32\55"+
             "\105\uffff\27\55\1\uffff\37\55\1\uffff\u1f08\55\u1040\uffff"+

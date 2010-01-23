@@ -170,6 +170,9 @@ package junitconverter;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Arrays;
+import java.util.Collections;
+
 }
 @members {
 	/** Tracks how deep down into classes we're in (inner classes etc.) */
@@ -189,11 +192,27 @@ import java.util.Set;
 	private Set<Integer> superMethodInvocations = new HashSet<Integer>();
 	private Set<Integer> overrideAnnotationsLines = new HashSet<Integer>();
 	private String packageName;
+	private String currentAnnotations = "";
+	private Map<String, List<String>> annotations = 
+			new HashMap<String, List<String>>();
 		
 	public String getType() { return type; }
 	public Set<String> getMethods() { return new HashSet<String>(methods.keySet()); }
 	public Map<String, Integer> getMethodsWithLines() { return methods; }
-	private void addMethod(String method, int line) { methods.put(method, line); }
+	private void addMethod(String method, int line) { 
+		methods.put(method, line);
+		if ("".equals(currentAnnotations)) {
+			annotations.put(method, Collections.<String>emptyList());
+		} else {
+			annotations.put(method, Arrays.asList(currentAnnotations.split("\\s+")));
+		}
+		currentAnnotations = "";
+	}
+	
+	public List<String> getAnnotations(String method) {
+		return annotations.get(method);
+	}
+	
 	private void addSuperConstructorInvocation(int line) {
 		if (classDepth == 1) 
 			superCtorInvocations.add(line); 
@@ -622,6 +641,9 @@ annotationName
     : name=Identifier ('.' name=Identifier)*  {
     	if (classDepth == 1 && $name.text.equals("Override")) {
     		overrideAnnotationsLines.add($name.line);
+    	}
+    	if (classDepth == 1) {
+    		currentAnnotations += $name.text + " ";
     	}
     }
     ;

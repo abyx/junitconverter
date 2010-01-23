@@ -1,9 +1,12 @@
-// $ANTLR 3.0.1 src/junitconverter/Java.g 2009-03-27 14:27:02
+// $ANTLR 3.0.1 /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g 2010-01-23 22:08:44
 
 package junitconverter;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Arrays;
+import java.util.Collections;
+
 
 
 import org.antlr.runtime.*;
@@ -154,28 +157,28 @@ public class JavaParser extends Parser {
     public static final String[] tokenNames = new String[] {
         "<invalid>", "<EOR>", "<DOWN>", "<UP>", "Identifier", "ENUM", "FloatingPointLiteral", "CharacterLiteral", "StringLiteral", "HexLiteral", "OctalLiteral", "DecimalLiteral", "ASSERT", "HexDigit", "IntegerTypeSuffix", "Exponent", "FloatTypeSuffix", "EscapeSequence", "UnicodeEscape", "OctalEscape", "Letter", "JavaIDDigit", "WS", "COMMENT", "LINE_COMMENT", "'package'", "';'", "'import'", "'static'", "'.'", "'*'", "'public'", "'protected'", "'private'", "'abstract'", "'final'", "'strictfp'", "'class'", "'extends'", "'implements'", "'<'", "','", "'>'", "'&'", "'{'", "'}'", "'interface'", "'void'", "'['", "']'", "'throws'", "'='", "'native'", "'synchronized'", "'transient'", "'volatile'", "'boolean'", "'char'", "'byte'", "'short'", "'int'", "'long'", "'float'", "'double'", "'?'", "'super'", "'('", "')'", "'...'", "'this'", "'null'", "'true'", "'false'", "'@'", "'default'", "':'", "'if'", "'else'", "'for'", "'while'", "'do'", "'try'", "'finally'", "'switch'", "'return'", "'throw'", "'break'", "'continue'", "'catch'", "'case'", "'+='", "'-='", "'*='", "'/='", "'&='", "'|='", "'^='", "'%='", "'||'", "'&&'", "'|'", "'^'", "'=='", "'!='", "'instanceof'", "'+'", "'-'", "'/'", "'%'", "'++'", "'--'", "'~'", "'!'", "'new'"
     };
-    public static final int Exponent=15;
+    public static final int HexLiteral=9;
+    public static final int LINE_COMMENT=24;
+    public static final int FloatTypeSuffix=16;
     public static final int OctalLiteral=10;
     public static final int IntegerTypeSuffix=14;
-    public static final int Identifier=4;
-    public static final int HexDigit=13;
-    public static final int WS=22;
     public static final int CharacterLiteral=7;
-    public static final int COMMENT=23;
-    public static final int StringLiteral=8;
-    public static final int LINE_COMMENT=24;
-    public static final int JavaIDDigit=21;
-    public static final int Letter=20;
-    public static final int UnicodeEscape=18;
-    public static final int HexLiteral=9;
-    public static final int EscapeSequence=17;
+    public static final int Exponent=15;
     public static final int EOF=-1;
     public static final int DecimalLiteral=11;
     public static final int ASSERT=12;
-    public static final int OctalEscape=19;
-    public static final int FloatingPointLiteral=6;
-    public static final int FloatTypeSuffix=16;
+    public static final int HexDigit=13;
+    public static final int Identifier=4;
+    public static final int StringLiteral=8;
+    public static final int WS=22;
     public static final int ENUM=5;
+    public static final int UnicodeEscape=18;
+    public static final int FloatingPointLiteral=6;
+    public static final int JavaIDDigit=21;
+    public static final int COMMENT=23;
+    public static final int Letter=20;
+    public static final int EscapeSequence=17;
+    public static final int OctalEscape=19;
 
         public JavaParser(TokenStream input) {
             super(input);
@@ -184,7 +187,7 @@ public class JavaParser extends Parser {
         
 
     public String[] getTokenNames() { return tokenNames; }
-    public String getGrammarFileName() { return "src/junitconverter/Java.g"; }
+    public String getGrammarFileName() { return "/home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g"; }
 
 
     	/** Tracks how deep down into classes we're in (inner classes etc.) */
@@ -204,11 +207,27 @@ public class JavaParser extends Parser {
     	private Set<Integer> superMethodInvocations = new HashSet<Integer>();
     	private Set<Integer> overrideAnnotationsLines = new HashSet<Integer>();
     	private String packageName;
+    	private String currentAnnotations = "";
+    	private Map<String, List<String>> annotations = 
+    			new HashMap<String, List<String>>();
     		
     	public String getType() { return type; }
     	public Set<String> getMethods() { return new HashSet<String>(methods.keySet()); }
     	public Map<String, Integer> getMethodsWithLines() { return methods; }
-    	private void addMethod(String method, int line) { methods.put(method, line); }
+    	private void addMethod(String method, int line) { 
+    		methods.put(method, line);
+    		if ("".equals(currentAnnotations)) {
+    			annotations.put(method, Collections.<String>emptyList());
+    		} else {
+    			annotations.put(method, Arrays.asList(currentAnnotations.split("\\s+")));
+    		}
+    		currentAnnotations = "";
+    	}
+    	
+    	public List<String> getAnnotations(String method) {
+    		return annotations.get(method);
+    	}
+    	
     	private void addSuperConstructorInvocation(int line) {
     		if (classDepth == 1) 
     			superCtorInvocations.add(line); 
@@ -253,12 +272,12 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start compilationUnit
-    // src/junitconverter/Java.g:255:1: compilationUnit : ( ( '@' )=> annotations ( packageDeclaration ( importDeclaration )* ( typeDeclaration )* | classOrInterfaceDeclaration ( typeDeclaration )* ) | ( packageDeclaration )? ( importDeclaration )* ( typeDeclaration )* );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:274:1: compilationUnit : ( ( '@' )=> annotations ( packageDeclaration ( importDeclaration )* ( typeDeclaration )* | classOrInterfaceDeclaration ( typeDeclaration )* ) | ( packageDeclaration )? ( importDeclaration )* ( typeDeclaration )* );
     public final void compilationUnit() throws RecognitionException {
         int compilationUnit_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 1) ) { return ; }
-            // src/junitconverter/Java.g:256:5: ( ( '@' )=> annotations ( packageDeclaration ( importDeclaration )* ( typeDeclaration )* | classOrInterfaceDeclaration ( typeDeclaration )* ) | ( packageDeclaration )? ( importDeclaration )* ( typeDeclaration )* )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:275:5: ( ( '@' )=> annotations ( packageDeclaration ( importDeclaration )* ( typeDeclaration )* | classOrInterfaceDeclaration ( typeDeclaration )* ) | ( packageDeclaration )? ( importDeclaration )* ( typeDeclaration )* )
             int alt8=2;
             int LA8_0 = input.LA(1);
 
@@ -280,7 +299,7 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("255:1: compilationUnit : ( ( '@' )=> annotations ( packageDeclaration ( importDeclaration )* ( typeDeclaration )* | classOrInterfaceDeclaration ( typeDeclaration )* ) | ( packageDeclaration )? ( importDeclaration )* ( typeDeclaration )* );", 8, 17, input);
+                            new NoViableAltException("274:1: compilationUnit : ( ( '@' )=> annotations ( packageDeclaration ( importDeclaration )* ( typeDeclaration )* | classOrInterfaceDeclaration ( typeDeclaration )* ) | ( packageDeclaration )? ( importDeclaration )* ( typeDeclaration )* );", 8, 17, input);
 
                         throw nvae;
                     }
@@ -288,7 +307,7 @@ public class JavaParser extends Parser {
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("255:1: compilationUnit : ( ( '@' )=> annotations ( packageDeclaration ( importDeclaration )* ( typeDeclaration )* | classOrInterfaceDeclaration ( typeDeclaration )* ) | ( packageDeclaration )? ( importDeclaration )* ( typeDeclaration )* );", 8, 1, input);
+                        new NoViableAltException("274:1: compilationUnit : ( ( '@' )=> annotations ( packageDeclaration ( importDeclaration )* ( typeDeclaration )* | classOrInterfaceDeclaration ( typeDeclaration )* ) | ( packageDeclaration )? ( importDeclaration )* ( typeDeclaration )* );", 8, 1, input);
 
                     throw nvae;
                 }
@@ -299,19 +318,19 @@ public class JavaParser extends Parser {
             else {
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("255:1: compilationUnit : ( ( '@' )=> annotations ( packageDeclaration ( importDeclaration )* ( typeDeclaration )* | classOrInterfaceDeclaration ( typeDeclaration )* ) | ( packageDeclaration )? ( importDeclaration )* ( typeDeclaration )* );", 8, 0, input);
+                    new NoViableAltException("274:1: compilationUnit : ( ( '@' )=> annotations ( packageDeclaration ( importDeclaration )* ( typeDeclaration )* | classOrInterfaceDeclaration ( typeDeclaration )* ) | ( packageDeclaration )? ( importDeclaration )* ( typeDeclaration )* );", 8, 0, input);
 
                 throw nvae;
             }
             switch (alt8) {
                 case 1 :
-                    // src/junitconverter/Java.g:256:9: ( '@' )=> annotations ( packageDeclaration ( importDeclaration )* ( typeDeclaration )* | classOrInterfaceDeclaration ( typeDeclaration )* )
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:275:9: ( '@' )=> annotations ( packageDeclaration ( importDeclaration )* ( typeDeclaration )* | classOrInterfaceDeclaration ( typeDeclaration )* )
                     {
                     pushFollow(FOLLOW_annotations_in_compilationUnit72);
                     annotations();
                     _fsp--;
                     if (failed) return ;
-                    // src/junitconverter/Java.g:257:9: ( packageDeclaration ( importDeclaration )* ( typeDeclaration )* | classOrInterfaceDeclaration ( typeDeclaration )* )
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:276:9: ( packageDeclaration ( importDeclaration )* ( typeDeclaration )* | classOrInterfaceDeclaration ( typeDeclaration )* )
                     int alt4=2;
                     int LA4_0 = input.LA(1);
 
@@ -324,19 +343,19 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("257:9: ( packageDeclaration ( importDeclaration )* ( typeDeclaration )* | classOrInterfaceDeclaration ( typeDeclaration )* )", 4, 0, input);
+                            new NoViableAltException("276:9: ( packageDeclaration ( importDeclaration )* ( typeDeclaration )* | classOrInterfaceDeclaration ( typeDeclaration )* )", 4, 0, input);
 
                         throw nvae;
                     }
                     switch (alt4) {
                         case 1 :
-                            // src/junitconverter/Java.g:257:13: packageDeclaration ( importDeclaration )* ( typeDeclaration )*
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:276:13: packageDeclaration ( importDeclaration )* ( typeDeclaration )*
                             {
                             pushFollow(FOLLOW_packageDeclaration_in_compilationUnit86);
                             packageDeclaration();
                             _fsp--;
                             if (failed) return ;
-                            // src/junitconverter/Java.g:257:32: ( importDeclaration )*
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:276:32: ( importDeclaration )*
                             loop1:
                             do {
                                 int alt1=2;
@@ -349,7 +368,7 @@ public class JavaParser extends Parser {
 
                                 switch (alt1) {
                             	case 1 :
-                            	    // src/junitconverter/Java.g:0:0: importDeclaration
+                            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:0:0: importDeclaration
                             	    {
                             	    pushFollow(FOLLOW_importDeclaration_in_compilationUnit88);
                             	    importDeclaration();
@@ -364,7 +383,7 @@ public class JavaParser extends Parser {
                                 }
                             } while (true);
 
-                            // src/junitconverter/Java.g:257:51: ( typeDeclaration )*
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:276:51: ( typeDeclaration )*
                             loop2:
                             do {
                                 int alt2=2;
@@ -377,7 +396,7 @@ public class JavaParser extends Parser {
 
                                 switch (alt2) {
                             	case 1 :
-                            	    // src/junitconverter/Java.g:0:0: typeDeclaration
+                            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:0:0: typeDeclaration
                             	    {
                             	    pushFollow(FOLLOW_typeDeclaration_in_compilationUnit91);
                             	    typeDeclaration();
@@ -396,13 +415,13 @@ public class JavaParser extends Parser {
                             }
                             break;
                         case 2 :
-                            // src/junitconverter/Java.g:258:13: classOrInterfaceDeclaration ( typeDeclaration )*
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:277:13: classOrInterfaceDeclaration ( typeDeclaration )*
                             {
                             pushFollow(FOLLOW_classOrInterfaceDeclaration_in_compilationUnit106);
                             classOrInterfaceDeclaration();
                             _fsp--;
                             if (failed) return ;
-                            // src/junitconverter/Java.g:258:41: ( typeDeclaration )*
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:277:41: ( typeDeclaration )*
                             loop3:
                             do {
                                 int alt3=2;
@@ -415,7 +434,7 @@ public class JavaParser extends Parser {
 
                                 switch (alt3) {
                             	case 1 :
-                            	    // src/junitconverter/Java.g:0:0: typeDeclaration
+                            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:0:0: typeDeclaration
                             	    {
                             	    pushFollow(FOLLOW_typeDeclaration_in_compilationUnit108);
                             	    typeDeclaration();
@@ -440,9 +459,9 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:260:9: ( packageDeclaration )? ( importDeclaration )* ( typeDeclaration )*
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:279:9: ( packageDeclaration )? ( importDeclaration )* ( typeDeclaration )*
                     {
-                    // src/junitconverter/Java.g:260:9: ( packageDeclaration )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:279:9: ( packageDeclaration )?
                     int alt5=2;
                     int LA5_0 = input.LA(1);
 
@@ -451,7 +470,7 @@ public class JavaParser extends Parser {
                     }
                     switch (alt5) {
                         case 1 :
-                            // src/junitconverter/Java.g:260:10: packageDeclaration
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:279:10: packageDeclaration
                             {
                             pushFollow(FOLLOW_packageDeclaration_in_compilationUnit129);
                             packageDeclaration();
@@ -463,7 +482,7 @@ public class JavaParser extends Parser {
 
                     }
 
-                    // src/junitconverter/Java.g:260:31: ( importDeclaration )*
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:279:31: ( importDeclaration )*
                     loop6:
                     do {
                         int alt6=2;
@@ -476,7 +495,7 @@ public class JavaParser extends Parser {
 
                         switch (alt6) {
                     	case 1 :
-                    	    // src/junitconverter/Java.g:0:0: importDeclaration
+                    	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:0:0: importDeclaration
                     	    {
                     	    pushFollow(FOLLOW_importDeclaration_in_compilationUnit133);
                     	    importDeclaration();
@@ -491,7 +510,7 @@ public class JavaParser extends Parser {
                         }
                     } while (true);
 
-                    // src/junitconverter/Java.g:260:50: ( typeDeclaration )*
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:279:50: ( typeDeclaration )*
                     loop7:
                     do {
                         int alt7=2;
@@ -504,7 +523,7 @@ public class JavaParser extends Parser {
 
                         switch (alt7) {
                     	case 1 :
-                    	    // src/junitconverter/Java.g:0:0: typeDeclaration
+                    	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:0:0: typeDeclaration
                     	    {
                     	    pushFollow(FOLLOW_typeDeclaration_in_compilationUnit136);
                     	    typeDeclaration();
@@ -538,7 +557,7 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start packageDeclaration
-    // src/junitconverter/Java.g:263:1: packageDeclaration : 'package' qualifiedName ';' ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:282:1: packageDeclaration : 'package' qualifiedName ';' ;
     public final void packageDeclaration() throws RecognitionException {
         int packageDeclaration_StartIndex = input.index();
         qualifiedName_return qualifiedName1 = null;
@@ -546,8 +565,8 @@ public class JavaParser extends Parser {
 
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 2) ) { return ; }
-            // src/junitconverter/Java.g:264:5: ( 'package' qualifiedName ';' )
-            // src/junitconverter/Java.g:264:9: 'package' qualifiedName ';'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:283:5: ( 'package' qualifiedName ';' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:283:9: 'package' qualifiedName ';'
             {
             match(input,25,FOLLOW_25_in_packageDeclaration156); if (failed) return ;
             pushFollow(FOLLOW_qualifiedName_in_packageDeclaration158);
@@ -575,16 +594,16 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start importDeclaration
-    // src/junitconverter/Java.g:267:1: importDeclaration : 'import' ( 'static' )? qualifiedName ( '.' '*' )? ';' ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:286:1: importDeclaration : 'import' ( 'static' )? qualifiedName ( '.' '*' )? ';' ;
     public final void importDeclaration() throws RecognitionException {
         int importDeclaration_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 3) ) { return ; }
-            // src/junitconverter/Java.g:268:5: ( 'import' ( 'static' )? qualifiedName ( '.' '*' )? ';' )
-            // src/junitconverter/Java.g:268:9: 'import' ( 'static' )? qualifiedName ( '.' '*' )? ';'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:287:5: ( 'import' ( 'static' )? qualifiedName ( '.' '*' )? ';' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:287:9: 'import' ( 'static' )? qualifiedName ( '.' '*' )? ';'
             {
             match(input,27,FOLLOW_27_in_importDeclaration185); if (failed) return ;
-            // src/junitconverter/Java.g:268:18: ( 'static' )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:287:18: ( 'static' )?
             int alt9=2;
             int LA9_0 = input.LA(1);
 
@@ -593,7 +612,7 @@ public class JavaParser extends Parser {
             }
             switch (alt9) {
                 case 1 :
-                    // src/junitconverter/Java.g:0:0: 'static'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:0:0: 'static'
                     {
                     match(input,28,FOLLOW_28_in_importDeclaration187); if (failed) return ;
 
@@ -606,7 +625,7 @@ public class JavaParser extends Parser {
             qualifiedName();
             _fsp--;
             if (failed) return ;
-            // src/junitconverter/Java.g:268:42: ( '.' '*' )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:287:42: ( '.' '*' )?
             int alt10=2;
             int LA10_0 = input.LA(1);
 
@@ -615,7 +634,7 @@ public class JavaParser extends Parser {
             }
             switch (alt10) {
                 case 1 :
-                    // src/junitconverter/Java.g:268:43: '.' '*'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:287:43: '.' '*'
                     {
                     match(input,29,FOLLOW_29_in_importDeclaration193); if (failed) return ;
                     match(input,30,FOLLOW_30_in_importDeclaration195); if (failed) return ;
@@ -643,12 +662,12 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start typeDeclaration
-    // src/junitconverter/Java.g:271:1: typeDeclaration : ( classOrInterfaceDeclaration | ';' );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:290:1: typeDeclaration : ( classOrInterfaceDeclaration | ';' );
     public final void typeDeclaration() throws RecognitionException {
         int typeDeclaration_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 4) ) { return ; }
-            // src/junitconverter/Java.g:272:5: ( classOrInterfaceDeclaration | ';' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:291:5: ( classOrInterfaceDeclaration | ';' )
             int alt11=2;
             int LA11_0 = input.LA(1);
 
@@ -661,13 +680,13 @@ public class JavaParser extends Parser {
             else {
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("271:1: typeDeclaration : ( classOrInterfaceDeclaration | ';' );", 11, 0, input);
+                    new NoViableAltException("290:1: typeDeclaration : ( classOrInterfaceDeclaration | ';' );", 11, 0, input);
 
                 throw nvae;
             }
             switch (alt11) {
                 case 1 :
-                    // src/junitconverter/Java.g:272:9: classOrInterfaceDeclaration
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:291:9: classOrInterfaceDeclaration
                     {
                     pushFollow(FOLLOW_classOrInterfaceDeclaration_in_typeDeclaration222);
                     classOrInterfaceDeclaration();
@@ -677,7 +696,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:273:9: ';'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:292:9: ';'
                     {
                     match(input,26,FOLLOW_26_in_typeDeclaration232); if (failed) return ;
 
@@ -699,19 +718,19 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start classOrInterfaceDeclaration
-    // src/junitconverter/Java.g:276:1: classOrInterfaceDeclaration : classOrInterfaceModifiers ( classDeclaration | interfaceDeclaration ) ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:295:1: classOrInterfaceDeclaration : classOrInterfaceModifiers ( classDeclaration | interfaceDeclaration ) ;
     public final void classOrInterfaceDeclaration() throws RecognitionException {
         int classOrInterfaceDeclaration_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 5) ) { return ; }
-            // src/junitconverter/Java.g:277:5: ( classOrInterfaceModifiers ( classDeclaration | interfaceDeclaration ) )
-            // src/junitconverter/Java.g:277:9: classOrInterfaceModifiers ( classDeclaration | interfaceDeclaration )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:296:5: ( classOrInterfaceModifiers ( classDeclaration | interfaceDeclaration ) )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:296:9: classOrInterfaceModifiers ( classDeclaration | interfaceDeclaration )
             {
             pushFollow(FOLLOW_classOrInterfaceModifiers_in_classOrInterfaceDeclaration255);
             classOrInterfaceModifiers();
             _fsp--;
             if (failed) return ;
-            // src/junitconverter/Java.g:277:35: ( classDeclaration | interfaceDeclaration )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:296:35: ( classDeclaration | interfaceDeclaration )
             int alt12=2;
             int LA12_0 = input.LA(1);
 
@@ -724,13 +743,13 @@ public class JavaParser extends Parser {
             else {
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("277:35: ( classDeclaration | interfaceDeclaration )", 12, 0, input);
+                    new NoViableAltException("296:35: ( classDeclaration | interfaceDeclaration )", 12, 0, input);
 
                 throw nvae;
             }
             switch (alt12) {
                 case 1 :
-                    // src/junitconverter/Java.g:277:36: classDeclaration
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:296:36: classDeclaration
                     {
                     pushFollow(FOLLOW_classDeclaration_in_classOrInterfaceDeclaration258);
                     classDeclaration();
@@ -740,7 +759,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:277:55: interfaceDeclaration
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:296:55: interfaceDeclaration
                     {
                     pushFollow(FOLLOW_interfaceDeclaration_in_classOrInterfaceDeclaration262);
                     interfaceDeclaration();
@@ -769,15 +788,15 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start classOrInterfaceModifiers
-    // src/junitconverter/Java.g:280:1: classOrInterfaceModifiers : ( classOrInterfaceModifier )* ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:299:1: classOrInterfaceModifiers : ( classOrInterfaceModifier )* ;
     public final void classOrInterfaceModifiers() throws RecognitionException {
         int classOrInterfaceModifiers_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 6) ) { return ; }
-            // src/junitconverter/Java.g:281:5: ( ( classOrInterfaceModifier )* )
-            // src/junitconverter/Java.g:281:9: ( classOrInterfaceModifier )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:300:5: ( ( classOrInterfaceModifier )* )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:300:9: ( classOrInterfaceModifier )*
             {
-            // src/junitconverter/Java.g:281:9: ( classOrInterfaceModifier )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:300:9: ( classOrInterfaceModifier )*
             loop13:
             do {
                 int alt13=2;
@@ -799,7 +818,7 @@ public class JavaParser extends Parser {
 
                 switch (alt13) {
             	case 1 :
-            	    // src/junitconverter/Java.g:0:0: classOrInterfaceModifier
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:0:0: classOrInterfaceModifier
             	    {
             	    pushFollow(FOLLOW_classOrInterfaceModifier_in_classOrInterfaceModifiers286);
             	    classOrInterfaceModifier();
@@ -831,12 +850,12 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start classOrInterfaceModifier
-    // src/junitconverter/Java.g:284:1: classOrInterfaceModifier : ( annotation | 'public' | 'protected' | 'private' | 'abstract' | 'static' | 'final' | 'strictfp' );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:303:1: classOrInterfaceModifier : ( annotation | 'public' | 'protected' | 'private' | 'abstract' | 'static' | 'final' | 'strictfp' );
     public final void classOrInterfaceModifier() throws RecognitionException {
         int classOrInterfaceModifier_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 7) ) { return ; }
-            // src/junitconverter/Java.g:285:5: ( annotation | 'public' | 'protected' | 'private' | 'abstract' | 'static' | 'final' | 'strictfp' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:304:5: ( annotation | 'public' | 'protected' | 'private' | 'abstract' | 'static' | 'final' | 'strictfp' )
             int alt14=8;
             switch ( input.LA(1) ) {
             case 73:
@@ -882,14 +901,14 @@ public class JavaParser extends Parser {
             default:
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("284:1: classOrInterfaceModifier : ( annotation | 'public' | 'protected' | 'private' | 'abstract' | 'static' | 'final' | 'strictfp' );", 14, 0, input);
+                    new NoViableAltException("303:1: classOrInterfaceModifier : ( annotation | 'public' | 'protected' | 'private' | 'abstract' | 'static' | 'final' | 'strictfp' );", 14, 0, input);
 
                 throw nvae;
             }
 
             switch (alt14) {
                 case 1 :
-                    // src/junitconverter/Java.g:285:9: annotation
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:304:9: annotation
                     {
                     pushFollow(FOLLOW_annotation_in_classOrInterfaceModifier306);
                     annotation();
@@ -899,49 +918,49 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:286:9: 'public'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:305:9: 'public'
                     {
                     match(input,31,FOLLOW_31_in_classOrInterfaceModifier319); if (failed) return ;
 
                     }
                     break;
                 case 3 :
-                    // src/junitconverter/Java.g:287:9: 'protected'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:306:9: 'protected'
                     {
                     match(input,32,FOLLOW_32_in_classOrInterfaceModifier334); if (failed) return ;
 
                     }
                     break;
                 case 4 :
-                    // src/junitconverter/Java.g:288:9: 'private'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:307:9: 'private'
                     {
                     match(input,33,FOLLOW_33_in_classOrInterfaceModifier346); if (failed) return ;
 
                     }
                     break;
                 case 5 :
-                    // src/junitconverter/Java.g:289:9: 'abstract'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:308:9: 'abstract'
                     {
                     match(input,34,FOLLOW_34_in_classOrInterfaceModifier360); if (failed) return ;
 
                     }
                     break;
                 case 6 :
-                    // src/junitconverter/Java.g:290:9: 'static'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:309:9: 'static'
                     {
                     match(input,28,FOLLOW_28_in_classOrInterfaceModifier373); if (failed) return ;
 
                     }
                     break;
                 case 7 :
-                    // src/junitconverter/Java.g:291:9: 'final'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:310:9: 'final'
                     {
                     match(input,35,FOLLOW_35_in_classOrInterfaceModifier388); if (failed) return ;
 
                     }
                     break;
                 case 8 :
-                    // src/junitconverter/Java.g:292:9: 'strictfp'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:311:9: 'strictfp'
                     {
                     match(input,36,FOLLOW_36_in_classOrInterfaceModifier404); if (failed) return ;
 
@@ -963,15 +982,15 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start modifiers
-    // src/junitconverter/Java.g:295:1: modifiers : ( modifier )* ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:314:1: modifiers : ( modifier )* ;
     public final void modifiers() throws RecognitionException {
         int modifiers_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 8) ) { return ; }
-            // src/junitconverter/Java.g:296:5: ( ( modifier )* )
-            // src/junitconverter/Java.g:296:9: ( modifier )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:315:5: ( ( modifier )* )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:315:9: ( modifier )*
             {
-            // src/junitconverter/Java.g:296:9: ( modifier )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:315:9: ( modifier )*
             loop15:
             do {
                 int alt15=2;
@@ -993,7 +1012,7 @@ public class JavaParser extends Parser {
 
                 switch (alt15) {
             	case 1 :
-            	    // src/junitconverter/Java.g:0:0: modifier
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:0:0: modifier
             	    {
             	    pushFollow(FOLLOW_modifier_in_modifiers426);
             	    modifier();
@@ -1025,12 +1044,12 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start classDeclaration
-    // src/junitconverter/Java.g:299:1: classDeclaration : ( normalClassDeclaration | enumDeclaration );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:318:1: classDeclaration : ( normalClassDeclaration | enumDeclaration );
     public final void classDeclaration() throws RecognitionException {
         int classDeclaration_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 9) ) { return ; }
-            // src/junitconverter/Java.g:300:5: ( normalClassDeclaration | enumDeclaration )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:319:5: ( normalClassDeclaration | enumDeclaration )
             int alt16=2;
             int LA16_0 = input.LA(1);
 
@@ -1043,13 +1062,13 @@ public class JavaParser extends Parser {
             else {
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("299:1: classDeclaration : ( normalClassDeclaration | enumDeclaration );", 16, 0, input);
+                    new NoViableAltException("318:1: classDeclaration : ( normalClassDeclaration | enumDeclaration );", 16, 0, input);
 
                 throw nvae;
             }
             switch (alt16) {
                 case 1 :
-                    // src/junitconverter/Java.g:300:9: normalClassDeclaration
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:319:9: normalClassDeclaration
                     {
                     if ( backtracking==0 ) {
                        classDepth++; 
@@ -1065,7 +1084,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:301:9: enumDeclaration
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:320:9: enumDeclaration
                     {
                     if ( backtracking==0 ) {
                        classDepth++; 
@@ -1096,7 +1115,7 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start normalClassDeclaration
-    // src/junitconverter/Java.g:304:1: normalClassDeclaration : 'class' Identifier ( typeParameters )? ( 'extends' type )? ( 'implements' typeList )? classBody ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:323:1: normalClassDeclaration : 'class' Identifier ( typeParameters )? ( 'extends' type )? ( 'implements' typeList )? classBody ;
     public final void normalClassDeclaration() throws RecognitionException {
         int normalClassDeclaration_StartIndex = input.index();
         Token Identifier2=null;
@@ -1105,13 +1124,13 @@ public class JavaParser extends Parser {
 
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 10) ) { return ; }
-            // src/junitconverter/Java.g:305:5: ( 'class' Identifier ( typeParameters )? ( 'extends' type )? ( 'implements' typeList )? classBody )
-            // src/junitconverter/Java.g:305:9: 'class' Identifier ( typeParameters )? ( 'extends' type )? ( 'implements' typeList )? classBody
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:324:5: ( 'class' Identifier ( typeParameters )? ( 'extends' type )? ( 'implements' typeList )? classBody )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:324:9: 'class' Identifier ( typeParameters )? ( 'extends' type )? ( 'implements' typeList )? classBody
             {
             match(input,37,FOLLOW_37_in_normalClassDeclaration488); if (failed) return ;
             Identifier2=(Token)input.LT(1);
             match(input,Identifier,FOLLOW_Identifier_in_normalClassDeclaration490); if (failed) return ;
-            // src/junitconverter/Java.g:305:28: ( typeParameters )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:324:28: ( typeParameters )?
             int alt17=2;
             int LA17_0 = input.LA(1);
 
@@ -1120,7 +1139,7 @@ public class JavaParser extends Parser {
             }
             switch (alt17) {
                 case 1 :
-                    // src/junitconverter/Java.g:305:29: typeParameters
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:324:29: typeParameters
                     {
                     pushFollow(FOLLOW_typeParameters_in_normalClassDeclaration493);
                     typeParameters();
@@ -1138,7 +1157,7 @@ public class JavaParser extends Parser {
                   			setType(Identifier2.getText()); 
                   	  
             }
-            // src/junitconverter/Java.g:309:9: ( 'extends' type )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:328:9: ( 'extends' type )?
             int alt18=2;
             int LA18_0 = input.LA(1);
 
@@ -1147,7 +1166,7 @@ public class JavaParser extends Parser {
             }
             switch (alt18) {
                 case 1 :
-                    // src/junitconverter/Java.g:309:10: 'extends' type
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:328:10: 'extends' type
                     {
                     match(input,38,FOLLOW_38_in_normalClassDeclaration508); if (failed) return ;
                     pushFollow(FOLLOW_type_in_normalClassDeclaration510);
@@ -1171,7 +1190,7 @@ public class JavaParser extends Parser {
                           foundSuper = true; 
                       
             }
-            // src/junitconverter/Java.g:315:9: ( 'implements' typeList )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:334:9: ( 'implements' typeList )?
             int alt19=2;
             int LA19_0 = input.LA(1);
 
@@ -1180,7 +1199,7 @@ public class JavaParser extends Parser {
             }
             switch (alt19) {
                 case 1 :
-                    // src/junitconverter/Java.g:315:10: 'implements' typeList
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:334:10: 'implements' typeList
                     {
                     match(input,39,FOLLOW_39_in_normalClassDeclaration527); if (failed) return ;
                     pushFollow(FOLLOW_typeList_in_normalClassDeclaration529);
@@ -1214,20 +1233,20 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start typeParameters
-    // src/junitconverter/Java.g:319:1: typeParameters : '<' typeParameter ( ',' typeParameter )* '>' ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:338:1: typeParameters : '<' typeParameter ( ',' typeParameter )* '>' ;
     public final void typeParameters() throws RecognitionException {
         int typeParameters_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 11) ) { return ; }
-            // src/junitconverter/Java.g:320:5: ( '<' typeParameter ( ',' typeParameter )* '>' )
-            // src/junitconverter/Java.g:320:9: '<' typeParameter ( ',' typeParameter )* '>'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:339:5: ( '<' typeParameter ( ',' typeParameter )* '>' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:339:9: '<' typeParameter ( ',' typeParameter )* '>'
             {
             match(input,40,FOLLOW_40_in_typeParameters564); if (failed) return ;
             pushFollow(FOLLOW_typeParameter_in_typeParameters566);
             typeParameter();
             _fsp--;
             if (failed) return ;
-            // src/junitconverter/Java.g:320:27: ( ',' typeParameter )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:339:27: ( ',' typeParameter )*
             loop20:
             do {
                 int alt20=2;
@@ -1240,7 +1259,7 @@ public class JavaParser extends Parser {
 
                 switch (alt20) {
             	case 1 :
-            	    // src/junitconverter/Java.g:320:28: ',' typeParameter
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:339:28: ',' typeParameter
             	    {
             	    match(input,41,FOLLOW_41_in_typeParameters569); if (failed) return ;
             	    pushFollow(FOLLOW_typeParameter_in_typeParameters571);
@@ -1274,16 +1293,16 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start typeParameter
-    // src/junitconverter/Java.g:323:1: typeParameter : Identifier ( 'extends' typeBound )? ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:342:1: typeParameter : Identifier ( 'extends' typeBound )? ;
     public final void typeParameter() throws RecognitionException {
         int typeParameter_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 12) ) { return ; }
-            // src/junitconverter/Java.g:324:5: ( Identifier ( 'extends' typeBound )? )
-            // src/junitconverter/Java.g:324:9: Identifier ( 'extends' typeBound )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:343:5: ( Identifier ( 'extends' typeBound )? )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:343:9: Identifier ( 'extends' typeBound )?
             {
             match(input,Identifier,FOLLOW_Identifier_in_typeParameter594); if (failed) return ;
-            // src/junitconverter/Java.g:324:20: ( 'extends' typeBound )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:343:20: ( 'extends' typeBound )?
             int alt21=2;
             int LA21_0 = input.LA(1);
 
@@ -1292,7 +1311,7 @@ public class JavaParser extends Parser {
             }
             switch (alt21) {
                 case 1 :
-                    // src/junitconverter/Java.g:324:21: 'extends' typeBound
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:343:21: 'extends' typeBound
                     {
                     match(input,38,FOLLOW_38_in_typeParameter597); if (failed) return ;
                     pushFollow(FOLLOW_typeBound_in_typeParameter599);
@@ -1322,19 +1341,19 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start typeBound
-    // src/junitconverter/Java.g:327:1: typeBound : type ( '&' type )* ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:346:1: typeBound : type ( '&' type )* ;
     public final void typeBound() throws RecognitionException {
         int typeBound_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 13) ) { return ; }
-            // src/junitconverter/Java.g:328:5: ( type ( '&' type )* )
-            // src/junitconverter/Java.g:328:9: type ( '&' type )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:347:5: ( type ( '&' type )* )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:347:9: type ( '&' type )*
             {
             pushFollow(FOLLOW_type_in_typeBound628);
             type();
             _fsp--;
             if (failed) return ;
-            // src/junitconverter/Java.g:328:14: ( '&' type )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:347:14: ( '&' type )*
             loop22:
             do {
                 int alt22=2;
@@ -1347,7 +1366,7 @@ public class JavaParser extends Parser {
 
                 switch (alt22) {
             	case 1 :
-            	    // src/junitconverter/Java.g:328:15: '&' type
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:347:15: '&' type
             	    {
             	    match(input,43,FOLLOW_43_in_typeBound631); if (failed) return ;
             	    pushFollow(FOLLOW_type_in_typeBound633);
@@ -1380,17 +1399,17 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start enumDeclaration
-    // src/junitconverter/Java.g:331:1: enumDeclaration : ENUM Identifier ( 'implements' typeList )? enumBody ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:350:1: enumDeclaration : ENUM Identifier ( 'implements' typeList )? enumBody ;
     public final void enumDeclaration() throws RecognitionException {
         int enumDeclaration_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 14) ) { return ; }
-            // src/junitconverter/Java.g:332:5: ( ENUM Identifier ( 'implements' typeList )? enumBody )
-            // src/junitconverter/Java.g:332:9: ENUM Identifier ( 'implements' typeList )? enumBody
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:351:5: ( ENUM Identifier ( 'implements' typeList )? enumBody )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:351:9: ENUM Identifier ( 'implements' typeList )? enumBody
             {
             match(input,ENUM,FOLLOW_ENUM_in_enumDeclaration654); if (failed) return ;
             match(input,Identifier,FOLLOW_Identifier_in_enumDeclaration656); if (failed) return ;
-            // src/junitconverter/Java.g:332:25: ( 'implements' typeList )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:351:25: ( 'implements' typeList )?
             int alt23=2;
             int LA23_0 = input.LA(1);
 
@@ -1399,7 +1418,7 @@ public class JavaParser extends Parser {
             }
             switch (alt23) {
                 case 1 :
-                    // src/junitconverter/Java.g:332:26: 'implements' typeList
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:351:26: 'implements' typeList
                     {
                     match(input,39,FOLLOW_39_in_enumDeclaration659); if (failed) return ;
                     pushFollow(FOLLOW_typeList_in_enumDeclaration661);
@@ -1433,16 +1452,16 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start enumBody
-    // src/junitconverter/Java.g:335:1: enumBody : '{' ( enumConstants )? ( ',' )? ( enumBodyDeclarations )? '}' ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:354:1: enumBody : '{' ( enumConstants )? ( ',' )? ( enumBodyDeclarations )? '}' ;
     public final void enumBody() throws RecognitionException {
         int enumBody_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 15) ) { return ; }
-            // src/junitconverter/Java.g:336:5: ( '{' ( enumConstants )? ( ',' )? ( enumBodyDeclarations )? '}' )
-            // src/junitconverter/Java.g:336:9: '{' ( enumConstants )? ( ',' )? ( enumBodyDeclarations )? '}'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:355:5: ( '{' ( enumConstants )? ( ',' )? ( enumBodyDeclarations )? '}' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:355:9: '{' ( enumConstants )? ( ',' )? ( enumBodyDeclarations )? '}'
             {
             match(input,44,FOLLOW_44_in_enumBody684); if (failed) return ;
-            // src/junitconverter/Java.g:336:13: ( enumConstants )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:355:13: ( enumConstants )?
             int alt24=2;
             int LA24_0 = input.LA(1);
 
@@ -1451,7 +1470,7 @@ public class JavaParser extends Parser {
             }
             switch (alt24) {
                 case 1 :
-                    // src/junitconverter/Java.g:0:0: enumConstants
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:0:0: enumConstants
                     {
                     pushFollow(FOLLOW_enumConstants_in_enumBody686);
                     enumConstants();
@@ -1463,7 +1482,7 @@ public class JavaParser extends Parser {
 
             }
 
-            // src/junitconverter/Java.g:336:28: ( ',' )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:355:28: ( ',' )?
             int alt25=2;
             int LA25_0 = input.LA(1);
 
@@ -1472,7 +1491,7 @@ public class JavaParser extends Parser {
             }
             switch (alt25) {
                 case 1 :
-                    // src/junitconverter/Java.g:0:0: ','
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:0:0: ','
                     {
                     match(input,41,FOLLOW_41_in_enumBody689); if (failed) return ;
 
@@ -1481,7 +1500,7 @@ public class JavaParser extends Parser {
 
             }
 
-            // src/junitconverter/Java.g:336:33: ( enumBodyDeclarations )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:355:33: ( enumBodyDeclarations )?
             int alt26=2;
             int LA26_0 = input.LA(1);
 
@@ -1490,7 +1509,7 @@ public class JavaParser extends Parser {
             }
             switch (alt26) {
                 case 1 :
-                    // src/junitconverter/Java.g:0:0: enumBodyDeclarations
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:0:0: enumBodyDeclarations
                     {
                     pushFollow(FOLLOW_enumBodyDeclarations_in_enumBody692);
                     enumBodyDeclarations();
@@ -1520,19 +1539,19 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start enumConstants
-    // src/junitconverter/Java.g:339:1: enumConstants : enumConstant ( ',' enumConstant )* ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:358:1: enumConstants : enumConstant ( ',' enumConstant )* ;
     public final void enumConstants() throws RecognitionException {
         int enumConstants_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 16) ) { return ; }
-            // src/junitconverter/Java.g:340:5: ( enumConstant ( ',' enumConstant )* )
-            // src/junitconverter/Java.g:340:9: enumConstant ( ',' enumConstant )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:359:5: ( enumConstant ( ',' enumConstant )* )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:359:9: enumConstant ( ',' enumConstant )*
             {
             pushFollow(FOLLOW_enumConstant_in_enumConstants714);
             enumConstant();
             _fsp--;
             if (failed) return ;
-            // src/junitconverter/Java.g:340:22: ( ',' enumConstant )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:359:22: ( ',' enumConstant )*
             loop27:
             do {
                 int alt27=2;
@@ -1551,7 +1570,7 @@ public class JavaParser extends Parser {
 
                 switch (alt27) {
             	case 1 :
-            	    // src/junitconverter/Java.g:340:23: ',' enumConstant
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:359:23: ',' enumConstant
             	    {
             	    match(input,41,FOLLOW_41_in_enumConstants717); if (failed) return ;
             	    pushFollow(FOLLOW_enumConstant_in_enumConstants719);
@@ -1584,15 +1603,15 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start enumConstant
-    // src/junitconverter/Java.g:343:1: enumConstant : ( annotations )? Identifier ( arguments )? ( classBody )? ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:362:1: enumConstant : ( annotations )? Identifier ( arguments )? ( classBody )? ;
     public final void enumConstant() throws RecognitionException {
         int enumConstant_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 17) ) { return ; }
-            // src/junitconverter/Java.g:344:5: ( ( annotations )? Identifier ( arguments )? ( classBody )? )
-            // src/junitconverter/Java.g:344:9: ( annotations )? Identifier ( arguments )? ( classBody )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:363:5: ( ( annotations )? Identifier ( arguments )? ( classBody )? )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:363:9: ( annotations )? Identifier ( arguments )? ( classBody )?
             {
-            // src/junitconverter/Java.g:344:9: ( annotations )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:363:9: ( annotations )?
             int alt28=2;
             int LA28_0 = input.LA(1);
 
@@ -1601,7 +1620,7 @@ public class JavaParser extends Parser {
             }
             switch (alt28) {
                 case 1 :
-                    // src/junitconverter/Java.g:0:0: annotations
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:0:0: annotations
                     {
                     pushFollow(FOLLOW_annotations_in_enumConstant744);
                     annotations();
@@ -1614,7 +1633,7 @@ public class JavaParser extends Parser {
             }
 
             match(input,Identifier,FOLLOW_Identifier_in_enumConstant747); if (failed) return ;
-            // src/junitconverter/Java.g:344:33: ( arguments )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:363:33: ( arguments )?
             int alt29=2;
             int LA29_0 = input.LA(1);
 
@@ -1623,7 +1642,7 @@ public class JavaParser extends Parser {
             }
             switch (alt29) {
                 case 1 :
-                    // src/junitconverter/Java.g:344:34: arguments
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:363:34: arguments
                     {
                     pushFollow(FOLLOW_arguments_in_enumConstant750);
                     arguments();
@@ -1635,7 +1654,7 @@ public class JavaParser extends Parser {
 
             }
 
-            // src/junitconverter/Java.g:344:46: ( classBody )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:363:46: ( classBody )?
             int alt30=2;
             int LA30_0 = input.LA(1);
 
@@ -1644,7 +1663,7 @@ public class JavaParser extends Parser {
             }
             switch (alt30) {
                 case 1 :
-                    // src/junitconverter/Java.g:344:47: classBody
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:363:47: classBody
                     {
                     pushFollow(FOLLOW_classBody_in_enumConstant755);
                     classBody();
@@ -1673,16 +1692,16 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start enumBodyDeclarations
-    // src/junitconverter/Java.g:347:1: enumBodyDeclarations : ';' ( classBodyDeclaration )* ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:366:1: enumBodyDeclarations : ';' ( classBodyDeclaration )* ;
     public final void enumBodyDeclarations() throws RecognitionException {
         int enumBodyDeclarations_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 18) ) { return ; }
-            // src/junitconverter/Java.g:348:5: ( ';' ( classBodyDeclaration )* )
-            // src/junitconverter/Java.g:348:9: ';' ( classBodyDeclaration )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:367:5: ( ';' ( classBodyDeclaration )* )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:367:9: ';' ( classBodyDeclaration )*
             {
             match(input,26,FOLLOW_26_in_enumBodyDeclarations780); if (failed) return ;
-            // src/junitconverter/Java.g:348:13: ( classBodyDeclaration )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:367:13: ( classBodyDeclaration )*
             loop31:
             do {
                 int alt31=2;
@@ -1695,7 +1714,7 @@ public class JavaParser extends Parser {
 
                 switch (alt31) {
             	case 1 :
-            	    // src/junitconverter/Java.g:348:14: classBodyDeclaration
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:367:14: classBodyDeclaration
             	    {
             	    pushFollow(FOLLOW_classBodyDeclaration_in_enumBodyDeclarations783);
             	    classBodyDeclaration();
@@ -1727,12 +1746,12 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start interfaceDeclaration
-    // src/junitconverter/Java.g:351:1: interfaceDeclaration : ( normalInterfaceDeclaration | annotationTypeDeclaration );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:370:1: interfaceDeclaration : ( normalInterfaceDeclaration | annotationTypeDeclaration );
     public final void interfaceDeclaration() throws RecognitionException {
         int interfaceDeclaration_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 19) ) { return ; }
-            // src/junitconverter/Java.g:352:5: ( normalInterfaceDeclaration | annotationTypeDeclaration )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:371:5: ( normalInterfaceDeclaration | annotationTypeDeclaration )
             int alt32=2;
             int LA32_0 = input.LA(1);
 
@@ -1745,13 +1764,13 @@ public class JavaParser extends Parser {
             else {
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("351:1: interfaceDeclaration : ( normalInterfaceDeclaration | annotationTypeDeclaration );", 32, 0, input);
+                    new NoViableAltException("370:1: interfaceDeclaration : ( normalInterfaceDeclaration | annotationTypeDeclaration );", 32, 0, input);
 
                 throw nvae;
             }
             switch (alt32) {
                 case 1 :
-                    // src/junitconverter/Java.g:352:9: normalInterfaceDeclaration
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:371:9: normalInterfaceDeclaration
                     {
                     pushFollow(FOLLOW_normalInterfaceDeclaration_in_interfaceDeclaration808);
                     normalInterfaceDeclaration();
@@ -1761,7 +1780,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:353:9: annotationTypeDeclaration
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:372:9: annotationTypeDeclaration
                     {
                     pushFollow(FOLLOW_annotationTypeDeclaration_in_interfaceDeclaration818);
                     annotationTypeDeclaration();
@@ -1786,17 +1805,17 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start normalInterfaceDeclaration
-    // src/junitconverter/Java.g:356:1: normalInterfaceDeclaration : 'interface' Identifier ( typeParameters )? ( 'extends' typeList )? interfaceBody ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:375:1: normalInterfaceDeclaration : 'interface' Identifier ( typeParameters )? ( 'extends' typeList )? interfaceBody ;
     public final void normalInterfaceDeclaration() throws RecognitionException {
         int normalInterfaceDeclaration_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 20) ) { return ; }
-            // src/junitconverter/Java.g:357:5: ( 'interface' Identifier ( typeParameters )? ( 'extends' typeList )? interfaceBody )
-            // src/junitconverter/Java.g:357:9: 'interface' Identifier ( typeParameters )? ( 'extends' typeList )? interfaceBody
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:376:5: ( 'interface' Identifier ( typeParameters )? ( 'extends' typeList )? interfaceBody )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:376:9: 'interface' Identifier ( typeParameters )? ( 'extends' typeList )? interfaceBody
             {
             match(input,46,FOLLOW_46_in_normalInterfaceDeclaration841); if (failed) return ;
             match(input,Identifier,FOLLOW_Identifier_in_normalInterfaceDeclaration843); if (failed) return ;
-            // src/junitconverter/Java.g:357:32: ( typeParameters )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:376:32: ( typeParameters )?
             int alt33=2;
             int LA33_0 = input.LA(1);
 
@@ -1805,7 +1824,7 @@ public class JavaParser extends Parser {
             }
             switch (alt33) {
                 case 1 :
-                    // src/junitconverter/Java.g:0:0: typeParameters
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:0:0: typeParameters
                     {
                     pushFollow(FOLLOW_typeParameters_in_normalInterfaceDeclaration845);
                     typeParameters();
@@ -1817,7 +1836,7 @@ public class JavaParser extends Parser {
 
             }
 
-            // src/junitconverter/Java.g:357:48: ( 'extends' typeList )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:376:48: ( 'extends' typeList )?
             int alt34=2;
             int LA34_0 = input.LA(1);
 
@@ -1826,7 +1845,7 @@ public class JavaParser extends Parser {
             }
             switch (alt34) {
                 case 1 :
-                    // src/junitconverter/Java.g:357:49: 'extends' typeList
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:376:49: 'extends' typeList
                     {
                     match(input,38,FOLLOW_38_in_normalInterfaceDeclaration849); if (failed) return ;
                     pushFollow(FOLLOW_typeList_in_normalInterfaceDeclaration851);
@@ -1860,19 +1879,19 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start typeList
-    // src/junitconverter/Java.g:360:1: typeList : type ( ',' type )* ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:379:1: typeList : type ( ',' type )* ;
     public final void typeList() throws RecognitionException {
         int typeList_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 21) ) { return ; }
-            // src/junitconverter/Java.g:361:5: ( type ( ',' type )* )
-            // src/junitconverter/Java.g:361:9: type ( ',' type )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:380:5: ( type ( ',' type )* )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:380:9: type ( ',' type )*
             {
             pushFollow(FOLLOW_type_in_typeList878);
             type();
             _fsp--;
             if (failed) return ;
-            // src/junitconverter/Java.g:361:14: ( ',' type )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:380:14: ( ',' type )*
             loop35:
             do {
                 int alt35=2;
@@ -1885,7 +1904,7 @@ public class JavaParser extends Parser {
 
                 switch (alt35) {
             	case 1 :
-            	    // src/junitconverter/Java.g:361:15: ',' type
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:380:15: ',' type
             	    {
             	    match(input,41,FOLLOW_41_in_typeList881); if (failed) return ;
             	    pushFollow(FOLLOW_type_in_typeList883);
@@ -1918,16 +1937,16 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start classBody
-    // src/junitconverter/Java.g:364:1: classBody : '{' ( classBodyDeclaration )* '}' ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:383:1: classBody : '{' ( classBodyDeclaration )* '}' ;
     public final void classBody() throws RecognitionException {
         int classBody_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 22) ) { return ; }
-            // src/junitconverter/Java.g:365:5: ( '{' ( classBodyDeclaration )* '}' )
-            // src/junitconverter/Java.g:365:9: '{' ( classBodyDeclaration )* '}'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:384:5: ( '{' ( classBodyDeclaration )* '}' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:384:9: '{' ( classBodyDeclaration )* '}'
             {
             match(input,44,FOLLOW_44_in_classBody908); if (failed) return ;
-            // src/junitconverter/Java.g:365:13: ( classBodyDeclaration )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:384:13: ( classBodyDeclaration )*
             loop36:
             do {
                 int alt36=2;
@@ -1940,7 +1959,7 @@ public class JavaParser extends Parser {
 
                 switch (alt36) {
             	case 1 :
-            	    // src/junitconverter/Java.g:0:0: classBodyDeclaration
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:0:0: classBodyDeclaration
             	    {
             	    pushFollow(FOLLOW_classBodyDeclaration_in_classBody910);
             	    classBodyDeclaration();
@@ -1973,16 +1992,16 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start interfaceBody
-    // src/junitconverter/Java.g:368:1: interfaceBody : '{' ( interfaceBodyDeclaration )* '}' ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:387:1: interfaceBody : '{' ( interfaceBodyDeclaration )* '}' ;
     public final void interfaceBody() throws RecognitionException {
         int interfaceBody_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 23) ) { return ; }
-            // src/junitconverter/Java.g:369:5: ( '{' ( interfaceBodyDeclaration )* '}' )
-            // src/junitconverter/Java.g:369:9: '{' ( interfaceBodyDeclaration )* '}'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:388:5: ( '{' ( interfaceBodyDeclaration )* '}' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:388:9: '{' ( interfaceBodyDeclaration )* '}'
             {
             match(input,44,FOLLOW_44_in_interfaceBody936); if (failed) return ;
-            // src/junitconverter/Java.g:369:13: ( interfaceBodyDeclaration )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:388:13: ( interfaceBodyDeclaration )*
             loop37:
             do {
                 int alt37=2;
@@ -1995,7 +2014,7 @@ public class JavaParser extends Parser {
 
                 switch (alt37) {
             	case 1 :
-            	    // src/junitconverter/Java.g:0:0: interfaceBodyDeclaration
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:0:0: interfaceBodyDeclaration
             	    {
             	    pushFollow(FOLLOW_interfaceBodyDeclaration_in_interfaceBody938);
             	    interfaceBodyDeclaration();
@@ -2028,12 +2047,12 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start classBodyDeclaration
-    // src/junitconverter/Java.g:372:1: classBodyDeclaration : ( ';' | ( 'static' )? block | modifiers memberDecl );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:391:1: classBodyDeclaration : ( ';' | ( 'static' )? block | modifiers memberDecl );
     public final void classBodyDeclaration() throws RecognitionException {
         int classBodyDeclaration_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 24) ) { return ; }
-            // src/junitconverter/Java.g:373:5: ( ';' | ( 'static' )? block | modifiers memberDecl )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:392:5: ( ';' | ( 'static' )? block | modifiers memberDecl )
             int alt39=3;
             switch ( input.LA(1) ) {
             case 26:
@@ -2054,7 +2073,7 @@ public class JavaParser extends Parser {
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("372:1: classBodyDeclaration : ( ';' | ( 'static' )? block | modifiers memberDecl );", 39, 2, input);
+                        new NoViableAltException("391:1: classBodyDeclaration : ( ';' | ( 'static' )? block | modifiers memberDecl );", 39, 2, input);
 
                     throw nvae;
                 }
@@ -2097,23 +2116,23 @@ public class JavaParser extends Parser {
             default:
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("372:1: classBodyDeclaration : ( ';' | ( 'static' )? block | modifiers memberDecl );", 39, 0, input);
+                    new NoViableAltException("391:1: classBodyDeclaration : ( ';' | ( 'static' )? block | modifiers memberDecl );", 39, 0, input);
 
                 throw nvae;
             }
 
             switch (alt39) {
                 case 1 :
-                    // src/junitconverter/Java.g:373:9: ';'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:392:9: ';'
                     {
                     match(input,26,FOLLOW_26_in_classBodyDeclaration960); if (failed) return ;
 
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:374:9: ( 'static' )? block
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:393:9: ( 'static' )? block
                     {
-                    // src/junitconverter/Java.g:374:9: ( 'static' )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:393:9: ( 'static' )?
                     int alt38=2;
                     int LA38_0 = input.LA(1);
 
@@ -2122,7 +2141,7 @@ public class JavaParser extends Parser {
                     }
                     switch (alt38) {
                         case 1 :
-                            // src/junitconverter/Java.g:0:0: 'static'
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:0:0: 'static'
                             {
                             match(input,28,FOLLOW_28_in_classBodyDeclaration970); if (failed) return ;
 
@@ -2139,7 +2158,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // src/junitconverter/Java.g:375:9: modifiers memberDecl
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:394:9: modifiers memberDecl
                     {
                     pushFollow(FOLLOW_modifiers_in_classBodyDeclaration983);
                     modifiers();
@@ -2168,14 +2187,14 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start memberDecl
-    // src/junitconverter/Java.g:378:1: memberDecl : ( genericMethodOrConstructorDecl | memberDeclaration | 'void' Identifier voidMethodDeclaratorRest | Identifier constructorDeclaratorRest | interfaceDeclaration | classDeclaration );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:397:1: memberDecl : ( genericMethodOrConstructorDecl | memberDeclaration | 'void' Identifier voidMethodDeclaratorRest | Identifier constructorDeclaratorRest | interfaceDeclaration | classDeclaration );
     public final void memberDecl() throws RecognitionException {
         int memberDecl_StartIndex = input.index();
         Token Identifier4=null;
 
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 25) ) { return ; }
-            // src/junitconverter/Java.g:379:5: ( genericMethodOrConstructorDecl | memberDeclaration | 'void' Identifier voidMethodDeclaratorRest | Identifier constructorDeclaratorRest | interfaceDeclaration | classDeclaration )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:398:5: ( genericMethodOrConstructorDecl | memberDeclaration | 'void' Identifier voidMethodDeclaratorRest | Identifier constructorDeclaratorRest | interfaceDeclaration | classDeclaration )
             int alt40=6;
             switch ( input.LA(1) ) {
             case 40:
@@ -2187,16 +2206,16 @@ public class JavaParser extends Parser {
                 {
                 int LA40_2 = input.LA(2);
 
-                if ( (LA40_2==Identifier||LA40_2==29||LA40_2==40||LA40_2==48) ) {
-                    alt40=2;
-                }
-                else if ( (LA40_2==66) ) {
+                if ( (LA40_2==66) ) {
                     alt40=4;
+                }
+                else if ( (LA40_2==Identifier||LA40_2==29||LA40_2==40||LA40_2==48) ) {
+                    alt40=2;
                 }
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("378:1: memberDecl : ( genericMethodOrConstructorDecl | memberDeclaration | 'void' Identifier voidMethodDeclaratorRest | Identifier constructorDeclaratorRest | interfaceDeclaration | classDeclaration );", 40, 2, input);
+                        new NoViableAltException("397:1: memberDecl : ( genericMethodOrConstructorDecl | memberDeclaration | 'void' Identifier voidMethodDeclaratorRest | Identifier constructorDeclaratorRest | interfaceDeclaration | classDeclaration );", 40, 2, input);
 
                     throw nvae;
                 }
@@ -2234,14 +2253,14 @@ public class JavaParser extends Parser {
             default:
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("378:1: memberDecl : ( genericMethodOrConstructorDecl | memberDeclaration | 'void' Identifier voidMethodDeclaratorRest | Identifier constructorDeclaratorRest | interfaceDeclaration | classDeclaration );", 40, 0, input);
+                    new NoViableAltException("397:1: memberDecl : ( genericMethodOrConstructorDecl | memberDeclaration | 'void' Identifier voidMethodDeclaratorRest | Identifier constructorDeclaratorRest | interfaceDeclaration | classDeclaration );", 40, 0, input);
 
                 throw nvae;
             }
 
             switch (alt40) {
                 case 1 :
-                    // src/junitconverter/Java.g:379:9: genericMethodOrConstructorDecl
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:398:9: genericMethodOrConstructorDecl
                     {
                     pushFollow(FOLLOW_genericMethodOrConstructorDecl_in_memberDecl1008);
                     genericMethodOrConstructorDecl();
@@ -2251,7 +2270,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:380:9: memberDeclaration
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:399:9: memberDeclaration
                     {
                     pushFollow(FOLLOW_memberDeclaration_in_memberDecl1018);
                     memberDeclaration();
@@ -2261,7 +2280,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // src/junitconverter/Java.g:381:9: 'void' Identifier voidMethodDeclaratorRest
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:400:9: 'void' Identifier voidMethodDeclaratorRest
                     {
                     match(input,47,FOLLOW_47_in_memberDecl1028); if (failed) return ;
                     Identifier4=(Token)input.LT(1);
@@ -2277,7 +2296,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 4 :
-                    // src/junitconverter/Java.g:382:9: Identifier constructorDeclaratorRest
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:401:9: Identifier constructorDeclaratorRest
                     {
                     match(input,Identifier,FOLLOW_Identifier_in_memberDecl1046); if (failed) return ;
                     pushFollow(FOLLOW_constructorDeclaratorRest_in_memberDecl1048);
@@ -2288,7 +2307,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 5 :
-                    // src/junitconverter/Java.g:383:9: interfaceDeclaration
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:402:9: interfaceDeclaration
                     {
                     pushFollow(FOLLOW_interfaceDeclaration_in_memberDecl1058);
                     interfaceDeclaration();
@@ -2298,7 +2317,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 6 :
-                    // src/junitconverter/Java.g:384:9: classDeclaration
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:403:9: classDeclaration
                     {
                     pushFollow(FOLLOW_classDeclaration_in_memberDecl1068);
                     classDeclaration();
@@ -2323,19 +2342,19 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start memberDeclaration
-    // src/junitconverter/Java.g:387:1: memberDeclaration : type ( methodDeclaration | fieldDeclaration ) ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:406:1: memberDeclaration : type ( methodDeclaration | fieldDeclaration ) ;
     public final void memberDeclaration() throws RecognitionException {
         int memberDeclaration_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 26) ) { return ; }
-            // src/junitconverter/Java.g:388:5: ( type ( methodDeclaration | fieldDeclaration ) )
-            // src/junitconverter/Java.g:388:9: type ( methodDeclaration | fieldDeclaration )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:407:5: ( type ( methodDeclaration | fieldDeclaration ) )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:407:9: type ( methodDeclaration | fieldDeclaration )
             {
             pushFollow(FOLLOW_type_in_memberDeclaration1091);
             type();
             _fsp--;
             if (failed) return ;
-            // src/junitconverter/Java.g:388:14: ( methodDeclaration | fieldDeclaration )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:407:14: ( methodDeclaration | fieldDeclaration )
             int alt41=2;
             int LA41_0 = input.LA(1);
 
@@ -2351,7 +2370,7 @@ public class JavaParser extends Parser {
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("388:14: ( methodDeclaration | fieldDeclaration )", 41, 1, input);
+                        new NoViableAltException("407:14: ( methodDeclaration | fieldDeclaration )", 41, 1, input);
 
                     throw nvae;
                 }
@@ -2359,13 +2378,13 @@ public class JavaParser extends Parser {
             else {
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("388:14: ( methodDeclaration | fieldDeclaration )", 41, 0, input);
+                    new NoViableAltException("407:14: ( methodDeclaration | fieldDeclaration )", 41, 0, input);
 
                 throw nvae;
             }
             switch (alt41) {
                 case 1 :
-                    // src/junitconverter/Java.g:388:15: methodDeclaration
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:407:15: methodDeclaration
                     {
                     pushFollow(FOLLOW_methodDeclaration_in_memberDeclaration1094);
                     methodDeclaration();
@@ -2375,7 +2394,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:388:35: fieldDeclaration
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:407:35: fieldDeclaration
                     {
                     pushFollow(FOLLOW_fieldDeclaration_in_memberDeclaration1098);
                     fieldDeclaration();
@@ -2404,13 +2423,13 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start genericMethodOrConstructorDecl
-    // src/junitconverter/Java.g:391:1: genericMethodOrConstructorDecl : typeParameters genericMethodOrConstructorRest ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:410:1: genericMethodOrConstructorDecl : typeParameters genericMethodOrConstructorRest ;
     public final void genericMethodOrConstructorDecl() throws RecognitionException {
         int genericMethodOrConstructorDecl_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 27) ) { return ; }
-            // src/junitconverter/Java.g:392:5: ( typeParameters genericMethodOrConstructorRest )
-            // src/junitconverter/Java.g:392:9: typeParameters genericMethodOrConstructorRest
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:411:5: ( typeParameters genericMethodOrConstructorRest )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:411:9: typeParameters genericMethodOrConstructorRest
             {
             pushFollow(FOLLOW_typeParameters_in_genericMethodOrConstructorDecl1118);
             typeParameters();
@@ -2437,30 +2456,30 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start genericMethodOrConstructorRest
-    // src/junitconverter/Java.g:395:1: genericMethodOrConstructorRest : ( ( type | 'void' ) Identifier methodDeclaratorRest | Identifier constructorDeclaratorRest );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:414:1: genericMethodOrConstructorRest : ( ( type | 'void' ) Identifier methodDeclaratorRest | Identifier constructorDeclaratorRest );
     public final void genericMethodOrConstructorRest() throws RecognitionException {
         int genericMethodOrConstructorRest_StartIndex = input.index();
         Token Identifier5=null;
 
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 28) ) { return ; }
-            // src/junitconverter/Java.g:396:5: ( ( type | 'void' ) Identifier methodDeclaratorRest | Identifier constructorDeclaratorRest )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:415:5: ( ( type | 'void' ) Identifier methodDeclaratorRest | Identifier constructorDeclaratorRest )
             int alt43=2;
             int LA43_0 = input.LA(1);
 
             if ( (LA43_0==Identifier) ) {
                 int LA43_1 = input.LA(2);
 
-                if ( (LA43_1==66) ) {
-                    alt43=2;
-                }
-                else if ( (LA43_1==Identifier||LA43_1==29||LA43_1==40||LA43_1==48) ) {
+                if ( (LA43_1==Identifier||LA43_1==29||LA43_1==40||LA43_1==48) ) {
                     alt43=1;
+                }
+                else if ( (LA43_1==66) ) {
+                    alt43=2;
                 }
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("395:1: genericMethodOrConstructorRest : ( ( type | 'void' ) Identifier methodDeclaratorRest | Identifier constructorDeclaratorRest );", 43, 1, input);
+                        new NoViableAltException("414:1: genericMethodOrConstructorRest : ( ( type | 'void' ) Identifier methodDeclaratorRest | Identifier constructorDeclaratorRest );", 43, 1, input);
 
                     throw nvae;
                 }
@@ -2471,15 +2490,15 @@ public class JavaParser extends Parser {
             else {
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("395:1: genericMethodOrConstructorRest : ( ( type | 'void' ) Identifier methodDeclaratorRest | Identifier constructorDeclaratorRest );", 43, 0, input);
+                    new NoViableAltException("414:1: genericMethodOrConstructorRest : ( ( type | 'void' ) Identifier methodDeclaratorRest | Identifier constructorDeclaratorRest );", 43, 0, input);
 
                 throw nvae;
             }
             switch (alt43) {
                 case 1 :
-                    // src/junitconverter/Java.g:396:9: ( type | 'void' ) Identifier methodDeclaratorRest
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:415:9: ( type | 'void' ) Identifier methodDeclaratorRest
                     {
-                    // src/junitconverter/Java.g:396:9: ( type | 'void' )
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:415:9: ( type | 'void' )
                     int alt42=2;
                     int LA42_0 = input.LA(1);
 
@@ -2492,13 +2511,13 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("396:9: ( type | 'void' )", 42, 0, input);
+                            new NoViableAltException("415:9: ( type | 'void' )", 42, 0, input);
 
                         throw nvae;
                     }
                     switch (alt42) {
                         case 1 :
-                            // src/junitconverter/Java.g:396:10: type
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:415:10: type
                             {
                             pushFollow(FOLLOW_type_in_genericMethodOrConstructorRest1144);
                             type();
@@ -2508,7 +2527,7 @@ public class JavaParser extends Parser {
                             }
                             break;
                         case 2 :
-                            // src/junitconverter/Java.g:396:17: 'void'
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:415:17: 'void'
                             {
                             match(input,47,FOLLOW_47_in_genericMethodOrConstructorRest1148); if (failed) return ;
 
@@ -2530,7 +2549,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:397:9: Identifier constructorDeclaratorRest
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:416:9: Identifier constructorDeclaratorRest
                     {
                     match(input,Identifier,FOLLOW_Identifier_in_genericMethodOrConstructorRest1167); if (failed) return ;
                     pushFollow(FOLLOW_constructorDeclaratorRest_in_genericMethodOrConstructorRest1169);
@@ -2556,15 +2575,15 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start methodDeclaration
-    // src/junitconverter/Java.g:400:1: methodDeclaration : Identifier methodDeclaratorRest ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:419:1: methodDeclaration : Identifier methodDeclaratorRest ;
     public final void methodDeclaration() throws RecognitionException {
         int methodDeclaration_StartIndex = input.index();
         Token Identifier6=null;
 
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 29) ) { return ; }
-            // src/junitconverter/Java.g:401:5: ( Identifier methodDeclaratorRest )
-            // src/junitconverter/Java.g:401:9: Identifier methodDeclaratorRest
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:420:5: ( Identifier methodDeclaratorRest )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:420:9: Identifier methodDeclaratorRest
             {
             Identifier6=(Token)input.LT(1);
             match(input,Identifier,FOLLOW_Identifier_in_methodDeclaration1188); if (failed) return ;
@@ -2592,13 +2611,13 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start fieldDeclaration
-    // src/junitconverter/Java.g:404:1: fieldDeclaration : variableDeclarators ';' ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:423:1: fieldDeclaration : variableDeclarators ';' ;
     public final void fieldDeclaration() throws RecognitionException {
         int fieldDeclaration_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 30) ) { return ; }
-            // src/junitconverter/Java.g:405:5: ( variableDeclarators ';' )
-            // src/junitconverter/Java.g:405:9: variableDeclarators ';'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:424:5: ( variableDeclarators ';' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:424:9: variableDeclarators ';'
             {
             pushFollow(FOLLOW_variableDeclarators_in_fieldDeclaration1213);
             variableDeclarators();
@@ -2622,12 +2641,12 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start interfaceBodyDeclaration
-    // src/junitconverter/Java.g:408:1: interfaceBodyDeclaration : ( modifiers interfaceMemberDecl | ';' );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:427:1: interfaceBodyDeclaration : ( modifiers interfaceMemberDecl | ';' );
     public final void interfaceBodyDeclaration() throws RecognitionException {
         int interfaceBodyDeclaration_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 31) ) { return ; }
-            // src/junitconverter/Java.g:409:5: ( modifiers interfaceMemberDecl | ';' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:428:5: ( modifiers interfaceMemberDecl | ';' )
             int alt44=2;
             int LA44_0 = input.LA(1);
 
@@ -2640,13 +2659,13 @@ public class JavaParser extends Parser {
             else {
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("408:1: interfaceBodyDeclaration : ( modifiers interfaceMemberDecl | ';' );", 44, 0, input);
+                    new NoViableAltException("427:1: interfaceBodyDeclaration : ( modifiers interfaceMemberDecl | ';' );", 44, 0, input);
 
                 throw nvae;
             }
             switch (alt44) {
                 case 1 :
-                    // src/junitconverter/Java.g:409:9: modifiers interfaceMemberDecl
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:428:9: modifiers interfaceMemberDecl
                     {
                     pushFollow(FOLLOW_modifiers_in_interfaceBodyDeclaration1242);
                     modifiers();
@@ -2660,7 +2679,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:410:9: ';'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:429:9: ';'
                     {
                     match(input,26,FOLLOW_26_in_interfaceBodyDeclaration1254); if (failed) return ;
 
@@ -2682,12 +2701,12 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start interfaceMemberDecl
-    // src/junitconverter/Java.g:413:1: interfaceMemberDecl : ( interfaceMethodOrFieldDecl | interfaceGenericMethodDecl | 'void' Identifier voidInterfaceMethodDeclaratorRest | interfaceDeclaration | classDeclaration );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:432:1: interfaceMemberDecl : ( interfaceMethodOrFieldDecl | interfaceGenericMethodDecl | 'void' Identifier voidInterfaceMethodDeclaratorRest | interfaceDeclaration | classDeclaration );
     public final void interfaceMemberDecl() throws RecognitionException {
         int interfaceMemberDecl_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 32) ) { return ; }
-            // src/junitconverter/Java.g:414:5: ( interfaceMethodOrFieldDecl | interfaceGenericMethodDecl | 'void' Identifier voidInterfaceMethodDeclaratorRest | interfaceDeclaration | classDeclaration )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:433:5: ( interfaceMethodOrFieldDecl | interfaceGenericMethodDecl | 'void' Identifier voidInterfaceMethodDeclaratorRest | interfaceDeclaration | classDeclaration )
             int alt45=5;
             switch ( input.LA(1) ) {
             case Identifier:
@@ -2728,14 +2747,14 @@ public class JavaParser extends Parser {
             default:
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("413:1: interfaceMemberDecl : ( interfaceMethodOrFieldDecl | interfaceGenericMethodDecl | 'void' Identifier voidInterfaceMethodDeclaratorRest | interfaceDeclaration | classDeclaration );", 45, 0, input);
+                    new NoViableAltException("432:1: interfaceMemberDecl : ( interfaceMethodOrFieldDecl | interfaceGenericMethodDecl | 'void' Identifier voidInterfaceMethodDeclaratorRest | interfaceDeclaration | classDeclaration );", 45, 0, input);
 
                 throw nvae;
             }
 
             switch (alt45) {
                 case 1 :
-                    // src/junitconverter/Java.g:414:9: interfaceMethodOrFieldDecl
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:433:9: interfaceMethodOrFieldDecl
                     {
                     pushFollow(FOLLOW_interfaceMethodOrFieldDecl_in_interfaceMemberDecl1273);
                     interfaceMethodOrFieldDecl();
@@ -2745,7 +2764,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:415:9: interfaceGenericMethodDecl
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:434:9: interfaceGenericMethodDecl
                     {
                     pushFollow(FOLLOW_interfaceGenericMethodDecl_in_interfaceMemberDecl1283);
                     interfaceGenericMethodDecl();
@@ -2755,7 +2774,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // src/junitconverter/Java.g:416:9: 'void' Identifier voidInterfaceMethodDeclaratorRest
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:435:9: 'void' Identifier voidInterfaceMethodDeclaratorRest
                     {
                     match(input,47,FOLLOW_47_in_interfaceMemberDecl1293); if (failed) return ;
                     match(input,Identifier,FOLLOW_Identifier_in_interfaceMemberDecl1295); if (failed) return ;
@@ -2767,7 +2786,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 4 :
-                    // src/junitconverter/Java.g:417:9: interfaceDeclaration
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:436:9: interfaceDeclaration
                     {
                     pushFollow(FOLLOW_interfaceDeclaration_in_interfaceMemberDecl1307);
                     interfaceDeclaration();
@@ -2777,7 +2796,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 5 :
-                    // src/junitconverter/Java.g:418:9: classDeclaration
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:437:9: classDeclaration
                     {
                     pushFollow(FOLLOW_classDeclaration_in_interfaceMemberDecl1317);
                     classDeclaration();
@@ -2802,13 +2821,13 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start interfaceMethodOrFieldDecl
-    // src/junitconverter/Java.g:421:1: interfaceMethodOrFieldDecl : type Identifier interfaceMethodOrFieldRest ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:440:1: interfaceMethodOrFieldDecl : type Identifier interfaceMethodOrFieldRest ;
     public final void interfaceMethodOrFieldDecl() throws RecognitionException {
         int interfaceMethodOrFieldDecl_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 33) ) { return ; }
-            // src/junitconverter/Java.g:422:5: ( type Identifier interfaceMethodOrFieldRest )
-            // src/junitconverter/Java.g:422:9: type Identifier interfaceMethodOrFieldRest
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:441:5: ( type Identifier interfaceMethodOrFieldRest )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:441:9: type Identifier interfaceMethodOrFieldRest
             {
             pushFollow(FOLLOW_type_in_interfaceMethodOrFieldDecl1340);
             type();
@@ -2836,12 +2855,12 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start interfaceMethodOrFieldRest
-    // src/junitconverter/Java.g:425:1: interfaceMethodOrFieldRest : ( constantDeclaratorsRest ';' | interfaceMethodDeclaratorRest );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:444:1: interfaceMethodOrFieldRest : ( constantDeclaratorsRest ';' | interfaceMethodDeclaratorRest );
     public final void interfaceMethodOrFieldRest() throws RecognitionException {
         int interfaceMethodOrFieldRest_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 34) ) { return ; }
-            // src/junitconverter/Java.g:426:5: ( constantDeclaratorsRest ';' | interfaceMethodDeclaratorRest )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:445:5: ( constantDeclaratorsRest ';' | interfaceMethodDeclaratorRest )
             int alt46=2;
             int LA46_0 = input.LA(1);
 
@@ -2854,13 +2873,13 @@ public class JavaParser extends Parser {
             else {
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("425:1: interfaceMethodOrFieldRest : ( constantDeclaratorsRest ';' | interfaceMethodDeclaratorRest );", 46, 0, input);
+                    new NoViableAltException("444:1: interfaceMethodOrFieldRest : ( constantDeclaratorsRest ';' | interfaceMethodDeclaratorRest );", 46, 0, input);
 
                 throw nvae;
             }
             switch (alt46) {
                 case 1 :
-                    // src/junitconverter/Java.g:426:9: constantDeclaratorsRest ';'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:445:9: constantDeclaratorsRest ';'
                     {
                     pushFollow(FOLLOW_constantDeclaratorsRest_in_interfaceMethodOrFieldRest1367);
                     constantDeclaratorsRest();
@@ -2871,7 +2890,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:427:9: interfaceMethodDeclaratorRest
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:446:9: interfaceMethodDeclaratorRest
                     {
                     pushFollow(FOLLOW_interfaceMethodDeclaratorRest_in_interfaceMethodOrFieldRest1379);
                     interfaceMethodDeclaratorRest();
@@ -2896,19 +2915,19 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start methodDeclaratorRest
-    // src/junitconverter/Java.g:430:1: methodDeclaratorRest : formalParameters ( '[' ']' )* ( 'throws' qualifiedNameList )? ( methodBody | ';' ) ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:449:1: methodDeclaratorRest : formalParameters ( '[' ']' )* ( 'throws' qualifiedNameList )? ( methodBody | ';' ) ;
     public final void methodDeclaratorRest() throws RecognitionException {
         int methodDeclaratorRest_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 35) ) { return ; }
-            // src/junitconverter/Java.g:431:5: ( formalParameters ( '[' ']' )* ( 'throws' qualifiedNameList )? ( methodBody | ';' ) )
-            // src/junitconverter/Java.g:431:9: formalParameters ( '[' ']' )* ( 'throws' qualifiedNameList )? ( methodBody | ';' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:450:5: ( formalParameters ( '[' ']' )* ( 'throws' qualifiedNameList )? ( methodBody | ';' ) )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:450:9: formalParameters ( '[' ']' )* ( 'throws' qualifiedNameList )? ( methodBody | ';' )
             {
             pushFollow(FOLLOW_formalParameters_in_methodDeclaratorRest1402);
             formalParameters();
             _fsp--;
             if (failed) return ;
-            // src/junitconverter/Java.g:431:26: ( '[' ']' )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:450:26: ( '[' ']' )*
             loop47:
             do {
                 int alt47=2;
@@ -2921,7 +2940,7 @@ public class JavaParser extends Parser {
 
                 switch (alt47) {
             	case 1 :
-            	    // src/junitconverter/Java.g:431:27: '[' ']'
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:450:27: '[' ']'
             	    {
             	    match(input,48,FOLLOW_48_in_methodDeclaratorRest1405); if (failed) return ;
             	    match(input,49,FOLLOW_49_in_methodDeclaratorRest1407); if (failed) return ;
@@ -2934,7 +2953,7 @@ public class JavaParser extends Parser {
                 }
             } while (true);
 
-            // src/junitconverter/Java.g:432:9: ( 'throws' qualifiedNameList )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:451:9: ( 'throws' qualifiedNameList )?
             int alt48=2;
             int LA48_0 = input.LA(1);
 
@@ -2943,7 +2962,7 @@ public class JavaParser extends Parser {
             }
             switch (alt48) {
                 case 1 :
-                    // src/junitconverter/Java.g:432:10: 'throws' qualifiedNameList
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:451:10: 'throws' qualifiedNameList
                     {
                     match(input,50,FOLLOW_50_in_methodDeclaratorRest1420); if (failed) return ;
                     pushFollow(FOLLOW_qualifiedNameList_in_methodDeclaratorRest1422);
@@ -2956,7 +2975,7 @@ public class JavaParser extends Parser {
 
             }
 
-            // src/junitconverter/Java.g:433:9: ( methodBody | ';' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:452:9: ( methodBody | ';' )
             int alt49=2;
             int LA49_0 = input.LA(1);
 
@@ -2969,13 +2988,13 @@ public class JavaParser extends Parser {
             else {
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("433:9: ( methodBody | ';' )", 49, 0, input);
+                    new NoViableAltException("452:9: ( methodBody | ';' )", 49, 0, input);
 
                 throw nvae;
             }
             switch (alt49) {
                 case 1 :
-                    // src/junitconverter/Java.g:433:13: methodBody
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:452:13: methodBody
                     {
                     pushFollow(FOLLOW_methodBody_in_methodDeclaratorRest1438);
                     methodBody();
@@ -2985,7 +3004,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:434:13: ';'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:453:13: ';'
                     {
                     match(input,26,FOLLOW_26_in_methodDeclaratorRest1452); if (failed) return ;
 
@@ -3011,19 +3030,19 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start voidMethodDeclaratorRest
-    // src/junitconverter/Java.g:438:1: voidMethodDeclaratorRest : formalParameters ( 'throws' qualifiedNameList )? ( methodBody | ';' ) ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:457:1: voidMethodDeclaratorRest : formalParameters ( 'throws' qualifiedNameList )? ( methodBody | ';' ) ;
     public final void voidMethodDeclaratorRest() throws RecognitionException {
         int voidMethodDeclaratorRest_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 36) ) { return ; }
-            // src/junitconverter/Java.g:439:5: ( formalParameters ( 'throws' qualifiedNameList )? ( methodBody | ';' ) )
-            // src/junitconverter/Java.g:439:9: formalParameters ( 'throws' qualifiedNameList )? ( methodBody | ';' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:458:5: ( formalParameters ( 'throws' qualifiedNameList )? ( methodBody | ';' ) )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:458:9: formalParameters ( 'throws' qualifiedNameList )? ( methodBody | ';' )
             {
             pushFollow(FOLLOW_formalParameters_in_voidMethodDeclaratorRest1485);
             formalParameters();
             _fsp--;
             if (failed) return ;
-            // src/junitconverter/Java.g:439:26: ( 'throws' qualifiedNameList )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:458:26: ( 'throws' qualifiedNameList )?
             int alt50=2;
             int LA50_0 = input.LA(1);
 
@@ -3032,7 +3051,7 @@ public class JavaParser extends Parser {
             }
             switch (alt50) {
                 case 1 :
-                    // src/junitconverter/Java.g:439:27: 'throws' qualifiedNameList
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:458:27: 'throws' qualifiedNameList
                     {
                     match(input,50,FOLLOW_50_in_voidMethodDeclaratorRest1488); if (failed) return ;
                     pushFollow(FOLLOW_qualifiedNameList_in_voidMethodDeclaratorRest1490);
@@ -3045,7 +3064,7 @@ public class JavaParser extends Parser {
 
             }
 
-            // src/junitconverter/Java.g:440:9: ( methodBody | ';' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:459:9: ( methodBody | ';' )
             int alt51=2;
             int LA51_0 = input.LA(1);
 
@@ -3058,13 +3077,13 @@ public class JavaParser extends Parser {
             else {
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("440:9: ( methodBody | ';' )", 51, 0, input);
+                    new NoViableAltException("459:9: ( methodBody | ';' )", 51, 0, input);
 
                 throw nvae;
             }
             switch (alt51) {
                 case 1 :
-                    // src/junitconverter/Java.g:440:13: methodBody
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:459:13: methodBody
                     {
                     pushFollow(FOLLOW_methodBody_in_voidMethodDeclaratorRest1506);
                     methodBody();
@@ -3074,7 +3093,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:441:13: ';'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:460:13: ';'
                     {
                     match(input,26,FOLLOW_26_in_voidMethodDeclaratorRest1520); if (failed) return ;
 
@@ -3100,19 +3119,19 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start interfaceMethodDeclaratorRest
-    // src/junitconverter/Java.g:445:1: interfaceMethodDeclaratorRest : formalParameters ( '[' ']' )* ( 'throws' qualifiedNameList )? ';' ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:464:1: interfaceMethodDeclaratorRest : formalParameters ( '[' ']' )* ( 'throws' qualifiedNameList )? ';' ;
     public final void interfaceMethodDeclaratorRest() throws RecognitionException {
         int interfaceMethodDeclaratorRest_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 37) ) { return ; }
-            // src/junitconverter/Java.g:446:5: ( formalParameters ( '[' ']' )* ( 'throws' qualifiedNameList )? ';' )
-            // src/junitconverter/Java.g:446:9: formalParameters ( '[' ']' )* ( 'throws' qualifiedNameList )? ';'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:465:5: ( formalParameters ( '[' ']' )* ( 'throws' qualifiedNameList )? ';' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:465:9: formalParameters ( '[' ']' )* ( 'throws' qualifiedNameList )? ';'
             {
             pushFollow(FOLLOW_formalParameters_in_interfaceMethodDeclaratorRest1553);
             formalParameters();
             _fsp--;
             if (failed) return ;
-            // src/junitconverter/Java.g:446:26: ( '[' ']' )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:465:26: ( '[' ']' )*
             loop52:
             do {
                 int alt52=2;
@@ -3125,7 +3144,7 @@ public class JavaParser extends Parser {
 
                 switch (alt52) {
             	case 1 :
-            	    // src/junitconverter/Java.g:446:27: '[' ']'
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:465:27: '[' ']'
             	    {
             	    match(input,48,FOLLOW_48_in_interfaceMethodDeclaratorRest1556); if (failed) return ;
             	    match(input,49,FOLLOW_49_in_interfaceMethodDeclaratorRest1558); if (failed) return ;
@@ -3138,7 +3157,7 @@ public class JavaParser extends Parser {
                 }
             } while (true);
 
-            // src/junitconverter/Java.g:446:37: ( 'throws' qualifiedNameList )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:465:37: ( 'throws' qualifiedNameList )?
             int alt53=2;
             int LA53_0 = input.LA(1);
 
@@ -3147,7 +3166,7 @@ public class JavaParser extends Parser {
             }
             switch (alt53) {
                 case 1 :
-                    // src/junitconverter/Java.g:446:38: 'throws' qualifiedNameList
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:465:38: 'throws' qualifiedNameList
                     {
                     match(input,50,FOLLOW_50_in_interfaceMethodDeclaratorRest1563); if (failed) return ;
                     pushFollow(FOLLOW_qualifiedNameList_in_interfaceMethodDeclaratorRest1565);
@@ -3178,19 +3197,19 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start interfaceGenericMethodDecl
-    // src/junitconverter/Java.g:449:1: interfaceGenericMethodDecl : typeParameters ( type | 'void' ) Identifier interfaceMethodDeclaratorRest ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:468:1: interfaceGenericMethodDecl : typeParameters ( type | 'void' ) Identifier interfaceMethodDeclaratorRest ;
     public final void interfaceGenericMethodDecl() throws RecognitionException {
         int interfaceGenericMethodDecl_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 38) ) { return ; }
-            // src/junitconverter/Java.g:450:5: ( typeParameters ( type | 'void' ) Identifier interfaceMethodDeclaratorRest )
-            // src/junitconverter/Java.g:450:9: typeParameters ( type | 'void' ) Identifier interfaceMethodDeclaratorRest
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:469:5: ( typeParameters ( type | 'void' ) Identifier interfaceMethodDeclaratorRest )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:469:9: typeParameters ( type | 'void' ) Identifier interfaceMethodDeclaratorRest
             {
             pushFollow(FOLLOW_typeParameters_in_interfaceGenericMethodDecl1592);
             typeParameters();
             _fsp--;
             if (failed) return ;
-            // src/junitconverter/Java.g:450:24: ( type | 'void' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:469:24: ( type | 'void' )
             int alt54=2;
             int LA54_0 = input.LA(1);
 
@@ -3203,13 +3222,13 @@ public class JavaParser extends Parser {
             else {
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("450:24: ( type | 'void' )", 54, 0, input);
+                    new NoViableAltException("469:24: ( type | 'void' )", 54, 0, input);
 
                 throw nvae;
             }
             switch (alt54) {
                 case 1 :
-                    // src/junitconverter/Java.g:450:25: type
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:469:25: type
                     {
                     pushFollow(FOLLOW_type_in_interfaceGenericMethodDecl1595);
                     type();
@@ -3219,7 +3238,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:450:32: 'void'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:469:32: 'void'
                     {
                     match(input,47,FOLLOW_47_in_interfaceGenericMethodDecl1599); if (failed) return ;
 
@@ -3250,19 +3269,19 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start voidInterfaceMethodDeclaratorRest
-    // src/junitconverter/Java.g:454:1: voidInterfaceMethodDeclaratorRest : formalParameters ( 'throws' qualifiedNameList )? ';' ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:473:1: voidInterfaceMethodDeclaratorRest : formalParameters ( 'throws' qualifiedNameList )? ';' ;
     public final void voidInterfaceMethodDeclaratorRest() throws RecognitionException {
         int voidInterfaceMethodDeclaratorRest_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 39) ) { return ; }
-            // src/junitconverter/Java.g:455:5: ( formalParameters ( 'throws' qualifiedNameList )? ';' )
-            // src/junitconverter/Java.g:455:9: formalParameters ( 'throws' qualifiedNameList )? ';'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:474:5: ( formalParameters ( 'throws' qualifiedNameList )? ';' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:474:9: formalParameters ( 'throws' qualifiedNameList )? ';'
             {
             pushFollow(FOLLOW_formalParameters_in_voidInterfaceMethodDeclaratorRest1635);
             formalParameters();
             _fsp--;
             if (failed) return ;
-            // src/junitconverter/Java.g:455:26: ( 'throws' qualifiedNameList )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:474:26: ( 'throws' qualifiedNameList )?
             int alt55=2;
             int LA55_0 = input.LA(1);
 
@@ -3271,7 +3290,7 @@ public class JavaParser extends Parser {
             }
             switch (alt55) {
                 case 1 :
-                    // src/junitconverter/Java.g:455:27: 'throws' qualifiedNameList
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:474:27: 'throws' qualifiedNameList
                     {
                     match(input,50,FOLLOW_50_in_voidInterfaceMethodDeclaratorRest1638); if (failed) return ;
                     pushFollow(FOLLOW_qualifiedNameList_in_voidInterfaceMethodDeclaratorRest1640);
@@ -3302,19 +3321,19 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start constructorDeclaratorRest
-    // src/junitconverter/Java.g:458:1: constructorDeclaratorRest : formalParameters ( 'throws' qualifiedNameList )? constructorBody ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:477:1: constructorDeclaratorRest : formalParameters ( 'throws' qualifiedNameList )? constructorBody ;
     public final void constructorDeclaratorRest() throws RecognitionException {
         int constructorDeclaratorRest_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 40) ) { return ; }
-            // src/junitconverter/Java.g:459:5: ( formalParameters ( 'throws' qualifiedNameList )? constructorBody )
-            // src/junitconverter/Java.g:459:9: formalParameters ( 'throws' qualifiedNameList )? constructorBody
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:478:5: ( formalParameters ( 'throws' qualifiedNameList )? constructorBody )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:478:9: formalParameters ( 'throws' qualifiedNameList )? constructorBody
             {
             pushFollow(FOLLOW_formalParameters_in_constructorDeclaratorRest1667);
             formalParameters();
             _fsp--;
             if (failed) return ;
-            // src/junitconverter/Java.g:459:26: ( 'throws' qualifiedNameList )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:478:26: ( 'throws' qualifiedNameList )?
             int alt56=2;
             int LA56_0 = input.LA(1);
 
@@ -3323,7 +3342,7 @@ public class JavaParser extends Parser {
             }
             switch (alt56) {
                 case 1 :
-                    // src/junitconverter/Java.g:459:27: 'throws' qualifiedNameList
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:478:27: 'throws' qualifiedNameList
                     {
                     match(input,50,FOLLOW_50_in_constructorDeclaratorRest1670); if (failed) return ;
                     pushFollow(FOLLOW_qualifiedNameList_in_constructorDeclaratorRest1672);
@@ -3357,13 +3376,13 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start constantDeclarator
-    // src/junitconverter/Java.g:462:1: constantDeclarator : Identifier constantDeclaratorRest ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:481:1: constantDeclarator : Identifier constantDeclaratorRest ;
     public final void constantDeclarator() throws RecognitionException {
         int constantDeclarator_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 41) ) { return ; }
-            // src/junitconverter/Java.g:463:5: ( Identifier constantDeclaratorRest )
-            // src/junitconverter/Java.g:463:9: Identifier constantDeclaratorRest
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:482:5: ( Identifier constantDeclaratorRest )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:482:9: Identifier constantDeclaratorRest
             {
             match(input,Identifier,FOLLOW_Identifier_in_constantDeclarator1695); if (failed) return ;
             pushFollow(FOLLOW_constantDeclaratorRest_in_constantDeclarator1697);
@@ -3387,19 +3406,19 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start variableDeclarators
-    // src/junitconverter/Java.g:466:1: variableDeclarators : variableDeclarator ( ',' variableDeclarator )* ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:485:1: variableDeclarators : variableDeclarator ( ',' variableDeclarator )* ;
     public final void variableDeclarators() throws RecognitionException {
         int variableDeclarators_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 42) ) { return ; }
-            // src/junitconverter/Java.g:467:5: ( variableDeclarator ( ',' variableDeclarator )* )
-            // src/junitconverter/Java.g:467:9: variableDeclarator ( ',' variableDeclarator )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:486:5: ( variableDeclarator ( ',' variableDeclarator )* )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:486:9: variableDeclarator ( ',' variableDeclarator )*
             {
             pushFollow(FOLLOW_variableDeclarator_in_variableDeclarators1720);
             variableDeclarator();
             _fsp--;
             if (failed) return ;
-            // src/junitconverter/Java.g:467:28: ( ',' variableDeclarator )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:486:28: ( ',' variableDeclarator )*
             loop57:
             do {
                 int alt57=2;
@@ -3412,7 +3431,7 @@ public class JavaParser extends Parser {
 
                 switch (alt57) {
             	case 1 :
-            	    // src/junitconverter/Java.g:467:29: ',' variableDeclarator
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:486:29: ',' variableDeclarator
             	    {
             	    match(input,41,FOLLOW_41_in_variableDeclarators1723); if (failed) return ;
             	    pushFollow(FOLLOW_variableDeclarator_in_variableDeclarators1725);
@@ -3445,19 +3464,19 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start variableDeclarator
-    // src/junitconverter/Java.g:470:1: variableDeclarator : variableDeclaratorId ( '=' variableInitializer )? ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:489:1: variableDeclarator : variableDeclaratorId ( '=' variableInitializer )? ;
     public final void variableDeclarator() throws RecognitionException {
         int variableDeclarator_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 43) ) { return ; }
-            // src/junitconverter/Java.g:471:5: ( variableDeclaratorId ( '=' variableInitializer )? )
-            // src/junitconverter/Java.g:471:9: variableDeclaratorId ( '=' variableInitializer )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:490:5: ( variableDeclaratorId ( '=' variableInitializer )? )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:490:9: variableDeclaratorId ( '=' variableInitializer )?
             {
             pushFollow(FOLLOW_variableDeclaratorId_in_variableDeclarator1746);
             variableDeclaratorId();
             _fsp--;
             if (failed) return ;
-            // src/junitconverter/Java.g:471:30: ( '=' variableInitializer )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:490:30: ( '=' variableInitializer )?
             int alt58=2;
             int LA58_0 = input.LA(1);
 
@@ -3466,7 +3485,7 @@ public class JavaParser extends Parser {
             }
             switch (alt58) {
                 case 1 :
-                    // src/junitconverter/Java.g:471:31: '=' variableInitializer
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:490:31: '=' variableInitializer
                     {
                     match(input,51,FOLLOW_51_in_variableDeclarator1749); if (failed) return ;
                     pushFollow(FOLLOW_variableInitializer_in_variableDeclarator1751);
@@ -3496,19 +3515,19 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start constantDeclaratorsRest
-    // src/junitconverter/Java.g:474:1: constantDeclaratorsRest : constantDeclaratorRest ( ',' constantDeclarator )* ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:493:1: constantDeclaratorsRest : constantDeclaratorRest ( ',' constantDeclarator )* ;
     public final void constantDeclaratorsRest() throws RecognitionException {
         int constantDeclaratorsRest_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 44) ) { return ; }
-            // src/junitconverter/Java.g:475:5: ( constantDeclaratorRest ( ',' constantDeclarator )* )
-            // src/junitconverter/Java.g:475:9: constantDeclaratorRest ( ',' constantDeclarator )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:494:5: ( constantDeclaratorRest ( ',' constantDeclarator )* )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:494:9: constantDeclaratorRest ( ',' constantDeclarator )*
             {
             pushFollow(FOLLOW_constantDeclaratorRest_in_constantDeclaratorsRest1776);
             constantDeclaratorRest();
             _fsp--;
             if (failed) return ;
-            // src/junitconverter/Java.g:475:32: ( ',' constantDeclarator )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:494:32: ( ',' constantDeclarator )*
             loop59:
             do {
                 int alt59=2;
@@ -3521,7 +3540,7 @@ public class JavaParser extends Parser {
 
                 switch (alt59) {
             	case 1 :
-            	    // src/junitconverter/Java.g:475:33: ',' constantDeclarator
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:494:33: ',' constantDeclarator
             	    {
             	    match(input,41,FOLLOW_41_in_constantDeclaratorsRest1779); if (failed) return ;
             	    pushFollow(FOLLOW_constantDeclarator_in_constantDeclaratorsRest1781);
@@ -3554,15 +3573,15 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start constantDeclaratorRest
-    // src/junitconverter/Java.g:478:1: constantDeclaratorRest : ( '[' ']' )* '=' variableInitializer ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:497:1: constantDeclaratorRest : ( '[' ']' )* '=' variableInitializer ;
     public final void constantDeclaratorRest() throws RecognitionException {
         int constantDeclaratorRest_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 45) ) { return ; }
-            // src/junitconverter/Java.g:479:5: ( ( '[' ']' )* '=' variableInitializer )
-            // src/junitconverter/Java.g:479:9: ( '[' ']' )* '=' variableInitializer
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:498:5: ( ( '[' ']' )* '=' variableInitializer )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:498:9: ( '[' ']' )* '=' variableInitializer
             {
-            // src/junitconverter/Java.g:479:9: ( '[' ']' )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:498:9: ( '[' ']' )*
             loop60:
             do {
                 int alt60=2;
@@ -3575,7 +3594,7 @@ public class JavaParser extends Parser {
 
                 switch (alt60) {
             	case 1 :
-            	    // src/junitconverter/Java.g:479:10: '[' ']'
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:498:10: '[' ']'
             	    {
             	    match(input,48,FOLLOW_48_in_constantDeclaratorRest1803); if (failed) return ;
             	    match(input,49,FOLLOW_49_in_constantDeclaratorRest1805); if (failed) return ;
@@ -3610,16 +3629,16 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start variableDeclaratorId
-    // src/junitconverter/Java.g:482:1: variableDeclaratorId : Identifier ( '[' ']' )* ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:501:1: variableDeclaratorId : Identifier ( '[' ']' )* ;
     public final void variableDeclaratorId() throws RecognitionException {
         int variableDeclaratorId_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 46) ) { return ; }
-            // src/junitconverter/Java.g:483:5: ( Identifier ( '[' ']' )* )
-            // src/junitconverter/Java.g:483:9: Identifier ( '[' ']' )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:502:5: ( Identifier ( '[' ']' )* )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:502:9: Identifier ( '[' ']' )*
             {
             match(input,Identifier,FOLLOW_Identifier_in_variableDeclaratorId1834); if (failed) return ;
-            // src/junitconverter/Java.g:483:20: ( '[' ']' )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:502:20: ( '[' ']' )*
             loop61:
             do {
                 int alt61=2;
@@ -3632,7 +3651,7 @@ public class JavaParser extends Parser {
 
                 switch (alt61) {
             	case 1 :
-            	    // src/junitconverter/Java.g:483:21: '[' ']'
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:502:21: '[' ']'
             	    {
             	    match(input,48,FOLLOW_48_in_variableDeclaratorId1837); if (failed) return ;
             	    match(input,49,FOLLOW_49_in_variableDeclaratorId1839); if (failed) return ;
@@ -3662,12 +3681,12 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start variableInitializer
-    // src/junitconverter/Java.g:486:1: variableInitializer : ( arrayInitializer | expression );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:505:1: variableInitializer : ( arrayInitializer | expression );
     public final void variableInitializer() throws RecognitionException {
         int variableInitializer_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 47) ) { return ; }
-            // src/junitconverter/Java.g:487:5: ( arrayInitializer | expression )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:506:5: ( arrayInitializer | expression )
             int alt62=2;
             int LA62_0 = input.LA(1);
 
@@ -3680,13 +3699,13 @@ public class JavaParser extends Parser {
             else {
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("486:1: variableInitializer : ( arrayInitializer | expression );", 62, 0, input);
+                    new NoViableAltException("505:1: variableInitializer : ( arrayInitializer | expression );", 62, 0, input);
 
                 throw nvae;
             }
             switch (alt62) {
                 case 1 :
-                    // src/junitconverter/Java.g:487:9: arrayInitializer
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:506:9: arrayInitializer
                     {
                     pushFollow(FOLLOW_arrayInitializer_in_variableInitializer1860);
                     arrayInitializer();
@@ -3696,7 +3715,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:488:9: expression
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:507:9: expression
                     {
                     pushFollow(FOLLOW_expression_in_variableInitializer1870);
                     expression();
@@ -3721,16 +3740,16 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start arrayInitializer
-    // src/junitconverter/Java.g:491:1: arrayInitializer : '{' ( variableInitializer ( ',' variableInitializer )* ( ',' )? )? '}' ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:510:1: arrayInitializer : '{' ( variableInitializer ( ',' variableInitializer )* ( ',' )? )? '}' ;
     public final void arrayInitializer() throws RecognitionException {
         int arrayInitializer_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 48) ) { return ; }
-            // src/junitconverter/Java.g:492:5: ( '{' ( variableInitializer ( ',' variableInitializer )* ( ',' )? )? '}' )
-            // src/junitconverter/Java.g:492:9: '{' ( variableInitializer ( ',' variableInitializer )* ( ',' )? )? '}'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:511:5: ( '{' ( variableInitializer ( ',' variableInitializer )* ( ',' )? )? '}' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:511:9: '{' ( variableInitializer ( ',' variableInitializer )* ( ',' )? )? '}'
             {
             match(input,44,FOLLOW_44_in_arrayInitializer1897); if (failed) return ;
-            // src/junitconverter/Java.g:492:13: ( variableInitializer ( ',' variableInitializer )* ( ',' )? )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:511:13: ( variableInitializer ( ',' variableInitializer )* ( ',' )? )?
             int alt65=2;
             int LA65_0 = input.LA(1);
 
@@ -3739,13 +3758,13 @@ public class JavaParser extends Parser {
             }
             switch (alt65) {
                 case 1 :
-                    // src/junitconverter/Java.g:492:14: variableInitializer ( ',' variableInitializer )* ( ',' )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:511:14: variableInitializer ( ',' variableInitializer )* ( ',' )?
                     {
                     pushFollow(FOLLOW_variableInitializer_in_arrayInitializer1900);
                     variableInitializer();
                     _fsp--;
                     if (failed) return ;
-                    // src/junitconverter/Java.g:492:34: ( ',' variableInitializer )*
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:511:34: ( ',' variableInitializer )*
                     loop63:
                     do {
                         int alt63=2;
@@ -3764,7 +3783,7 @@ public class JavaParser extends Parser {
 
                         switch (alt63) {
                     	case 1 :
-                    	    // src/junitconverter/Java.g:492:35: ',' variableInitializer
+                    	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:511:35: ',' variableInitializer
                     	    {
                     	    match(input,41,FOLLOW_41_in_arrayInitializer1903); if (failed) return ;
                     	    pushFollow(FOLLOW_variableInitializer_in_arrayInitializer1905);
@@ -3780,7 +3799,7 @@ public class JavaParser extends Parser {
                         }
                     } while (true);
 
-                    // src/junitconverter/Java.g:492:61: ( ',' )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:511:61: ( ',' )?
                     int alt64=2;
                     int LA64_0 = input.LA(1);
 
@@ -3789,7 +3808,7 @@ public class JavaParser extends Parser {
                     }
                     switch (alt64) {
                         case 1 :
-                            // src/junitconverter/Java.g:492:62: ','
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:511:62: ','
                             {
                             match(input,41,FOLLOW_41_in_arrayInitializer1910); if (failed) return ;
 
@@ -3822,12 +3841,12 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start modifier
-    // src/junitconverter/Java.g:495:1: modifier : ( annotation | 'public' | 'protected' | 'private' | 'static' | 'abstract' | 'final' | 'native' | 'synchronized' | 'transient' | 'volatile' | 'strictfp' );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:514:1: modifier : ( annotation | 'public' | 'protected' | 'private' | 'static' | 'abstract' | 'final' | 'native' | 'synchronized' | 'transient' | 'volatile' | 'strictfp' );
     public final void modifier() throws RecognitionException {
         int modifier_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 49) ) { return ; }
-            // src/junitconverter/Java.g:496:5: ( annotation | 'public' | 'protected' | 'private' | 'static' | 'abstract' | 'final' | 'native' | 'synchronized' | 'transient' | 'volatile' | 'strictfp' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:515:5: ( annotation | 'public' | 'protected' | 'private' | 'static' | 'abstract' | 'final' | 'native' | 'synchronized' | 'transient' | 'volatile' | 'strictfp' )
             int alt66=12;
             switch ( input.LA(1) ) {
             case 73:
@@ -3893,14 +3912,14 @@ public class JavaParser extends Parser {
             default:
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("495:1: modifier : ( annotation | 'public' | 'protected' | 'private' | 'static' | 'abstract' | 'final' | 'native' | 'synchronized' | 'transient' | 'volatile' | 'strictfp' );", 66, 0, input);
+                    new NoViableAltException("514:1: modifier : ( annotation | 'public' | 'protected' | 'private' | 'static' | 'abstract' | 'final' | 'native' | 'synchronized' | 'transient' | 'volatile' | 'strictfp' );", 66, 0, input);
 
                 throw nvae;
             }
 
             switch (alt66) {
                 case 1 :
-                    // src/junitconverter/Java.g:496:9: annotation
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:515:9: annotation
                     {
                     pushFollow(FOLLOW_annotation_in_modifier1936);
                     annotation();
@@ -3910,77 +3929,77 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:497:9: 'public'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:516:9: 'public'
                     {
                     match(input,31,FOLLOW_31_in_modifier1946); if (failed) return ;
 
                     }
                     break;
                 case 3 :
-                    // src/junitconverter/Java.g:498:9: 'protected'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:517:9: 'protected'
                     {
                     match(input,32,FOLLOW_32_in_modifier1956); if (failed) return ;
 
                     }
                     break;
                 case 4 :
-                    // src/junitconverter/Java.g:499:9: 'private'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:518:9: 'private'
                     {
                     match(input,33,FOLLOW_33_in_modifier1966); if (failed) return ;
 
                     }
                     break;
                 case 5 :
-                    // src/junitconverter/Java.g:500:9: 'static'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:519:9: 'static'
                     {
                     match(input,28,FOLLOW_28_in_modifier1976); if (failed) return ;
 
                     }
                     break;
                 case 6 :
-                    // src/junitconverter/Java.g:501:9: 'abstract'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:520:9: 'abstract'
                     {
                     match(input,34,FOLLOW_34_in_modifier1986); if (failed) return ;
 
                     }
                     break;
                 case 7 :
-                    // src/junitconverter/Java.g:502:9: 'final'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:521:9: 'final'
                     {
                     match(input,35,FOLLOW_35_in_modifier1996); if (failed) return ;
 
                     }
                     break;
                 case 8 :
-                    // src/junitconverter/Java.g:503:9: 'native'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:522:9: 'native'
                     {
                     match(input,52,FOLLOW_52_in_modifier2006); if (failed) return ;
 
                     }
                     break;
                 case 9 :
-                    // src/junitconverter/Java.g:504:9: 'synchronized'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:523:9: 'synchronized'
                     {
                     match(input,53,FOLLOW_53_in_modifier2016); if (failed) return ;
 
                     }
                     break;
                 case 10 :
-                    // src/junitconverter/Java.g:505:9: 'transient'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:524:9: 'transient'
                     {
                     match(input,54,FOLLOW_54_in_modifier2026); if (failed) return ;
 
                     }
                     break;
                 case 11 :
-                    // src/junitconverter/Java.g:506:9: 'volatile'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:525:9: 'volatile'
                     {
                     match(input,55,FOLLOW_55_in_modifier2036); if (failed) return ;
 
                     }
                     break;
                 case 12 :
-                    // src/junitconverter/Java.g:507:9: 'strictfp'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:526:9: 'strictfp'
                     {
                     match(input,36,FOLLOW_36_in_modifier2046); if (failed) return ;
 
@@ -4002,13 +4021,13 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start packageOrTypeName
-    // src/junitconverter/Java.g:510:1: packageOrTypeName : qualifiedName ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:529:1: packageOrTypeName : qualifiedName ;
     public final void packageOrTypeName() throws RecognitionException {
         int packageOrTypeName_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 50) ) { return ; }
-            // src/junitconverter/Java.g:511:5: ( qualifiedName )
-            // src/junitconverter/Java.g:511:9: qualifiedName
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:530:5: ( qualifiedName )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:530:9: qualifiedName
             {
             pushFollow(FOLLOW_qualifiedName_in_packageOrTypeName2065);
             qualifiedName();
@@ -4031,13 +4050,13 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start enumConstantName
-    // src/junitconverter/Java.g:514:1: enumConstantName : Identifier ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:533:1: enumConstantName : Identifier ;
     public final void enumConstantName() throws RecognitionException {
         int enumConstantName_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 51) ) { return ; }
-            // src/junitconverter/Java.g:515:5: ( Identifier )
-            // src/junitconverter/Java.g:515:9: Identifier
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:534:5: ( Identifier )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:534:9: Identifier
             {
             match(input,Identifier,FOLLOW_Identifier_in_enumConstantName2084); if (failed) return ;
 
@@ -4057,13 +4076,13 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start typeName
-    // src/junitconverter/Java.g:518:1: typeName : qualifiedName ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:537:1: typeName : qualifiedName ;
     public final void typeName() throws RecognitionException {
         int typeName_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 52) ) { return ; }
-            // src/junitconverter/Java.g:519:5: ( qualifiedName )
-            // src/junitconverter/Java.g:519:9: qualifiedName
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:538:5: ( qualifiedName )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:538:9: qualifiedName
             {
             pushFollow(FOLLOW_qualifiedName_in_typeName2103);
             qualifiedName();
@@ -4088,14 +4107,14 @@ public class JavaParser extends Parser {
     };
 
     // $ANTLR start type
-    // src/junitconverter/Java.g:522:1: type : ( classOrInterfaceType ( '[' ']' )* | primitiveType ( '[' ']' )* );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:541:1: type : ( classOrInterfaceType ( '[' ']' )* | primitiveType ( '[' ']' )* );
     public final type_return type() throws RecognitionException {
         type_return retval = new type_return();
         retval.start = input.LT(1);
         int type_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 53) ) { return retval; }
-            // src/junitconverter/Java.g:523:2: ( classOrInterfaceType ( '[' ']' )* | primitiveType ( '[' ']' )* )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:542:2: ( classOrInterfaceType ( '[' ']' )* | primitiveType ( '[' ']' )* )
             int alt69=2;
             int LA69_0 = input.LA(1);
 
@@ -4108,19 +4127,19 @@ public class JavaParser extends Parser {
             else {
                 if (backtracking>0) {failed=true; return retval;}
                 NoViableAltException nvae =
-                    new NoViableAltException("522:1: type : ( classOrInterfaceType ( '[' ']' )* | primitiveType ( '[' ']' )* );", 69, 0, input);
+                    new NoViableAltException("541:1: type : ( classOrInterfaceType ( '[' ']' )* | primitiveType ( '[' ']' )* );", 69, 0, input);
 
                 throw nvae;
             }
             switch (alt69) {
                 case 1 :
-                    // src/junitconverter/Java.g:523:4: classOrInterfaceType ( '[' ']' )*
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:542:4: classOrInterfaceType ( '[' ']' )*
                     {
                     pushFollow(FOLLOW_classOrInterfaceType_in_type2117);
                     classOrInterfaceType();
                     _fsp--;
                     if (failed) return retval;
-                    // src/junitconverter/Java.g:523:25: ( '[' ']' )*
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:542:25: ( '[' ']' )*
                     loop67:
                     do {
                         int alt67=2;
@@ -4133,7 +4152,7 @@ public class JavaParser extends Parser {
 
                         switch (alt67) {
                     	case 1 :
-                    	    // src/junitconverter/Java.g:523:26: '[' ']'
+                    	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:542:26: '[' ']'
                     	    {
                     	    match(input,48,FOLLOW_48_in_type2120); if (failed) return retval;
                     	    match(input,49,FOLLOW_49_in_type2122); if (failed) return retval;
@@ -4150,13 +4169,13 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:524:4: primitiveType ( '[' ']' )*
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:543:4: primitiveType ( '[' ']' )*
                     {
                     pushFollow(FOLLOW_primitiveType_in_type2129);
                     primitiveType();
                     _fsp--;
                     if (failed) return retval;
-                    // src/junitconverter/Java.g:524:18: ( '[' ']' )*
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:543:18: ( '[' ']' )*
                     loop68:
                     do {
                         int alt68=2;
@@ -4169,7 +4188,7 @@ public class JavaParser extends Parser {
 
                         switch (alt68) {
                     	case 1 :
-                    	    // src/junitconverter/Java.g:524:19: '[' ']'
+                    	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:543:19: '[' ']'
                     	    {
                     	    match(input,48,FOLLOW_48_in_type2132); if (failed) return retval;
                     	    match(input,49,FOLLOW_49_in_type2134); if (failed) return retval;
@@ -4203,19 +4222,19 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start classOrInterfaceType
-    // src/junitconverter/Java.g:527:1: classOrInterfaceType : name= Identifier ( typeArguments )? ( '.' Identifier ( typeArguments )? )* ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:546:1: classOrInterfaceType : name= Identifier ( typeArguments )? ( '.' Identifier ( typeArguments )? )* ;
     public final void classOrInterfaceType() throws RecognitionException {
         int classOrInterfaceType_StartIndex = input.index();
         Token name=null;
 
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 54) ) { return ; }
-            // src/junitconverter/Java.g:528:2: (name= Identifier ( typeArguments )? ( '.' Identifier ( typeArguments )? )* )
-            // src/junitconverter/Java.g:528:4: name= Identifier ( typeArguments )? ( '.' Identifier ( typeArguments )? )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:547:2: (name= Identifier ( typeArguments )? ( '.' Identifier ( typeArguments )? )* )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:547:4: name= Identifier ( typeArguments )? ( '.' Identifier ( typeArguments )? )*
             {
             name=(Token)input.LT(1);
             match(input,Identifier,FOLLOW_Identifier_in_classOrInterfaceType2149); if (failed) return ;
-            // src/junitconverter/Java.g:528:20: ( typeArguments )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:547:20: ( typeArguments )?
             int alt70=2;
             int LA70_0 = input.LA(1);
 
@@ -4228,7 +4247,7 @@ public class JavaParser extends Parser {
             }
             switch (alt70) {
                 case 1 :
-                    // src/junitconverter/Java.g:528:21: typeArguments
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:547:21: typeArguments
                     {
                     pushFollow(FOLLOW_typeArguments_in_classOrInterfaceType2152);
                     typeArguments();
@@ -4240,7 +4259,7 @@ public class JavaParser extends Parser {
 
             }
 
-            // src/junitconverter/Java.g:528:37: ( '.' Identifier ( typeArguments )? )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:547:37: ( '.' Identifier ( typeArguments )? )*
             loop72:
             do {
                 int alt72=2;
@@ -4253,11 +4272,11 @@ public class JavaParser extends Parser {
 
                 switch (alt72) {
             	case 1 :
-            	    // src/junitconverter/Java.g:528:38: '.' Identifier ( typeArguments )?
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:547:38: '.' Identifier ( typeArguments )?
             	    {
             	    match(input,29,FOLLOW_29_in_classOrInterfaceType2157); if (failed) return ;
             	    match(input,Identifier,FOLLOW_Identifier_in_classOrInterfaceType2159); if (failed) return ;
-            	    // src/junitconverter/Java.g:528:53: ( typeArguments )?
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:547:53: ( typeArguments )?
             	    int alt71=2;
             	    int LA71_0 = input.LA(1);
 
@@ -4270,7 +4289,7 @@ public class JavaParser extends Parser {
             	    }
             	    switch (alt71) {
             	        case 1 :
-            	            // src/junitconverter/Java.g:528:54: typeArguments
+            	            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:547:54: typeArguments
             	            {
             	            pushFollow(FOLLOW_typeArguments_in_classOrInterfaceType2162);
             	            typeArguments();
@@ -4311,13 +4330,13 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start primitiveType
-    // src/junitconverter/Java.g:531:1: primitiveType : ( 'boolean' | 'char' | 'byte' | 'short' | 'int' | 'long' | 'float' | 'double' );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:550:1: primitiveType : ( 'boolean' | 'char' | 'byte' | 'short' | 'int' | 'long' | 'float' | 'double' );
     public final void primitiveType() throws RecognitionException {
         int primitiveType_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 55) ) { return ; }
-            // src/junitconverter/Java.g:532:5: ( 'boolean' | 'char' | 'byte' | 'short' | 'int' | 'long' | 'float' | 'double' )
-            // src/junitconverter/Java.g:
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:551:5: ( 'boolean' | 'char' | 'byte' | 'short' | 'int' | 'long' | 'float' | 'double' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:
             {
             if ( (input.LA(1)>=56 && input.LA(1)<=63) ) {
                 input.consume();
@@ -4347,12 +4366,12 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start variableModifier
-    // src/junitconverter/Java.g:542:1: variableModifier : ( 'final' | annotation );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:561:1: variableModifier : ( 'final' | annotation );
     public final void variableModifier() throws RecognitionException {
         int variableModifier_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 56) ) { return ; }
-            // src/junitconverter/Java.g:543:5: ( 'final' | annotation )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:562:5: ( 'final' | annotation )
             int alt73=2;
             int LA73_0 = input.LA(1);
 
@@ -4365,20 +4384,20 @@ public class JavaParser extends Parser {
             else {
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("542:1: variableModifier : ( 'final' | annotation );", 73, 0, input);
+                    new NoViableAltException("561:1: variableModifier : ( 'final' | annotation );", 73, 0, input);
 
                 throw nvae;
             }
             switch (alt73) {
                 case 1 :
-                    // src/junitconverter/Java.g:543:9: 'final'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:562:9: 'final'
                     {
                     match(input,35,FOLLOW_35_in_variableModifier2275); if (failed) return ;
 
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:544:9: annotation
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:563:9: annotation
                     {
                     pushFollow(FOLLOW_annotation_in_variableModifier2285);
                     annotation();
@@ -4403,20 +4422,20 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start typeArguments
-    // src/junitconverter/Java.g:547:1: typeArguments : '<' typeArgument ( ',' typeArgument )* '>' ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:566:1: typeArguments : '<' typeArgument ( ',' typeArgument )* '>' ;
     public final void typeArguments() throws RecognitionException {
         int typeArguments_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 57) ) { return ; }
-            // src/junitconverter/Java.g:548:5: ( '<' typeArgument ( ',' typeArgument )* '>' )
-            // src/junitconverter/Java.g:548:9: '<' typeArgument ( ',' typeArgument )* '>'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:567:5: ( '<' typeArgument ( ',' typeArgument )* '>' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:567:9: '<' typeArgument ( ',' typeArgument )* '>'
             {
             match(input,40,FOLLOW_40_in_typeArguments2304); if (failed) return ;
             pushFollow(FOLLOW_typeArgument_in_typeArguments2306);
             typeArgument();
             _fsp--;
             if (failed) return ;
-            // src/junitconverter/Java.g:548:26: ( ',' typeArgument )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:567:26: ( ',' typeArgument )*
             loop74:
             do {
                 int alt74=2;
@@ -4429,7 +4448,7 @@ public class JavaParser extends Parser {
 
                 switch (alt74) {
             	case 1 :
-            	    // src/junitconverter/Java.g:548:27: ',' typeArgument
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:567:27: ',' typeArgument
             	    {
             	    match(input,41,FOLLOW_41_in_typeArguments2309); if (failed) return ;
             	    pushFollow(FOLLOW_typeArgument_in_typeArguments2311);
@@ -4463,12 +4482,12 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start typeArgument
-    // src/junitconverter/Java.g:551:1: typeArgument : ( type | '?' ( ( 'extends' | 'super' ) type )? );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:570:1: typeArgument : ( type | '?' ( ( 'extends' | 'super' ) type )? );
     public final void typeArgument() throws RecognitionException {
         int typeArgument_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 58) ) { return ; }
-            // src/junitconverter/Java.g:552:5: ( type | '?' ( ( 'extends' | 'super' ) type )? )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:571:5: ( type | '?' ( ( 'extends' | 'super' ) type )? )
             int alt76=2;
             int LA76_0 = input.LA(1);
 
@@ -4481,13 +4500,13 @@ public class JavaParser extends Parser {
             else {
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("551:1: typeArgument : ( type | '?' ( ( 'extends' | 'super' ) type )? );", 76, 0, input);
+                    new NoViableAltException("570:1: typeArgument : ( type | '?' ( ( 'extends' | 'super' ) type )? );", 76, 0, input);
 
                 throw nvae;
             }
             switch (alt76) {
                 case 1 :
-                    // src/junitconverter/Java.g:552:9: type
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:571:9: type
                     {
                     pushFollow(FOLLOW_type_in_typeArgument2338);
                     type();
@@ -4497,10 +4516,10 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:553:9: '?' ( ( 'extends' | 'super' ) type )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:572:9: '?' ( ( 'extends' | 'super' ) type )?
                     {
                     match(input,64,FOLLOW_64_in_typeArgument2348); if (failed) return ;
-                    // src/junitconverter/Java.g:553:13: ( ( 'extends' | 'super' ) type )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:572:13: ( ( 'extends' | 'super' ) type )?
                     int alt75=2;
                     int LA75_0 = input.LA(1);
 
@@ -4509,7 +4528,7 @@ public class JavaParser extends Parser {
                     }
                     switch (alt75) {
                         case 1 :
-                            // src/junitconverter/Java.g:553:14: ( 'extends' | 'super' ) type
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:572:14: ( 'extends' | 'super' ) type
                             {
                             if ( input.LA(1)==38||input.LA(1)==65 ) {
                                 input.consume();
@@ -4551,19 +4570,19 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start qualifiedNameList
-    // src/junitconverter/Java.g:556:1: qualifiedNameList : qualifiedName ( ',' qualifiedName )* ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:575:1: qualifiedNameList : qualifiedName ( ',' qualifiedName )* ;
     public final void qualifiedNameList() throws RecognitionException {
         int qualifiedNameList_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 59) ) { return ; }
-            // src/junitconverter/Java.g:557:5: ( qualifiedName ( ',' qualifiedName )* )
-            // src/junitconverter/Java.g:557:9: qualifiedName ( ',' qualifiedName )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:576:5: ( qualifiedName ( ',' qualifiedName )* )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:576:9: qualifiedName ( ',' qualifiedName )*
             {
             pushFollow(FOLLOW_qualifiedName_in_qualifiedNameList2384);
             qualifiedName();
             _fsp--;
             if (failed) return ;
-            // src/junitconverter/Java.g:557:23: ( ',' qualifiedName )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:576:23: ( ',' qualifiedName )*
             loop77:
             do {
                 int alt77=2;
@@ -4576,7 +4595,7 @@ public class JavaParser extends Parser {
 
                 switch (alt77) {
             	case 1 :
-            	    // src/junitconverter/Java.g:557:24: ',' qualifiedName
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:576:24: ',' qualifiedName
             	    {
             	    match(input,41,FOLLOW_41_in_qualifiedNameList2387); if (failed) return ;
             	    pushFollow(FOLLOW_qualifiedName_in_qualifiedNameList2389);
@@ -4609,16 +4628,16 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start formalParameters
-    // src/junitconverter/Java.g:560:1: formalParameters : '(' ( formalParameterDecls )? ')' ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:579:1: formalParameters : '(' ( formalParameterDecls )? ')' ;
     public final void formalParameters() throws RecognitionException {
         int formalParameters_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 60) ) { return ; }
-            // src/junitconverter/Java.g:561:5: ( '(' ( formalParameterDecls )? ')' )
-            // src/junitconverter/Java.g:561:9: '(' ( formalParameterDecls )? ')'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:580:5: ( '(' ( formalParameterDecls )? ')' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:580:9: '(' ( formalParameterDecls )? ')'
             {
             match(input,66,FOLLOW_66_in_formalParameters2410); if (failed) return ;
-            // src/junitconverter/Java.g:561:13: ( formalParameterDecls )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:580:13: ( formalParameterDecls )?
             int alt78=2;
             int LA78_0 = input.LA(1);
 
@@ -4627,7 +4646,7 @@ public class JavaParser extends Parser {
             }
             switch (alt78) {
                 case 1 :
-                    // src/junitconverter/Java.g:0:0: formalParameterDecls
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:0:0: formalParameterDecls
                     {
                     pushFollow(FOLLOW_formalParameterDecls_in_formalParameters2412);
                     formalParameterDecls();
@@ -4657,13 +4676,13 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start formalParameterDecls
-    // src/junitconverter/Java.g:564:1: formalParameterDecls : variableModifiers type formalParameterDeclsRest ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:583:1: formalParameterDecls : variableModifiers type formalParameterDeclsRest ;
     public final void formalParameterDecls() throws RecognitionException {
         int formalParameterDecls_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 61) ) { return ; }
-            // src/junitconverter/Java.g:565:5: ( variableModifiers type formalParameterDeclsRest )
-            // src/junitconverter/Java.g:565:9: variableModifiers type formalParameterDeclsRest
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:584:5: ( variableModifiers type formalParameterDeclsRest )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:584:9: variableModifiers type formalParameterDeclsRest
             {
             pushFollow(FOLLOW_variableModifiers_in_formalParameterDecls2438);
             variableModifiers();
@@ -4694,12 +4713,12 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start formalParameterDeclsRest
-    // src/junitconverter/Java.g:568:1: formalParameterDeclsRest : ( variableDeclaratorId ( ',' formalParameterDecls )? | '...' variableDeclaratorId );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:587:1: formalParameterDeclsRest : ( variableDeclaratorId ( ',' formalParameterDecls )? | '...' variableDeclaratorId );
     public final void formalParameterDeclsRest() throws RecognitionException {
         int formalParameterDeclsRest_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 62) ) { return ; }
-            // src/junitconverter/Java.g:569:5: ( variableDeclaratorId ( ',' formalParameterDecls )? | '...' variableDeclaratorId )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:588:5: ( variableDeclaratorId ( ',' formalParameterDecls )? | '...' variableDeclaratorId )
             int alt80=2;
             int LA80_0 = input.LA(1);
 
@@ -4712,19 +4731,19 @@ public class JavaParser extends Parser {
             else {
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("568:1: formalParameterDeclsRest : ( variableDeclaratorId ( ',' formalParameterDecls )? | '...' variableDeclaratorId );", 80, 0, input);
+                    new NoViableAltException("587:1: formalParameterDeclsRest : ( variableDeclaratorId ( ',' formalParameterDecls )? | '...' variableDeclaratorId );", 80, 0, input);
 
                 throw nvae;
             }
             switch (alt80) {
                 case 1 :
-                    // src/junitconverter/Java.g:569:9: variableDeclaratorId ( ',' formalParameterDecls )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:588:9: variableDeclaratorId ( ',' formalParameterDecls )?
                     {
                     pushFollow(FOLLOW_variableDeclaratorId_in_formalParameterDeclsRest2465);
                     variableDeclaratorId();
                     _fsp--;
                     if (failed) return ;
-                    // src/junitconverter/Java.g:569:30: ( ',' formalParameterDecls )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:588:30: ( ',' formalParameterDecls )?
                     int alt79=2;
                     int LA79_0 = input.LA(1);
 
@@ -4733,7 +4752,7 @@ public class JavaParser extends Parser {
                     }
                     switch (alt79) {
                         case 1 :
-                            // src/junitconverter/Java.g:569:31: ',' formalParameterDecls
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:588:31: ',' formalParameterDecls
                             {
                             match(input,41,FOLLOW_41_in_formalParameterDeclsRest2468); if (failed) return ;
                             pushFollow(FOLLOW_formalParameterDecls_in_formalParameterDeclsRest2470);
@@ -4750,7 +4769,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:570:9: '...' variableDeclaratorId
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:589:9: '...' variableDeclaratorId
                     {
                     match(input,68,FOLLOW_68_in_formalParameterDeclsRest2482); if (failed) return ;
                     pushFollow(FOLLOW_variableDeclaratorId_in_formalParameterDeclsRest2484);
@@ -4776,13 +4795,13 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start methodBody
-    // src/junitconverter/Java.g:573:1: methodBody : block ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:592:1: methodBody : block ;
     public final void methodBody() throws RecognitionException {
         int methodBody_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 63) ) { return ; }
-            // src/junitconverter/Java.g:574:5: ( block )
-            // src/junitconverter/Java.g:574:9: block
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:593:5: ( block )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:593:9: block
             {
             pushFollow(FOLLOW_block_in_methodBody2507);
             block();
@@ -4805,16 +4824,16 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start constructorBody
-    // src/junitconverter/Java.g:577:1: constructorBody : '{' ( explicitConstructorInvocation )? ( blockStatement )* '}' ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:596:1: constructorBody : '{' ( explicitConstructorInvocation )? ( blockStatement )* '}' ;
     public final void constructorBody() throws RecognitionException {
         int constructorBody_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 64) ) { return ; }
-            // src/junitconverter/Java.g:578:5: ( '{' ( explicitConstructorInvocation )? ( blockStatement )* '}' )
-            // src/junitconverter/Java.g:578:9: '{' ( explicitConstructorInvocation )? ( blockStatement )* '}'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:597:5: ( '{' ( explicitConstructorInvocation )? ( blockStatement )* '}' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:597:9: '{' ( explicitConstructorInvocation )? ( blockStatement )* '}'
             {
             match(input,44,FOLLOW_44_in_constructorBody2526); if (failed) return ;
-            // src/junitconverter/Java.g:578:13: ( explicitConstructorInvocation )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:597:13: ( explicitConstructorInvocation )?
             int alt81=2;
             switch ( input.LA(1) ) {
                 case 40:
@@ -4825,7 +4844,7 @@ public class JavaParser extends Parser {
                 case 69:
                     {
                     switch ( input.LA(2) ) {
-                        case 66:
+                        case 29:
                             {
                             int LA81_47 = input.LA(3);
 
@@ -4834,7 +4853,7 @@ public class JavaParser extends Parser {
                             }
                             }
                             break;
-                        case 29:
+                        case 48:
                             {
                             int LA81_48 = input.LA(3);
 
@@ -4843,7 +4862,7 @@ public class JavaParser extends Parser {
                             }
                             }
                             break;
-                        case 48:
+                        case 66:
                             {
                             int LA81_49 = input.LA(3);
 
@@ -4879,14 +4898,7 @@ public class JavaParser extends Parser {
                 case 66:
                     {
                     switch ( input.LA(2) ) {
-                        case 56:
-                        case 57:
-                        case 58:
-                        case 59:
-                        case 60:
-                        case 61:
-                        case 62:
-                        case 63:
+                        case 105:
                             {
                             int LA81_75 = input.LA(3);
 
@@ -4895,7 +4907,7 @@ public class JavaParser extends Parser {
                             }
                             }
                             break;
-                        case Identifier:
+                        case 106:
                             {
                             int LA81_76 = input.LA(3);
 
@@ -4904,7 +4916,7 @@ public class JavaParser extends Parser {
                             }
                             }
                             break;
-                        case 105:
+                        case 109:
                             {
                             int LA81_77 = input.LA(3);
 
@@ -4913,7 +4925,7 @@ public class JavaParser extends Parser {
                             }
                             }
                             break;
-                        case 106:
+                        case 110:
                             {
                             int LA81_78 = input.LA(3);
 
@@ -4922,7 +4934,7 @@ public class JavaParser extends Parser {
                             }
                             }
                             break;
-                        case 109:
+                        case 111:
                             {
                             int LA81_79 = input.LA(3);
 
@@ -4931,7 +4943,7 @@ public class JavaParser extends Parser {
                             }
                             }
                             break;
-                        case 110:
+                        case 112:
                             {
                             int LA81_80 = input.LA(3);
 
@@ -4940,7 +4952,7 @@ public class JavaParser extends Parser {
                             }
                             }
                             break;
-                        case 111:
+                        case 66:
                             {
                             int LA81_81 = input.LA(3);
 
@@ -4949,7 +4961,7 @@ public class JavaParser extends Parser {
                             }
                             }
                             break;
-                        case 112:
+                        case 69:
                             {
                             int LA81_82 = input.LA(3);
 
@@ -4958,27 +4970,9 @@ public class JavaParser extends Parser {
                             }
                             }
                             break;
-                        case 66:
-                            {
-                            int LA81_83 = input.LA(3);
-
-                            if ( (synpred113()) ) {
-                                alt81=1;
-                            }
-                            }
-                            break;
-                        case 69:
-                            {
-                            int LA81_84 = input.LA(3);
-
-                            if ( (synpred113()) ) {
-                                alt81=1;
-                            }
-                            }
-                            break;
                         case 65:
                             {
-                            int LA81_85 = input.LA(3);
+                            int LA81_83 = input.LA(3);
 
                             if ( (synpred113()) ) {
                                 alt81=1;
@@ -4989,7 +4983,7 @@ public class JavaParser extends Parser {
                         case OctalLiteral:
                         case DecimalLiteral:
                             {
-                            int LA81_86 = input.LA(3);
+                            int LA81_84 = input.LA(3);
 
                             if ( (synpred113()) ) {
                                 alt81=1;
@@ -4998,7 +4992,7 @@ public class JavaParser extends Parser {
                             break;
                         case FloatingPointLiteral:
                             {
-                            int LA81_87 = input.LA(3);
+                            int LA81_85 = input.LA(3);
 
                             if ( (synpred113()) ) {
                                 alt81=1;
@@ -5007,7 +5001,7 @@ public class JavaParser extends Parser {
                             break;
                         case CharacterLiteral:
                             {
-                            int LA81_88 = input.LA(3);
+                            int LA81_86 = input.LA(3);
 
                             if ( (synpred113()) ) {
                                 alt81=1;
@@ -5016,7 +5010,7 @@ public class JavaParser extends Parser {
                             break;
                         case StringLiteral:
                             {
-                            int LA81_89 = input.LA(3);
+                            int LA81_87 = input.LA(3);
 
                             if ( (synpred113()) ) {
                                 alt81=1;
@@ -5026,7 +5020,7 @@ public class JavaParser extends Parser {
                         case 71:
                         case 72:
                             {
-                            int LA81_90 = input.LA(3);
+                            int LA81_88 = input.LA(3);
 
                             if ( (synpred113()) ) {
                                 alt81=1;
@@ -5035,7 +5029,7 @@ public class JavaParser extends Parser {
                             break;
                         case 70:
                             {
-                            int LA81_91 = input.LA(3);
+                            int LA81_89 = input.LA(3);
 
                             if ( (synpred113()) ) {
                                 alt81=1;
@@ -5043,6 +5037,31 @@ public class JavaParser extends Parser {
                             }
                             break;
                         case 113:
+                            {
+                            int LA81_90 = input.LA(3);
+
+                            if ( (synpred113()) ) {
+                                alt81=1;
+                            }
+                            }
+                            break;
+                        case Identifier:
+                            {
+                            int LA81_91 = input.LA(3);
+
+                            if ( (synpred113()) ) {
+                                alt81=1;
+                            }
+                            }
+                            break;
+                        case 56:
+                        case 57:
+                        case 58:
+                        case 59:
+                        case 60:
+                        case 61:
+                        case 62:
+                        case 63:
                             {
                             int LA81_92 = input.LA(3);
 
@@ -5239,7 +5258,7 @@ public class JavaParser extends Parser {
                         }
                     }
                     else if ( (LA81_13==29) ) {
-                        int LA81_277 = input.LA(3);
+                        int LA81_276 = input.LA(3);
 
                         if ( (synpred113()) ) {
                             alt81=1;
@@ -5264,7 +5283,7 @@ public class JavaParser extends Parser {
 
             switch (alt81) {
                 case 1 :
-                    // src/junitconverter/Java.g:0:0: explicitConstructorInvocation
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:0:0: explicitConstructorInvocation
                     {
                     pushFollow(FOLLOW_explicitConstructorInvocation_in_constructorBody2528);
                     explicitConstructorInvocation();
@@ -5276,7 +5295,7 @@ public class JavaParser extends Parser {
 
             }
 
-            // src/junitconverter/Java.g:578:44: ( blockStatement )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:597:44: ( blockStatement )*
             loop82:
             do {
                 int alt82=2;
@@ -5289,7 +5308,7 @@ public class JavaParser extends Parser {
 
                 switch (alt82) {
             	case 1 :
-            	    // src/junitconverter/Java.g:0:0: blockStatement
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:0:0: blockStatement
             	    {
             	    pushFollow(FOLLOW_blockStatement_in_constructorBody2531);
             	    blockStatement();
@@ -5322,14 +5341,14 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start explicitConstructorInvocation
-    // src/junitconverter/Java.g:581:1: explicitConstructorInvocation : ( ( nonWildcardTypeArguments )? ( 'this' | t1= 'super' ) arguments ';' | primary '.' ( nonWildcardTypeArguments )? t1= 'super' arguments ';' );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:600:1: explicitConstructorInvocation : ( ( nonWildcardTypeArguments )? ( 'this' | t1= 'super' ) arguments ';' | primary '.' ( nonWildcardTypeArguments )? t1= 'super' arguments ';' );
     public final void explicitConstructorInvocation() throws RecognitionException {
         int explicitConstructorInvocation_StartIndex = input.index();
         Token t1=null;
 
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 65) ) { return ; }
-            // src/junitconverter/Java.g:582:5: ( ( nonWildcardTypeArguments )? ( 'this' | t1= 'super' ) arguments ';' | primary '.' ( nonWildcardTypeArguments )? t1= 'super' arguments ';' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:601:5: ( ( nonWildcardTypeArguments )? ( 'this' | t1= 'super' ) arguments ';' | primary '.' ( nonWildcardTypeArguments )? t1= 'super' arguments ';' )
             int alt86=2;
             switch ( input.LA(1) ) {
             case 40:
@@ -5341,11 +5360,8 @@ public class JavaParser extends Parser {
                 {
                 int LA86_2 = input.LA(2);
 
-                if ( (LA86_2==29||LA86_2==48) ) {
-                    alt86=2;
-                }
-                else if ( (LA86_2==66) ) {
-                    int LA86_17 = input.LA(3);
+                if ( (LA86_2==66) ) {
+                    int LA86_15 = input.LA(3);
 
                     if ( (synpred117()) ) {
                         alt86=1;
@@ -5356,15 +5372,18 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("581:1: explicitConstructorInvocation : ( ( nonWildcardTypeArguments )? ( 'this' | t1= 'super' ) arguments ';' | primary '.' ( nonWildcardTypeArguments )? t1= 'super' arguments ';' );", 86, 17, input);
+                            new NoViableAltException("600:1: explicitConstructorInvocation : ( ( nonWildcardTypeArguments )? ( 'this' | t1= 'super' ) arguments ';' | primary '.' ( nonWildcardTypeArguments )? t1= 'super' arguments ';' );", 86, 15, input);
 
                         throw nvae;
                     }
                 }
+                else if ( (LA86_2==29||LA86_2==48) ) {
+                    alt86=2;
+                }
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("581:1: explicitConstructorInvocation : ( ( nonWildcardTypeArguments )? ( 'this' | t1= 'super' ) arguments ';' | primary '.' ( nonWildcardTypeArguments )? t1= 'super' arguments ';' );", 86, 2, input);
+                        new NoViableAltException("600:1: explicitConstructorInvocation : ( ( nonWildcardTypeArguments )? ( 'this' | t1= 'super' ) arguments ';' | primary '.' ( nonWildcardTypeArguments )? t1= 'super' arguments ';' );", 86, 2, input);
 
                     throw nvae;
                 }
@@ -5386,7 +5405,7 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("581:1: explicitConstructorInvocation : ( ( nonWildcardTypeArguments )? ( 'this' | t1= 'super' ) arguments ';' | primary '.' ( nonWildcardTypeArguments )? t1= 'super' arguments ';' );", 86, 18, input);
+                            new NoViableAltException("600:1: explicitConstructorInvocation : ( ( nonWildcardTypeArguments )? ( 'this' | t1= 'super' ) arguments ';' | primary '.' ( nonWildcardTypeArguments )? t1= 'super' arguments ';' );", 86, 18, input);
 
                         throw nvae;
                     }
@@ -5397,7 +5416,7 @@ public class JavaParser extends Parser {
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("581:1: explicitConstructorInvocation : ( ( nonWildcardTypeArguments )? ( 'this' | t1= 'super' ) arguments ';' | primary '.' ( nonWildcardTypeArguments )? t1= 'super' arguments ';' );", 86, 3, input);
+                        new NoViableAltException("600:1: explicitConstructorInvocation : ( ( nonWildcardTypeArguments )? ( 'this' | t1= 'super' ) arguments ';' | primary '.' ( nonWildcardTypeArguments )? t1= 'super' arguments ';' );", 86, 3, input);
 
                     throw nvae;
                 }
@@ -5431,16 +5450,16 @@ public class JavaParser extends Parser {
             default:
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("581:1: explicitConstructorInvocation : ( ( nonWildcardTypeArguments )? ( 'this' | t1= 'super' ) arguments ';' | primary '.' ( nonWildcardTypeArguments )? t1= 'super' arguments ';' );", 86, 0, input);
+                    new NoViableAltException("600:1: explicitConstructorInvocation : ( ( nonWildcardTypeArguments )? ( 'this' | t1= 'super' ) arguments ';' | primary '.' ( nonWildcardTypeArguments )? t1= 'super' arguments ';' );", 86, 0, input);
 
                 throw nvae;
             }
 
             switch (alt86) {
                 case 1 :
-                    // src/junitconverter/Java.g:582:9: ( nonWildcardTypeArguments )? ( 'this' | t1= 'super' ) arguments ';'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:601:9: ( nonWildcardTypeArguments )? ( 'this' | t1= 'super' ) arguments ';'
                     {
-                    // src/junitconverter/Java.g:582:9: ( nonWildcardTypeArguments )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:601:9: ( nonWildcardTypeArguments )?
                     int alt83=2;
                     int LA83_0 = input.LA(1);
 
@@ -5449,7 +5468,7 @@ public class JavaParser extends Parser {
                     }
                     switch (alt83) {
                         case 1 :
-                            // src/junitconverter/Java.g:582:10: nonWildcardTypeArguments
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:601:10: nonWildcardTypeArguments
                             {
                             pushFollow(FOLLOW_nonWildcardTypeArguments_in_explicitConstructorInvocation2554);
                             nonWildcardTypeArguments();
@@ -5461,7 +5480,7 @@ public class JavaParser extends Parser {
 
                     }
 
-                    // src/junitconverter/Java.g:582:37: ( 'this' | t1= 'super' )
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:601:37: ( 'this' | t1= 'super' )
                     int alt84=2;
                     int LA84_0 = input.LA(1);
 
@@ -5474,20 +5493,20 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("582:37: ( 'this' | t1= 'super' )", 84, 0, input);
+                            new NoViableAltException("601:37: ( 'this' | t1= 'super' )", 84, 0, input);
 
                         throw nvae;
                     }
                     switch (alt84) {
                         case 1 :
-                            // src/junitconverter/Java.g:582:38: 'this'
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:601:38: 'this'
                             {
                             match(input,69,FOLLOW_69_in_explicitConstructorInvocation2559); if (failed) return ;
 
                             }
                             break;
                         case 2 :
-                            // src/junitconverter/Java.g:582:47: t1= 'super'
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:601:47: t1= 'super'
                             {
                             t1=(Token)input.LT(1);
                             match(input,65,FOLLOW_65_in_explicitConstructorInvocation2565); if (failed) return ;
@@ -5509,14 +5528,14 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:583:9: primary '.' ( nonWildcardTypeArguments )? t1= 'super' arguments ';'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:602:9: primary '.' ( nonWildcardTypeArguments )? t1= 'super' arguments ';'
                     {
                     pushFollow(FOLLOW_primary_in_explicitConstructorInvocation2582);
                     primary();
                     _fsp--;
                     if (failed) return ;
                     match(input,29,FOLLOW_29_in_explicitConstructorInvocation2584); if (failed) return ;
-                    // src/junitconverter/Java.g:583:21: ( nonWildcardTypeArguments )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:602:21: ( nonWildcardTypeArguments )?
                     int alt85=2;
                     int LA85_0 = input.LA(1);
 
@@ -5525,7 +5544,7 @@ public class JavaParser extends Parser {
                     }
                     switch (alt85) {
                         case 1 :
-                            // src/junitconverter/Java.g:0:0: nonWildcardTypeArguments
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:0:0: nonWildcardTypeArguments
                             {
                             pushFollow(FOLLOW_nonWildcardTypeArguments_in_explicitConstructorInvocation2586);
                             nonWildcardTypeArguments();
@@ -5568,18 +5587,18 @@ public class JavaParser extends Parser {
     };
 
     // $ANTLR start qualifiedName
-    // src/junitconverter/Java.g:587:1: qualifiedName : Identifier ( '.' Identifier )* ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:606:1: qualifiedName : Identifier ( '.' Identifier )* ;
     public final qualifiedName_return qualifiedName() throws RecognitionException {
         qualifiedName_return retval = new qualifiedName_return();
         retval.start = input.LT(1);
         int qualifiedName_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 66) ) { return retval; }
-            // src/junitconverter/Java.g:588:5: ( Identifier ( '.' Identifier )* )
-            // src/junitconverter/Java.g:588:9: Identifier ( '.' Identifier )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:607:5: ( Identifier ( '.' Identifier )* )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:607:9: Identifier ( '.' Identifier )*
             {
             match(input,Identifier,FOLLOW_Identifier_in_qualifiedName2617); if (failed) return retval;
-            // src/junitconverter/Java.g:588:20: ( '.' Identifier )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:607:20: ( '.' Identifier )*
             loop87:
             do {
                 int alt87=2;
@@ -5598,7 +5617,7 @@ public class JavaParser extends Parser {
 
                 switch (alt87) {
             	case 1 :
-            	    // src/junitconverter/Java.g:588:21: '.' Identifier
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:607:21: '.' Identifier
             	    {
             	    match(input,29,FOLLOW_29_in_qualifiedName2620); if (failed) return retval;
             	    match(input,Identifier,FOLLOW_Identifier_in_qualifiedName2622); if (failed) return retval;
@@ -5630,12 +5649,12 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start literal
-    // src/junitconverter/Java.g:591:1: literal : ( integerLiteral | FloatingPointLiteral | CharacterLiteral | StringLiteral | booleanLiteral | 'null' );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:610:1: literal : ( integerLiteral | FloatingPointLiteral | CharacterLiteral | StringLiteral | booleanLiteral | 'null' );
     public final void literal() throws RecognitionException {
         int literal_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 67) ) { return ; }
-            // src/junitconverter/Java.g:592:5: ( integerLiteral | FloatingPointLiteral | CharacterLiteral | StringLiteral | booleanLiteral | 'null' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:611:5: ( integerLiteral | FloatingPointLiteral | CharacterLiteral | StringLiteral | booleanLiteral | 'null' )
             int alt88=6;
             switch ( input.LA(1) ) {
             case HexLiteral:
@@ -5674,14 +5693,14 @@ public class JavaParser extends Parser {
             default:
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("591:1: literal : ( integerLiteral | FloatingPointLiteral | CharacterLiteral | StringLiteral | booleanLiteral | 'null' );", 88, 0, input);
+                    new NoViableAltException("610:1: literal : ( integerLiteral | FloatingPointLiteral | CharacterLiteral | StringLiteral | booleanLiteral | 'null' );", 88, 0, input);
 
                 throw nvae;
             }
 
             switch (alt88) {
                 case 1 :
-                    // src/junitconverter/Java.g:592:9: integerLiteral
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:611:9: integerLiteral
                     {
                     pushFollow(FOLLOW_integerLiteral_in_literal2648);
                     integerLiteral();
@@ -5691,28 +5710,28 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:593:9: FloatingPointLiteral
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:612:9: FloatingPointLiteral
                     {
                     match(input,FloatingPointLiteral,FOLLOW_FloatingPointLiteral_in_literal2658); if (failed) return ;
 
                     }
                     break;
                 case 3 :
-                    // src/junitconverter/Java.g:594:9: CharacterLiteral
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:613:9: CharacterLiteral
                     {
                     match(input,CharacterLiteral,FOLLOW_CharacterLiteral_in_literal2668); if (failed) return ;
 
                     }
                     break;
                 case 4 :
-                    // src/junitconverter/Java.g:595:9: StringLiteral
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:614:9: StringLiteral
                     {
                     match(input,StringLiteral,FOLLOW_StringLiteral_in_literal2678); if (failed) return ;
 
                     }
                     break;
                 case 5 :
-                    // src/junitconverter/Java.g:596:9: booleanLiteral
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:615:9: booleanLiteral
                     {
                     pushFollow(FOLLOW_booleanLiteral_in_literal2688);
                     booleanLiteral();
@@ -5722,7 +5741,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 6 :
-                    // src/junitconverter/Java.g:597:9: 'null'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:616:9: 'null'
                     {
                     match(input,70,FOLLOW_70_in_literal2698); if (failed) return ;
 
@@ -5744,13 +5763,13 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start integerLiteral
-    // src/junitconverter/Java.g:600:1: integerLiteral : ( HexLiteral | OctalLiteral | DecimalLiteral );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:619:1: integerLiteral : ( HexLiteral | OctalLiteral | DecimalLiteral );
     public final void integerLiteral() throws RecognitionException {
         int integerLiteral_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 68) ) { return ; }
-            // src/junitconverter/Java.g:601:5: ( HexLiteral | OctalLiteral | DecimalLiteral )
-            // src/junitconverter/Java.g:
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:620:5: ( HexLiteral | OctalLiteral | DecimalLiteral )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:
             {
             if ( (input.LA(1)>=HexLiteral && input.LA(1)<=DecimalLiteral) ) {
                 input.consume();
@@ -5780,13 +5799,13 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start booleanLiteral
-    // src/junitconverter/Java.g:606:1: booleanLiteral : ( 'true' | 'false' );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:625:1: booleanLiteral : ( 'true' | 'false' );
     public final void booleanLiteral() throws RecognitionException {
         int booleanLiteral_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 69) ) { return ; }
-            // src/junitconverter/Java.g:607:5: ( 'true' | 'false' )
-            // src/junitconverter/Java.g:
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:626:5: ( 'true' | 'false' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:
             {
             if ( (input.LA(1)>=71 && input.LA(1)<=72) ) {
                 input.consume();
@@ -5816,15 +5835,15 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start annotations
-    // src/junitconverter/Java.g:613:1: annotations : ( annotation )+ ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:632:1: annotations : ( annotation )+ ;
     public final void annotations() throws RecognitionException {
         int annotations_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 70) ) { return ; }
-            // src/junitconverter/Java.g:614:5: ( ( annotation )+ )
-            // src/junitconverter/Java.g:614:9: ( annotation )+
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:633:5: ( ( annotation )+ )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:633:9: ( annotation )+
             {
-            // src/junitconverter/Java.g:614:9: ( annotation )+
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:633:9: ( annotation )+
             int cnt89=0;
             loop89:
             do {
@@ -5850,7 +5869,7 @@ public class JavaParser extends Parser {
 
                 switch (alt89) {
             	case 1 :
-            	    // src/junitconverter/Java.g:0:0: annotation
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:0:0: annotation
             	    {
             	    pushFollow(FOLLOW_annotation_in_annotations2787);
             	    annotation();
@@ -5887,20 +5906,20 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start annotation
-    // src/junitconverter/Java.g:617:1: annotation : '@' annotationName ( '(' ( elementValuePairs | elementValue )? ')' )? ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:636:1: annotation : '@' annotationName ( '(' ( elementValuePairs | elementValue )? ')' )? ;
     public final void annotation() throws RecognitionException {
         int annotation_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 71) ) { return ; }
-            // src/junitconverter/Java.g:618:5: ( '@' annotationName ( '(' ( elementValuePairs | elementValue )? ')' )? )
-            // src/junitconverter/Java.g:618:9: '@' annotationName ( '(' ( elementValuePairs | elementValue )? ')' )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:637:5: ( '@' annotationName ( '(' ( elementValuePairs | elementValue )? ')' )? )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:637:9: '@' annotationName ( '(' ( elementValuePairs | elementValue )? ')' )?
             {
             match(input,73,FOLLOW_73_in_annotation2807); if (failed) return ;
             pushFollow(FOLLOW_annotationName_in_annotation2809);
             annotationName();
             _fsp--;
             if (failed) return ;
-            // src/junitconverter/Java.g:618:28: ( '(' ( elementValuePairs | elementValue )? ')' )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:637:28: ( '(' ( elementValuePairs | elementValue )? ')' )?
             int alt91=2;
             int LA91_0 = input.LA(1);
 
@@ -5909,10 +5928,10 @@ public class JavaParser extends Parser {
             }
             switch (alt91) {
                 case 1 :
-                    // src/junitconverter/Java.g:618:30: '(' ( elementValuePairs | elementValue )? ')'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:637:30: '(' ( elementValuePairs | elementValue )? ')'
                     {
                     match(input,66,FOLLOW_66_in_annotation2813); if (failed) return ;
-                    // src/junitconverter/Java.g:618:34: ( elementValuePairs | elementValue )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:637:34: ( elementValuePairs | elementValue )?
                     int alt90=3;
                     int LA90_0 = input.LA(1);
 
@@ -5931,7 +5950,7 @@ public class JavaParser extends Parser {
                     }
                     switch (alt90) {
                         case 1 :
-                            // src/junitconverter/Java.g:618:36: elementValuePairs
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:637:36: elementValuePairs
                             {
                             pushFollow(FOLLOW_elementValuePairs_in_annotation2817);
                             elementValuePairs();
@@ -5941,7 +5960,7 @@ public class JavaParser extends Parser {
                             }
                             break;
                         case 2 :
-                            // src/junitconverter/Java.g:618:56: elementValue
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:637:56: elementValue
                             {
                             pushFollow(FOLLOW_elementValue_in_annotation2821);
                             elementValue();
@@ -5977,19 +5996,19 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start annotationName
-    // src/junitconverter/Java.g:621:1: annotationName : name= Identifier ( '.' name= Identifier )* ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:640:1: annotationName : name= Identifier ( '.' name= Identifier )* ;
     public final void annotationName() throws RecognitionException {
         int annotationName_StartIndex = input.index();
         Token name=null;
 
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 72) ) { return ; }
-            // src/junitconverter/Java.g:622:5: (name= Identifier ( '.' name= Identifier )* )
-            // src/junitconverter/Java.g:622:7: name= Identifier ( '.' name= Identifier )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:641:5: (name= Identifier ( '.' name= Identifier )* )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:641:7: name= Identifier ( '.' name= Identifier )*
             {
             name=(Token)input.LT(1);
             match(input,Identifier,FOLLOW_Identifier_in_annotationName2852); if (failed) return ;
-            // src/junitconverter/Java.g:622:23: ( '.' name= Identifier )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:641:23: ( '.' name= Identifier )*
             loop92:
             do {
                 int alt92=2;
@@ -6002,7 +6021,7 @@ public class JavaParser extends Parser {
 
                 switch (alt92) {
             	case 1 :
-            	    // src/junitconverter/Java.g:622:24: '.' name= Identifier
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:641:24: '.' name= Identifier
             	    {
             	    match(input,29,FOLLOW_29_in_annotationName2855); if (failed) return ;
             	    name=(Token)input.LT(1);
@@ -6020,6 +6039,9 @@ public class JavaParser extends Parser {
 
                   	if (classDepth == 1 && name.getText().equals("Override")) {
                   		overrideAnnotationsLines.add(name.getLine());
+                  	}
+                  	if (classDepth == 1) {
+                  		currentAnnotations += name.getText() + " ";
                   	}
                   
             }
@@ -6040,19 +6062,19 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start elementValuePairs
-    // src/junitconverter/Java.g:629:1: elementValuePairs : elementValuePair ( ',' elementValuePair )* ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:651:1: elementValuePairs : elementValuePair ( ',' elementValuePair )* ;
     public final void elementValuePairs() throws RecognitionException {
         int elementValuePairs_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 73) ) { return ; }
-            // src/junitconverter/Java.g:630:5: ( elementValuePair ( ',' elementValuePair )* )
-            // src/junitconverter/Java.g:630:9: elementValuePair ( ',' elementValuePair )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:652:5: ( elementValuePair ( ',' elementValuePair )* )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:652:9: elementValuePair ( ',' elementValuePair )*
             {
             pushFollow(FOLLOW_elementValuePair_in_elementValuePairs2883);
             elementValuePair();
             _fsp--;
             if (failed) return ;
-            // src/junitconverter/Java.g:630:26: ( ',' elementValuePair )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:652:26: ( ',' elementValuePair )*
             loop93:
             do {
                 int alt93=2;
@@ -6065,7 +6087,7 @@ public class JavaParser extends Parser {
 
                 switch (alt93) {
             	case 1 :
-            	    // src/junitconverter/Java.g:630:27: ',' elementValuePair
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:652:27: ',' elementValuePair
             	    {
             	    match(input,41,FOLLOW_41_in_elementValuePairs2886); if (failed) return ;
             	    pushFollow(FOLLOW_elementValuePair_in_elementValuePairs2888);
@@ -6098,13 +6120,13 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start elementValuePair
-    // src/junitconverter/Java.g:633:1: elementValuePair : Identifier '=' elementValue ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:655:1: elementValuePair : Identifier '=' elementValue ;
     public final void elementValuePair() throws RecognitionException {
         int elementValuePair_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 74) ) { return ; }
-            // src/junitconverter/Java.g:634:5: ( Identifier '=' elementValue )
-            // src/junitconverter/Java.g:634:9: Identifier '=' elementValue
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:656:5: ( Identifier '=' elementValue )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:656:9: Identifier '=' elementValue
             {
             match(input,Identifier,FOLLOW_Identifier_in_elementValuePair2909); if (failed) return ;
             match(input,51,FOLLOW_51_in_elementValuePair2911); if (failed) return ;
@@ -6129,12 +6151,12 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start elementValue
-    // src/junitconverter/Java.g:637:1: elementValue : ( conditionalExpression | annotation | elementValueArrayInitializer );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:659:1: elementValue : ( conditionalExpression | annotation | elementValueArrayInitializer );
     public final void elementValue() throws RecognitionException {
         int elementValue_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 75) ) { return ; }
-            // src/junitconverter/Java.g:638:5: ( conditionalExpression | annotation | elementValueArrayInitializer )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:660:5: ( conditionalExpression | annotation | elementValueArrayInitializer )
             int alt94=3;
             switch ( input.LA(1) ) {
             case Identifier:
@@ -6183,14 +6205,14 @@ public class JavaParser extends Parser {
             default:
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("637:1: elementValue : ( conditionalExpression | annotation | elementValueArrayInitializer );", 94, 0, input);
+                    new NoViableAltException("659:1: elementValue : ( conditionalExpression | annotation | elementValueArrayInitializer );", 94, 0, input);
 
                 throw nvae;
             }
 
             switch (alt94) {
                 case 1 :
-                    // src/junitconverter/Java.g:638:9: conditionalExpression
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:660:9: conditionalExpression
                     {
                     pushFollow(FOLLOW_conditionalExpression_in_elementValue2936);
                     conditionalExpression();
@@ -6200,7 +6222,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:639:9: annotation
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:661:9: annotation
                     {
                     pushFollow(FOLLOW_annotation_in_elementValue2946);
                     annotation();
@@ -6210,7 +6232,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // src/junitconverter/Java.g:640:9: elementValueArrayInitializer
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:662:9: elementValueArrayInitializer
                     {
                     pushFollow(FOLLOW_elementValueArrayInitializer_in_elementValue2956);
                     elementValueArrayInitializer();
@@ -6235,16 +6257,16 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start elementValueArrayInitializer
-    // src/junitconverter/Java.g:643:1: elementValueArrayInitializer : '{' ( elementValue ( ',' elementValue )* )? ( ',' )? '}' ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:665:1: elementValueArrayInitializer : '{' ( elementValue ( ',' elementValue )* )? ( ',' )? '}' ;
     public final void elementValueArrayInitializer() throws RecognitionException {
         int elementValueArrayInitializer_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 76) ) { return ; }
-            // src/junitconverter/Java.g:644:5: ( '{' ( elementValue ( ',' elementValue )* )? ( ',' )? '}' )
-            // src/junitconverter/Java.g:644:9: '{' ( elementValue ( ',' elementValue )* )? ( ',' )? '}'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:666:5: ( '{' ( elementValue ( ',' elementValue )* )? ( ',' )? '}' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:666:9: '{' ( elementValue ( ',' elementValue )* )? ( ',' )? '}'
             {
             match(input,44,FOLLOW_44_in_elementValueArrayInitializer2979); if (failed) return ;
-            // src/junitconverter/Java.g:644:13: ( elementValue ( ',' elementValue )* )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:666:13: ( elementValue ( ',' elementValue )* )?
             int alt96=2;
             int LA96_0 = input.LA(1);
 
@@ -6253,13 +6275,13 @@ public class JavaParser extends Parser {
             }
             switch (alt96) {
                 case 1 :
-                    // src/junitconverter/Java.g:644:14: elementValue ( ',' elementValue )*
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:666:14: elementValue ( ',' elementValue )*
                     {
                     pushFollow(FOLLOW_elementValue_in_elementValueArrayInitializer2982);
                     elementValue();
                     _fsp--;
                     if (failed) return ;
-                    // src/junitconverter/Java.g:644:27: ( ',' elementValue )*
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:666:27: ( ',' elementValue )*
                     loop95:
                     do {
                         int alt95=2;
@@ -6278,7 +6300,7 @@ public class JavaParser extends Parser {
 
                         switch (alt95) {
                     	case 1 :
-                    	    // src/junitconverter/Java.g:644:28: ',' elementValue
+                    	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:666:28: ',' elementValue
                     	    {
                     	    match(input,41,FOLLOW_41_in_elementValueArrayInitializer2985); if (failed) return ;
                     	    pushFollow(FOLLOW_elementValue_in_elementValueArrayInitializer2987);
@@ -6300,7 +6322,7 @@ public class JavaParser extends Parser {
 
             }
 
-            // src/junitconverter/Java.g:644:49: ( ',' )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:666:49: ( ',' )?
             int alt97=2;
             int LA97_0 = input.LA(1);
 
@@ -6309,7 +6331,7 @@ public class JavaParser extends Parser {
             }
             switch (alt97) {
                 case 1 :
-                    // src/junitconverter/Java.g:644:50: ','
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:666:50: ','
                     {
                     match(input,41,FOLLOW_41_in_elementValueArrayInitializer2994); if (failed) return ;
 
@@ -6336,13 +6358,13 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start annotationTypeDeclaration
-    // src/junitconverter/Java.g:647:1: annotationTypeDeclaration : '@' 'interface' Identifier annotationTypeBody ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:669:1: annotationTypeDeclaration : '@' 'interface' Identifier annotationTypeBody ;
     public final void annotationTypeDeclaration() throws RecognitionException {
         int annotationTypeDeclaration_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 77) ) { return ; }
-            // src/junitconverter/Java.g:648:5: ( '@' 'interface' Identifier annotationTypeBody )
-            // src/junitconverter/Java.g:648:9: '@' 'interface' Identifier annotationTypeBody
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:670:5: ( '@' 'interface' Identifier annotationTypeBody )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:670:9: '@' 'interface' Identifier annotationTypeBody
             {
             match(input,73,FOLLOW_73_in_annotationTypeDeclaration3021); if (failed) return ;
             match(input,46,FOLLOW_46_in_annotationTypeDeclaration3023); if (failed) return ;
@@ -6368,16 +6390,16 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start annotationTypeBody
-    // src/junitconverter/Java.g:651:1: annotationTypeBody : '{' ( annotationTypeElementDeclaration )* '}' ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:673:1: annotationTypeBody : '{' ( annotationTypeElementDeclaration )* '}' ;
     public final void annotationTypeBody() throws RecognitionException {
         int annotationTypeBody_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 78) ) { return ; }
-            // src/junitconverter/Java.g:652:5: ( '{' ( annotationTypeElementDeclaration )* '}' )
-            // src/junitconverter/Java.g:652:9: '{' ( annotationTypeElementDeclaration )* '}'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:674:5: ( '{' ( annotationTypeElementDeclaration )* '}' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:674:9: '{' ( annotationTypeElementDeclaration )* '}'
             {
             match(input,44,FOLLOW_44_in_annotationTypeBody3050); if (failed) return ;
-            // src/junitconverter/Java.g:652:13: ( annotationTypeElementDeclaration )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:674:13: ( annotationTypeElementDeclaration )*
             loop98:
             do {
                 int alt98=2;
@@ -6390,7 +6412,7 @@ public class JavaParser extends Parser {
 
                 switch (alt98) {
             	case 1 :
-            	    // src/junitconverter/Java.g:652:14: annotationTypeElementDeclaration
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:674:14: annotationTypeElementDeclaration
             	    {
             	    pushFollow(FOLLOW_annotationTypeElementDeclaration_in_annotationTypeBody3053);
             	    annotationTypeElementDeclaration();
@@ -6423,13 +6445,13 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start annotationTypeElementDeclaration
-    // src/junitconverter/Java.g:655:1: annotationTypeElementDeclaration : modifiers annotationTypeElementRest ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:677:1: annotationTypeElementDeclaration : modifiers annotationTypeElementRest ;
     public final void annotationTypeElementDeclaration() throws RecognitionException {
         int annotationTypeElementDeclaration_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 79) ) { return ; }
-            // src/junitconverter/Java.g:656:5: ( modifiers annotationTypeElementRest )
-            // src/junitconverter/Java.g:656:9: modifiers annotationTypeElementRest
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:678:5: ( modifiers annotationTypeElementRest )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:678:9: modifiers annotationTypeElementRest
             {
             pushFollow(FOLLOW_modifiers_in_annotationTypeElementDeclaration3080);
             modifiers();
@@ -6456,12 +6478,12 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start annotationTypeElementRest
-    // src/junitconverter/Java.g:659:1: annotationTypeElementRest : ( type annotationMethodOrConstantRest ';' | normalClassDeclaration ( ';' )? | normalInterfaceDeclaration ( ';' )? | enumDeclaration ( ';' )? | annotationTypeDeclaration ( ';' )? );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:681:1: annotationTypeElementRest : ( type annotationMethodOrConstantRest ';' | normalClassDeclaration ( ';' )? | normalInterfaceDeclaration ( ';' )? | enumDeclaration ( ';' )? | annotationTypeDeclaration ( ';' )? );
     public final void annotationTypeElementRest() throws RecognitionException {
         int annotationTypeElementRest_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 80) ) { return ; }
-            // src/junitconverter/Java.g:660:5: ( type annotationMethodOrConstantRest ';' | normalClassDeclaration ( ';' )? | normalInterfaceDeclaration ( ';' )? | enumDeclaration ( ';' )? | annotationTypeDeclaration ( ';' )? )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:682:5: ( type annotationMethodOrConstantRest ';' | normalClassDeclaration ( ';' )? | normalInterfaceDeclaration ( ';' )? | enumDeclaration ( ';' )? | annotationTypeDeclaration ( ';' )? )
             int alt103=5;
             switch ( input.LA(1) ) {
             case Identifier:
@@ -6500,14 +6522,14 @@ public class JavaParser extends Parser {
             default:
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("659:1: annotationTypeElementRest : ( type annotationMethodOrConstantRest ';' | normalClassDeclaration ( ';' )? | normalInterfaceDeclaration ( ';' )? | enumDeclaration ( ';' )? | annotationTypeDeclaration ( ';' )? );", 103, 0, input);
+                    new NoViableAltException("681:1: annotationTypeElementRest : ( type annotationMethodOrConstantRest ';' | normalClassDeclaration ( ';' )? | normalInterfaceDeclaration ( ';' )? | enumDeclaration ( ';' )? | annotationTypeDeclaration ( ';' )? );", 103, 0, input);
 
                 throw nvae;
             }
 
             switch (alt103) {
                 case 1 :
-                    // src/junitconverter/Java.g:660:9: type annotationMethodOrConstantRest ';'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:682:9: type annotationMethodOrConstantRest ';'
                     {
                     pushFollow(FOLLOW_type_in_annotationTypeElementRest3105);
                     type();
@@ -6522,13 +6544,13 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:661:9: normalClassDeclaration ( ';' )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:683:9: normalClassDeclaration ( ';' )?
                     {
                     pushFollow(FOLLOW_normalClassDeclaration_in_annotationTypeElementRest3119);
                     normalClassDeclaration();
                     _fsp--;
                     if (failed) return ;
-                    // src/junitconverter/Java.g:661:32: ( ';' )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:683:32: ( ';' )?
                     int alt99=2;
                     int LA99_0 = input.LA(1);
 
@@ -6537,7 +6559,7 @@ public class JavaParser extends Parser {
                     }
                     switch (alt99) {
                         case 1 :
-                            // src/junitconverter/Java.g:0:0: ';'
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:0:0: ';'
                             {
                             match(input,26,FOLLOW_26_in_annotationTypeElementRest3121); if (failed) return ;
 
@@ -6550,13 +6572,13 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // src/junitconverter/Java.g:662:9: normalInterfaceDeclaration ( ';' )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:684:9: normalInterfaceDeclaration ( ';' )?
                     {
                     pushFollow(FOLLOW_normalInterfaceDeclaration_in_annotationTypeElementRest3132);
                     normalInterfaceDeclaration();
                     _fsp--;
                     if (failed) return ;
-                    // src/junitconverter/Java.g:662:36: ( ';' )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:684:36: ( ';' )?
                     int alt100=2;
                     int LA100_0 = input.LA(1);
 
@@ -6565,7 +6587,7 @@ public class JavaParser extends Parser {
                     }
                     switch (alt100) {
                         case 1 :
-                            // src/junitconverter/Java.g:0:0: ';'
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:0:0: ';'
                             {
                             match(input,26,FOLLOW_26_in_annotationTypeElementRest3134); if (failed) return ;
 
@@ -6578,13 +6600,13 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 4 :
-                    // src/junitconverter/Java.g:663:9: enumDeclaration ( ';' )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:685:9: enumDeclaration ( ';' )?
                     {
                     pushFollow(FOLLOW_enumDeclaration_in_annotationTypeElementRest3145);
                     enumDeclaration();
                     _fsp--;
                     if (failed) return ;
-                    // src/junitconverter/Java.g:663:25: ( ';' )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:685:25: ( ';' )?
                     int alt101=2;
                     int LA101_0 = input.LA(1);
 
@@ -6593,7 +6615,7 @@ public class JavaParser extends Parser {
                     }
                     switch (alt101) {
                         case 1 :
-                            // src/junitconverter/Java.g:0:0: ';'
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:0:0: ';'
                             {
                             match(input,26,FOLLOW_26_in_annotationTypeElementRest3147); if (failed) return ;
 
@@ -6606,13 +6628,13 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 5 :
-                    // src/junitconverter/Java.g:664:9: annotationTypeDeclaration ( ';' )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:686:9: annotationTypeDeclaration ( ';' )?
                     {
                     pushFollow(FOLLOW_annotationTypeDeclaration_in_annotationTypeElementRest3158);
                     annotationTypeDeclaration();
                     _fsp--;
                     if (failed) return ;
-                    // src/junitconverter/Java.g:664:35: ( ';' )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:686:35: ( ';' )?
                     int alt102=2;
                     int LA102_0 = input.LA(1);
 
@@ -6621,7 +6643,7 @@ public class JavaParser extends Parser {
                     }
                     switch (alt102) {
                         case 1 :
-                            // src/junitconverter/Java.g:0:0: ';'
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:0:0: ';'
                             {
                             match(input,26,FOLLOW_26_in_annotationTypeElementRest3160); if (failed) return ;
 
@@ -6649,12 +6671,12 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start annotationMethodOrConstantRest
-    // src/junitconverter/Java.g:667:1: annotationMethodOrConstantRest : ( annotationMethodRest | annotationConstantRest );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:689:1: annotationMethodOrConstantRest : ( annotationMethodRest | annotationConstantRest );
     public final void annotationMethodOrConstantRest() throws RecognitionException {
         int annotationMethodOrConstantRest_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 81) ) { return ; }
-            // src/junitconverter/Java.g:668:5: ( annotationMethodRest | annotationConstantRest )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:690:5: ( annotationMethodRest | annotationConstantRest )
             int alt104=2;
             int LA104_0 = input.LA(1);
 
@@ -6670,7 +6692,7 @@ public class JavaParser extends Parser {
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("667:1: annotationMethodOrConstantRest : ( annotationMethodRest | annotationConstantRest );", 104, 1, input);
+                        new NoViableAltException("689:1: annotationMethodOrConstantRest : ( annotationMethodRest | annotationConstantRest );", 104, 1, input);
 
                     throw nvae;
                 }
@@ -6678,13 +6700,13 @@ public class JavaParser extends Parser {
             else {
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("667:1: annotationMethodOrConstantRest : ( annotationMethodRest | annotationConstantRest );", 104, 0, input);
+                    new NoViableAltException("689:1: annotationMethodOrConstantRest : ( annotationMethodRest | annotationConstantRest );", 104, 0, input);
 
                 throw nvae;
             }
             switch (alt104) {
                 case 1 :
-                    // src/junitconverter/Java.g:668:9: annotationMethodRest
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:690:9: annotationMethodRest
                     {
                     pushFollow(FOLLOW_annotationMethodRest_in_annotationMethodOrConstantRest3184);
                     annotationMethodRest();
@@ -6694,7 +6716,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:669:9: annotationConstantRest
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:691:9: annotationConstantRest
                     {
                     pushFollow(FOLLOW_annotationConstantRest_in_annotationMethodOrConstantRest3194);
                     annotationConstantRest();
@@ -6719,18 +6741,18 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start annotationMethodRest
-    // src/junitconverter/Java.g:672:1: annotationMethodRest : Identifier '(' ')' ( defaultValue )? ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:694:1: annotationMethodRest : Identifier '(' ')' ( defaultValue )? ;
     public final void annotationMethodRest() throws RecognitionException {
         int annotationMethodRest_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 82) ) { return ; }
-            // src/junitconverter/Java.g:673:5: ( Identifier '(' ')' ( defaultValue )? )
-            // src/junitconverter/Java.g:673:9: Identifier '(' ')' ( defaultValue )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:695:5: ( Identifier '(' ')' ( defaultValue )? )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:695:9: Identifier '(' ')' ( defaultValue )?
             {
             match(input,Identifier,FOLLOW_Identifier_in_annotationMethodRest3217); if (failed) return ;
             match(input,66,FOLLOW_66_in_annotationMethodRest3219); if (failed) return ;
             match(input,67,FOLLOW_67_in_annotationMethodRest3221); if (failed) return ;
-            // src/junitconverter/Java.g:673:28: ( defaultValue )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:695:28: ( defaultValue )?
             int alt105=2;
             int LA105_0 = input.LA(1);
 
@@ -6739,7 +6761,7 @@ public class JavaParser extends Parser {
             }
             switch (alt105) {
                 case 1 :
-                    // src/junitconverter/Java.g:673:29: defaultValue
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:695:29: defaultValue
                     {
                     pushFollow(FOLLOW_defaultValue_in_annotationMethodRest3224);
                     defaultValue();
@@ -6768,13 +6790,13 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start annotationConstantRest
-    // src/junitconverter/Java.g:676:1: annotationConstantRest : variableDeclarators ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:698:1: annotationConstantRest : variableDeclarators ;
     public final void annotationConstantRest() throws RecognitionException {
         int annotationConstantRest_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 83) ) { return ; }
-            // src/junitconverter/Java.g:677:5: ( variableDeclarators )
-            // src/junitconverter/Java.g:677:9: variableDeclarators
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:699:5: ( variableDeclarators )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:699:9: variableDeclarators
             {
             pushFollow(FOLLOW_variableDeclarators_in_annotationConstantRest3249);
             variableDeclarators();
@@ -6797,13 +6819,13 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start defaultValue
-    // src/junitconverter/Java.g:680:1: defaultValue : 'default' elementValue ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:702:1: defaultValue : 'default' elementValue ;
     public final void defaultValue() throws RecognitionException {
         int defaultValue_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 84) ) { return ; }
-            // src/junitconverter/Java.g:681:5: ( 'default' elementValue )
-            // src/junitconverter/Java.g:681:9: 'default' elementValue
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:703:5: ( 'default' elementValue )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:703:9: 'default' elementValue
             {
             match(input,74,FOLLOW_74_in_defaultValue3272); if (failed) return ;
             pushFollow(FOLLOW_elementValue_in_defaultValue3274);
@@ -6827,16 +6849,16 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start block
-    // src/junitconverter/Java.g:686:1: block : '{' ( blockStatement )* '}' ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:708:1: block : '{' ( blockStatement )* '}' ;
     public final void block() throws RecognitionException {
         int block_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 85) ) { return ; }
-            // src/junitconverter/Java.g:687:5: ( '{' ( blockStatement )* '}' )
-            // src/junitconverter/Java.g:687:9: '{' ( blockStatement )* '}'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:709:5: ( '{' ( blockStatement )* '}' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:709:9: '{' ( blockStatement )* '}'
             {
             match(input,44,FOLLOW_44_in_block3295); if (failed) return ;
-            // src/junitconverter/Java.g:687:13: ( blockStatement )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:709:13: ( blockStatement )*
             loop106:
             do {
                 int alt106=2;
@@ -6849,7 +6871,7 @@ public class JavaParser extends Parser {
 
                 switch (alt106) {
             	case 1 :
-            	    // src/junitconverter/Java.g:0:0: blockStatement
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:0:0: blockStatement
             	    {
             	    pushFollow(FOLLOW_blockStatement_in_block3297);
             	    blockStatement();
@@ -6882,12 +6904,12 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start blockStatement
-    // src/junitconverter/Java.g:690:1: blockStatement : ( localVariableDeclarationStatement | classOrInterfaceDeclaration | statement );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:712:1: blockStatement : ( localVariableDeclarationStatement | classOrInterfaceDeclaration | statement );
     public final void blockStatement() throws RecognitionException {
         int blockStatement_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 86) ) { return ; }
-            // src/junitconverter/Java.g:691:5: ( localVariableDeclarationStatement | classOrInterfaceDeclaration | statement )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:713:5: ( localVariableDeclarationStatement | classOrInterfaceDeclaration | statement )
             int alt107=3;
             switch ( input.LA(1) ) {
             case 35:
@@ -6919,7 +6941,7 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("690:1: blockStatement : ( localVariableDeclarationStatement | classOrInterfaceDeclaration | statement );", 107, 47, input);
+                            new NoViableAltException("712:1: blockStatement : ( localVariableDeclarationStatement | classOrInterfaceDeclaration | statement );", 107, 47, input);
 
                         throw nvae;
                     }
@@ -6938,7 +6960,7 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("690:1: blockStatement : ( localVariableDeclarationStatement | classOrInterfaceDeclaration | statement );", 107, 48, input);
+                            new NoViableAltException("712:1: blockStatement : ( localVariableDeclarationStatement | classOrInterfaceDeclaration | statement );", 107, 48, input);
 
                         throw nvae;
                     }
@@ -6960,7 +6982,7 @@ public class JavaParser extends Parser {
                 default:
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("690:1: blockStatement : ( localVariableDeclarationStatement | classOrInterfaceDeclaration | statement );", 107, 1, input);
+                        new NoViableAltException("712:1: blockStatement : ( localVariableDeclarationStatement | classOrInterfaceDeclaration | statement );", 107, 1, input);
 
                     throw nvae;
                 }
@@ -6986,7 +7008,7 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("690:1: blockStatement : ( localVariableDeclarationStatement | classOrInterfaceDeclaration | statement );", 107, 59, input);
+                            new NoViableAltException("712:1: blockStatement : ( localVariableDeclarationStatement | classOrInterfaceDeclaration | statement );", 107, 59, input);
 
                         throw nvae;
                     }
@@ -6994,7 +7016,7 @@ public class JavaParser extends Parser {
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("690:1: blockStatement : ( localVariableDeclarationStatement | classOrInterfaceDeclaration | statement );", 107, 2, input);
+                        new NoViableAltException("712:1: blockStatement : ( localVariableDeclarationStatement | classOrInterfaceDeclaration | statement );", 107, 2, input);
 
                     throw nvae;
                 }
@@ -7036,7 +7058,7 @@ public class JavaParser extends Parser {
                     alt107=3;
                     }
                     break;
-                case 40:
+                case 29:
                     {
                     int LA107_61 = input.LA(3);
 
@@ -7049,13 +7071,13 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("690:1: blockStatement : ( localVariableDeclarationStatement | classOrInterfaceDeclaration | statement );", 107, 61, input);
+                            new NoViableAltException("712:1: blockStatement : ( localVariableDeclarationStatement | classOrInterfaceDeclaration | statement );", 107, 61, input);
 
                         throw nvae;
                     }
                     }
                     break;
-                case 29:
+                case 48:
                     {
                     int LA107_62 = input.LA(3);
 
@@ -7068,15 +7090,15 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("690:1: blockStatement : ( localVariableDeclarationStatement | classOrInterfaceDeclaration | statement );", 107, 62, input);
+                            new NoViableAltException("712:1: blockStatement : ( localVariableDeclarationStatement | classOrInterfaceDeclaration | statement );", 107, 62, input);
 
                         throw nvae;
                     }
                     }
                     break;
-                case 48:
+                case 40:
                     {
-                    int LA107_63 = input.LA(3);
+                    int LA107_67 = input.LA(3);
 
                     if ( (synpred151()) ) {
                         alt107=1;
@@ -7087,7 +7109,7 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("690:1: blockStatement : ( localVariableDeclarationStatement | classOrInterfaceDeclaration | statement );", 107, 63, input);
+                            new NoViableAltException("712:1: blockStatement : ( localVariableDeclarationStatement | classOrInterfaceDeclaration | statement );", 107, 67, input);
 
                         throw nvae;
                     }
@@ -7101,7 +7123,7 @@ public class JavaParser extends Parser {
                 default:
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("690:1: blockStatement : ( localVariableDeclarationStatement | classOrInterfaceDeclaration | statement );", 107, 3, input);
+                        new NoViableAltException("712:1: blockStatement : ( localVariableDeclarationStatement | classOrInterfaceDeclaration | statement );", 107, 3, input);
 
                     throw nvae;
                 }
@@ -7131,7 +7153,7 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("690:1: blockStatement : ( localVariableDeclarationStatement | classOrInterfaceDeclaration | statement );", 107, 88, input);
+                            new NoViableAltException("712:1: blockStatement : ( localVariableDeclarationStatement | classOrInterfaceDeclaration | statement );", 107, 88, input);
 
                         throw nvae;
                     }
@@ -7150,7 +7172,7 @@ public class JavaParser extends Parser {
                 default:
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("690:1: blockStatement : ( localVariableDeclarationStatement | classOrInterfaceDeclaration | statement );", 107, 4, input);
+                        new NoViableAltException("712:1: blockStatement : ( localVariableDeclarationStatement | classOrInterfaceDeclaration | statement );", 107, 4, input);
 
                     throw nvae;
                 }
@@ -7211,14 +7233,14 @@ public class JavaParser extends Parser {
             default:
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("690:1: blockStatement : ( localVariableDeclarationStatement | classOrInterfaceDeclaration | statement );", 107, 0, input);
+                    new NoViableAltException("712:1: blockStatement : ( localVariableDeclarationStatement | classOrInterfaceDeclaration | statement );", 107, 0, input);
 
                 throw nvae;
             }
 
             switch (alt107) {
                 case 1 :
-                    // src/junitconverter/Java.g:691:9: localVariableDeclarationStatement
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:713:9: localVariableDeclarationStatement
                     {
                     pushFollow(FOLLOW_localVariableDeclarationStatement_in_blockStatement3323);
                     localVariableDeclarationStatement();
@@ -7228,7 +7250,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:692:9: classOrInterfaceDeclaration
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:714:9: classOrInterfaceDeclaration
                     {
                     pushFollow(FOLLOW_classOrInterfaceDeclaration_in_blockStatement3333);
                     classOrInterfaceDeclaration();
@@ -7238,7 +7260,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // src/junitconverter/Java.g:693:9: statement
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:715:9: statement
                     {
                     pushFollow(FOLLOW_statement_in_blockStatement3343);
                     statement();
@@ -7263,13 +7285,13 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start localVariableDeclarationStatement
-    // src/junitconverter/Java.g:696:1: localVariableDeclarationStatement : localVariableDeclaration ';' ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:718:1: localVariableDeclarationStatement : localVariableDeclaration ';' ;
     public final void localVariableDeclarationStatement() throws RecognitionException {
         int localVariableDeclarationStatement_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 87) ) { return ; }
-            // src/junitconverter/Java.g:697:5: ( localVariableDeclaration ';' )
-            // src/junitconverter/Java.g:697:10: localVariableDeclaration ';'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:719:5: ( localVariableDeclaration ';' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:719:10: localVariableDeclaration ';'
             {
             pushFollow(FOLLOW_localVariableDeclaration_in_localVariableDeclarationStatement3367);
             localVariableDeclaration();
@@ -7293,13 +7315,13 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start localVariableDeclaration
-    // src/junitconverter/Java.g:700:1: localVariableDeclaration : variableModifiers type variableDeclarators ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:722:1: localVariableDeclaration : variableModifiers type variableDeclarators ;
     public final void localVariableDeclaration() throws RecognitionException {
         int localVariableDeclaration_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 88) ) { return ; }
-            // src/junitconverter/Java.g:701:5: ( variableModifiers type variableDeclarators )
-            // src/junitconverter/Java.g:701:9: variableModifiers type variableDeclarators
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:723:5: ( variableModifiers type variableDeclarators )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:723:9: variableModifiers type variableDeclarators
             {
             pushFollow(FOLLOW_variableModifiers_in_localVariableDeclaration3388);
             variableModifiers();
@@ -7330,15 +7352,15 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start variableModifiers
-    // src/junitconverter/Java.g:704:1: variableModifiers : ( variableModifier )* ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:726:1: variableModifiers : ( variableModifier )* ;
     public final void variableModifiers() throws RecognitionException {
         int variableModifiers_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 89) ) { return ; }
-            // src/junitconverter/Java.g:705:5: ( ( variableModifier )* )
-            // src/junitconverter/Java.g:705:9: ( variableModifier )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:727:5: ( ( variableModifier )* )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:727:9: ( variableModifier )*
             {
-            // src/junitconverter/Java.g:705:9: ( variableModifier )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:727:9: ( variableModifier )*
             loop108:
             do {
                 int alt108=2;
@@ -7351,7 +7373,7 @@ public class JavaParser extends Parser {
 
                 switch (alt108) {
             	case 1 :
-            	    // src/junitconverter/Java.g:0:0: variableModifier
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:0:0: variableModifier
             	    {
             	    pushFollow(FOLLOW_variableModifier_in_variableModifiers3415);
             	    variableModifier();
@@ -7383,12 +7405,12 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start statement
-    // src/junitconverter/Java.g:708:1: statement : ( block | ASSERT expression ( ':' expression )? ';' | 'if' parExpression statement ( options {k=1; } : 'else' statement )? | 'for' '(' forControl ')' statement | 'while' parExpression statement | 'do' statement 'while' parExpression ';' | 'try' block ( catches 'finally' block | catches | 'finally' block ) | 'switch' parExpression '{' switchBlockStatementGroups '}' | 'synchronized' parExpression block | 'return' ( expression )? ';' | 'throw' expression ';' | 'break' ( Identifier )? ';' | 'continue' ( Identifier )? ';' | ';' | statementExpression ';' | Identifier ':' statement );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:730:1: statement : ( block | ASSERT expression ( ':' expression )? ';' | 'if' parExpression statement ( options {k=1; } : 'else' statement )? | 'for' '(' forControl ')' statement | 'while' parExpression statement | 'do' statement 'while' parExpression ';' | 'try' block ( catches 'finally' block | catches | 'finally' block ) | 'switch' parExpression '{' switchBlockStatementGroups '}' | 'synchronized' parExpression block | 'return' ( expression )? ';' | 'throw' expression ';' | 'break' ( Identifier )? ';' | 'continue' ( Identifier )? ';' | ';' | statementExpression ';' | Identifier ':' statement );
     public final void statement() throws RecognitionException {
         int statement_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 90) ) { return ; }
-            // src/junitconverter/Java.g:709:5: ( block | ASSERT expression ( ':' expression )? ';' | 'if' parExpression statement ( options {k=1; } : 'else' statement )? | 'for' '(' forControl ')' statement | 'while' parExpression statement | 'do' statement 'while' parExpression ';' | 'try' block ( catches 'finally' block | catches | 'finally' block ) | 'switch' parExpression '{' switchBlockStatementGroups '}' | 'synchronized' parExpression block | 'return' ( expression )? ';' | 'throw' expression ';' | 'break' ( Identifier )? ';' | 'continue' ( Identifier )? ';' | ';' | statementExpression ';' | Identifier ':' statement )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:731:5: ( block | ASSERT expression ( ':' expression )? ';' | 'if' parExpression statement ( options {k=1; } : 'else' statement )? | 'for' '(' forControl ')' statement | 'while' parExpression statement | 'do' statement 'while' parExpression ';' | 'try' block ( catches 'finally' block | catches | 'finally' block ) | 'switch' parExpression '{' switchBlockStatementGroups '}' | 'synchronized' parExpression block | 'return' ( expression )? ';' | 'throw' expression ';' | 'break' ( Identifier )? ';' | 'continue' ( Identifier )? ';' | ';' | statementExpression ';' | Identifier ':' statement )
             int alt115=16;
             switch ( input.LA(1) ) {
             case 44:
@@ -7506,7 +7528,7 @@ public class JavaParser extends Parser {
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("708:1: statement : ( block | ASSERT expression ( ':' expression )? ';' | 'if' parExpression statement ( options {k=1; } : 'else' statement )? | 'for' '(' forControl ')' statement | 'while' parExpression statement | 'do' statement 'while' parExpression ';' | 'try' block ( catches 'finally' block | catches | 'finally' block ) | 'switch' parExpression '{' switchBlockStatementGroups '}' | 'synchronized' parExpression block | 'return' ( expression )? ';' | 'throw' expression ';' | 'break' ( Identifier )? ';' | 'continue' ( Identifier )? ';' | ';' | statementExpression ';' | Identifier ':' statement );", 115, 31, input);
+                        new NoViableAltException("730:1: statement : ( block | ASSERT expression ( ':' expression )? ';' | 'if' parExpression statement ( options {k=1; } : 'else' statement )? | 'for' '(' forControl ')' statement | 'while' parExpression statement | 'do' statement 'while' parExpression ';' | 'try' block ( catches 'finally' block | catches | 'finally' block ) | 'switch' parExpression '{' switchBlockStatementGroups '}' | 'synchronized' parExpression block | 'return' ( expression )? ';' | 'throw' expression ';' | 'break' ( Identifier )? ';' | 'continue' ( Identifier )? ';' | ';' | statementExpression ';' | Identifier ':' statement );", 115, 31, input);
 
                     throw nvae;
                 }
@@ -7515,14 +7537,14 @@ public class JavaParser extends Parser {
             default:
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("708:1: statement : ( block | ASSERT expression ( ':' expression )? ';' | 'if' parExpression statement ( options {k=1; } : 'else' statement )? | 'for' '(' forControl ')' statement | 'while' parExpression statement | 'do' statement 'while' parExpression ';' | 'try' block ( catches 'finally' block | catches | 'finally' block ) | 'switch' parExpression '{' switchBlockStatementGroups '}' | 'synchronized' parExpression block | 'return' ( expression )? ';' | 'throw' expression ';' | 'break' ( Identifier )? ';' | 'continue' ( Identifier )? ';' | ';' | statementExpression ';' | Identifier ':' statement );", 115, 0, input);
+                    new NoViableAltException("730:1: statement : ( block | ASSERT expression ( ':' expression )? ';' | 'if' parExpression statement ( options {k=1; } : 'else' statement )? | 'for' '(' forControl ')' statement | 'while' parExpression statement | 'do' statement 'while' parExpression ';' | 'try' block ( catches 'finally' block | catches | 'finally' block ) | 'switch' parExpression '{' switchBlockStatementGroups '}' | 'synchronized' parExpression block | 'return' ( expression )? ';' | 'throw' expression ';' | 'break' ( Identifier )? ';' | 'continue' ( Identifier )? ';' | ';' | statementExpression ';' | Identifier ':' statement );", 115, 0, input);
 
                 throw nvae;
             }
 
             switch (alt115) {
                 case 1 :
-                    // src/junitconverter/Java.g:709:7: block
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:731:7: block
                     {
                     pushFollow(FOLLOW_block_in_statement3433);
                     block();
@@ -7532,14 +7554,14 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:710:9: ASSERT expression ( ':' expression )? ';'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:732:9: ASSERT expression ( ':' expression )? ';'
                     {
                     match(input,ASSERT,FOLLOW_ASSERT_in_statement3443); if (failed) return ;
                     pushFollow(FOLLOW_expression_in_statement3445);
                     expression();
                     _fsp--;
                     if (failed) return ;
-                    // src/junitconverter/Java.g:710:27: ( ':' expression )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:732:27: ( ':' expression )?
                     int alt109=2;
                     int LA109_0 = input.LA(1);
 
@@ -7548,7 +7570,7 @@ public class JavaParser extends Parser {
                     }
                     switch (alt109) {
                         case 1 :
-                            // src/junitconverter/Java.g:710:28: ':' expression
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:732:28: ':' expression
                             {
                             match(input,75,FOLLOW_75_in_statement3448); if (failed) return ;
                             pushFollow(FOLLOW_expression_in_statement3450);
@@ -7566,7 +7588,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // src/junitconverter/Java.g:711:9: 'if' parExpression statement ( options {k=1; } : 'else' statement )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:733:9: 'if' parExpression statement ( options {k=1; } : 'else' statement )?
                     {
                     match(input,76,FOLLOW_76_in_statement3464); if (failed) return ;
                     pushFollow(FOLLOW_parExpression_in_statement3466);
@@ -7577,7 +7599,7 @@ public class JavaParser extends Parser {
                     statement();
                     _fsp--;
                     if (failed) return ;
-                    // src/junitconverter/Java.g:711:38: ( options {k=1; } : 'else' statement )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:733:38: ( options {k=1; } : 'else' statement )?
                     int alt110=2;
                     int LA110_0 = input.LA(1);
 
@@ -7590,7 +7612,7 @@ public class JavaParser extends Parser {
                     }
                     switch (alt110) {
                         case 1 :
-                            // src/junitconverter/Java.g:711:54: 'else' statement
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:733:54: 'else' statement
                             {
                             match(input,77,FOLLOW_77_in_statement3478); if (failed) return ;
                             pushFollow(FOLLOW_statement_in_statement3480);
@@ -7607,7 +7629,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 4 :
-                    // src/junitconverter/Java.g:712:9: 'for' '(' forControl ')' statement
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:734:9: 'for' '(' forControl ')' statement
                     {
                     match(input,78,FOLLOW_78_in_statement3492); if (failed) return ;
                     match(input,66,FOLLOW_66_in_statement3494); if (failed) return ;
@@ -7624,7 +7646,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 5 :
-                    // src/junitconverter/Java.g:713:9: 'while' parExpression statement
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:735:9: 'while' parExpression statement
                     {
                     match(input,79,FOLLOW_79_in_statement3510); if (failed) return ;
                     pushFollow(FOLLOW_parExpression_in_statement3512);
@@ -7639,7 +7661,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 6 :
-                    // src/junitconverter/Java.g:714:9: 'do' statement 'while' parExpression ';'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:736:9: 'do' statement 'while' parExpression ';'
                     {
                     match(input,80,FOLLOW_80_in_statement3524); if (failed) return ;
                     pushFollow(FOLLOW_statement_in_statement3526);
@@ -7656,14 +7678,14 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 7 :
-                    // src/junitconverter/Java.g:715:9: 'try' block ( catches 'finally' block | catches | 'finally' block )
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:737:9: 'try' block ( catches 'finally' block | catches | 'finally' block )
                     {
                     match(input,81,FOLLOW_81_in_statement3542); if (failed) return ;
                     pushFollow(FOLLOW_block_in_statement3544);
                     block();
                     _fsp--;
                     if (failed) return ;
-                    // src/junitconverter/Java.g:716:9: ( catches 'finally' block | catches | 'finally' block )
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:738:9: ( catches 'finally' block | catches | 'finally' block )
                     int alt111=3;
                     int LA111_0 = input.LA(1);
 
@@ -7682,7 +7704,7 @@ public class JavaParser extends Parser {
                             else {
                                 if (backtracking>0) {failed=true; return ;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("716:9: ( catches 'finally' block | catches | 'finally' block )", 111, 3, input);
+                                    new NoViableAltException("738:9: ( catches 'finally' block | catches | 'finally' block )", 111, 3, input);
 
                                 throw nvae;
                             }
@@ -7690,7 +7712,7 @@ public class JavaParser extends Parser {
                         else {
                             if (backtracking>0) {failed=true; return ;}
                             NoViableAltException nvae =
-                                new NoViableAltException("716:9: ( catches 'finally' block | catches | 'finally' block )", 111, 1, input);
+                                new NoViableAltException("738:9: ( catches 'finally' block | catches | 'finally' block )", 111, 1, input);
 
                             throw nvae;
                         }
@@ -7701,13 +7723,13 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("716:9: ( catches 'finally' block | catches | 'finally' block )", 111, 0, input);
+                            new NoViableAltException("738:9: ( catches 'finally' block | catches | 'finally' block )", 111, 0, input);
 
                         throw nvae;
                     }
                     switch (alt111) {
                         case 1 :
-                            // src/junitconverter/Java.g:716:11: catches 'finally' block
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:738:11: catches 'finally' block
                             {
                             pushFollow(FOLLOW_catches_in_statement3556);
                             catches();
@@ -7722,7 +7744,7 @@ public class JavaParser extends Parser {
                             }
                             break;
                         case 2 :
-                            // src/junitconverter/Java.g:717:11: catches
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:739:11: catches
                             {
                             pushFollow(FOLLOW_catches_in_statement3572);
                             catches();
@@ -7732,7 +7754,7 @@ public class JavaParser extends Parser {
                             }
                             break;
                         case 3 :
-                            // src/junitconverter/Java.g:718:13: 'finally' block
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:740:13: 'finally' block
                             {
                             match(input,82,FOLLOW_82_in_statement3586); if (failed) return ;
                             pushFollow(FOLLOW_block_in_statement3588);
@@ -7749,7 +7771,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 8 :
-                    // src/junitconverter/Java.g:720:9: 'switch' parExpression '{' switchBlockStatementGroups '}'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:742:9: 'switch' parExpression '{' switchBlockStatementGroups '}'
                     {
                     match(input,83,FOLLOW_83_in_statement3608); if (failed) return ;
                     pushFollow(FOLLOW_parExpression_in_statement3610);
@@ -7766,7 +7788,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 9 :
-                    // src/junitconverter/Java.g:721:9: 'synchronized' parExpression block
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:743:9: 'synchronized' parExpression block
                     {
                     match(input,53,FOLLOW_53_in_statement3626); if (failed) return ;
                     pushFollow(FOLLOW_parExpression_in_statement3628);
@@ -7781,10 +7803,10 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 10 :
-                    // src/junitconverter/Java.g:722:9: 'return' ( expression )? ';'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:744:9: 'return' ( expression )? ';'
                     {
                     match(input,84,FOLLOW_84_in_statement3640); if (failed) return ;
-                    // src/junitconverter/Java.g:722:18: ( expression )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:744:18: ( expression )?
                     int alt112=2;
                     int LA112_0 = input.LA(1);
 
@@ -7793,7 +7815,7 @@ public class JavaParser extends Parser {
                     }
                     switch (alt112) {
                         case 1 :
-                            // src/junitconverter/Java.g:0:0: expression
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:0:0: expression
                             {
                             pushFollow(FOLLOW_expression_in_statement3642);
                             expression();
@@ -7810,7 +7832,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 11 :
-                    // src/junitconverter/Java.g:723:9: 'throw' expression ';'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:745:9: 'throw' expression ';'
                     {
                     match(input,85,FOLLOW_85_in_statement3655); if (failed) return ;
                     pushFollow(FOLLOW_expression_in_statement3657);
@@ -7822,10 +7844,10 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 12 :
-                    // src/junitconverter/Java.g:724:9: 'break' ( Identifier )? ';'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:746:9: 'break' ( Identifier )? ';'
                     {
                     match(input,86,FOLLOW_86_in_statement3669); if (failed) return ;
-                    // src/junitconverter/Java.g:724:17: ( Identifier )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:746:17: ( Identifier )?
                     int alt113=2;
                     int LA113_0 = input.LA(1);
 
@@ -7834,7 +7856,7 @@ public class JavaParser extends Parser {
                     }
                     switch (alt113) {
                         case 1 :
-                            // src/junitconverter/Java.g:0:0: Identifier
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:0:0: Identifier
                             {
                             match(input,Identifier,FOLLOW_Identifier_in_statement3671); if (failed) return ;
 
@@ -7848,10 +7870,10 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 13 :
-                    // src/junitconverter/Java.g:725:9: 'continue' ( Identifier )? ';'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:747:9: 'continue' ( Identifier )? ';'
                     {
                     match(input,87,FOLLOW_87_in_statement3684); if (failed) return ;
-                    // src/junitconverter/Java.g:725:20: ( Identifier )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:747:20: ( Identifier )?
                     int alt114=2;
                     int LA114_0 = input.LA(1);
 
@@ -7860,7 +7882,7 @@ public class JavaParser extends Parser {
                     }
                     switch (alt114) {
                         case 1 :
-                            // src/junitconverter/Java.g:0:0: Identifier
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:0:0: Identifier
                             {
                             match(input,Identifier,FOLLOW_Identifier_in_statement3686); if (failed) return ;
 
@@ -7874,14 +7896,14 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 14 :
-                    // src/junitconverter/Java.g:726:9: ';'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:748:9: ';'
                     {
                     match(input,26,FOLLOW_26_in_statement3699); if (failed) return ;
 
                     }
                     break;
                 case 15 :
-                    // src/junitconverter/Java.g:727:9: statementExpression ';'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:749:9: statementExpression ';'
                     {
                     pushFollow(FOLLOW_statementExpression_in_statement3710);
                     statementExpression();
@@ -7892,7 +7914,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 16 :
-                    // src/junitconverter/Java.g:728:9: Identifier ':' statement
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:750:9: Identifier ':' statement
                     {
                     match(input,Identifier,FOLLOW_Identifier_in_statement3722); if (failed) return ;
                     match(input,75,FOLLOW_75_in_statement3724); if (failed) return ;
@@ -7919,19 +7941,19 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start catches
-    // src/junitconverter/Java.g:731:1: catches : catchClause ( catchClause )* ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:753:1: catches : catchClause ( catchClause )* ;
     public final void catches() throws RecognitionException {
         int catches_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 91) ) { return ; }
-            // src/junitconverter/Java.g:732:5: ( catchClause ( catchClause )* )
-            // src/junitconverter/Java.g:732:9: catchClause ( catchClause )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:754:5: ( catchClause ( catchClause )* )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:754:9: catchClause ( catchClause )*
             {
             pushFollow(FOLLOW_catchClause_in_catches3749);
             catchClause();
             _fsp--;
             if (failed) return ;
-            // src/junitconverter/Java.g:732:21: ( catchClause )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:754:21: ( catchClause )*
             loop116:
             do {
                 int alt116=2;
@@ -7944,7 +7966,7 @@ public class JavaParser extends Parser {
 
                 switch (alt116) {
             	case 1 :
-            	    // src/junitconverter/Java.g:732:22: catchClause
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:754:22: catchClause
             	    {
             	    pushFollow(FOLLOW_catchClause_in_catches3752);
             	    catchClause();
@@ -7976,13 +7998,13 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start catchClause
-    // src/junitconverter/Java.g:735:1: catchClause : 'catch' '(' formalParameter ')' block ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:757:1: catchClause : 'catch' '(' formalParameter ')' block ;
     public final void catchClause() throws RecognitionException {
         int catchClause_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 92) ) { return ; }
-            // src/junitconverter/Java.g:736:5: ( 'catch' '(' formalParameter ')' block )
-            // src/junitconverter/Java.g:736:9: 'catch' '(' formalParameter ')' block
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:758:5: ( 'catch' '(' formalParameter ')' block )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:758:9: 'catch' '(' formalParameter ')' block
             {
             match(input,88,FOLLOW_88_in_catchClause3777); if (failed) return ;
             match(input,66,FOLLOW_66_in_catchClause3779); if (failed) return ;
@@ -8012,13 +8034,13 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start formalParameter
-    // src/junitconverter/Java.g:739:1: formalParameter : variableModifiers type variableDeclaratorId ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:761:1: formalParameter : variableModifiers type variableDeclaratorId ;
     public final void formalParameter() throws RecognitionException {
         int formalParameter_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 93) ) { return ; }
-            // src/junitconverter/Java.g:740:5: ( variableModifiers type variableDeclaratorId )
-            // src/junitconverter/Java.g:740:9: variableModifiers type variableDeclaratorId
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:762:5: ( variableModifiers type variableDeclaratorId )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:762:9: variableModifiers type variableDeclaratorId
             {
             pushFollow(FOLLOW_variableModifiers_in_formalParameter3804);
             variableModifiers();
@@ -8049,15 +8071,15 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start switchBlockStatementGroups
-    // src/junitconverter/Java.g:743:1: switchBlockStatementGroups : ( switchBlockStatementGroup )* ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:765:1: switchBlockStatementGroups : ( switchBlockStatementGroup )* ;
     public final void switchBlockStatementGroups() throws RecognitionException {
         int switchBlockStatementGroups_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 94) ) { return ; }
-            // src/junitconverter/Java.g:744:5: ( ( switchBlockStatementGroup )* )
-            // src/junitconverter/Java.g:744:9: ( switchBlockStatementGroup )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:766:5: ( ( switchBlockStatementGroup )* )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:766:9: ( switchBlockStatementGroup )*
             {
-            // src/junitconverter/Java.g:744:9: ( switchBlockStatementGroup )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:766:9: ( switchBlockStatementGroup )*
             loop117:
             do {
                 int alt117=2;
@@ -8070,7 +8092,7 @@ public class JavaParser extends Parser {
 
                 switch (alt117) {
             	case 1 :
-            	    // src/junitconverter/Java.g:744:10: switchBlockStatementGroup
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:766:10: switchBlockStatementGroup
             	    {
             	    pushFollow(FOLLOW_switchBlockStatementGroup_in_switchBlockStatementGroups3836);
             	    switchBlockStatementGroup();
@@ -8102,15 +8124,15 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start switchBlockStatementGroup
-    // src/junitconverter/Java.g:751:1: switchBlockStatementGroup : ( switchLabel )+ ( blockStatement )* ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:773:1: switchBlockStatementGroup : ( switchLabel )+ ( blockStatement )* ;
     public final void switchBlockStatementGroup() throws RecognitionException {
         int switchBlockStatementGroup_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 95) ) { return ; }
-            // src/junitconverter/Java.g:752:5: ( ( switchLabel )+ ( blockStatement )* )
-            // src/junitconverter/Java.g:752:9: ( switchLabel )+ ( blockStatement )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:774:5: ( ( switchLabel )+ ( blockStatement )* )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:774:9: ( switchLabel )+ ( blockStatement )*
             {
-            // src/junitconverter/Java.g:752:9: ( switchLabel )+
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:774:9: ( switchLabel )+
             int cnt118=0;
             loop118:
             do {
@@ -8139,7 +8161,7 @@ public class JavaParser extends Parser {
 
                 switch (alt118) {
             	case 1 :
-            	    // src/junitconverter/Java.g:0:0: switchLabel
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:0:0: switchLabel
             	    {
             	    pushFollow(FOLLOW_switchLabel_in_switchBlockStatementGroup3863);
             	    switchLabel();
@@ -8159,7 +8181,7 @@ public class JavaParser extends Parser {
                 cnt118++;
             } while (true);
 
-            // src/junitconverter/Java.g:752:22: ( blockStatement )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:774:22: ( blockStatement )*
             loop119:
             do {
                 int alt119=2;
@@ -8172,7 +8194,7 @@ public class JavaParser extends Parser {
 
                 switch (alt119) {
             	case 1 :
-            	    // src/junitconverter/Java.g:0:0: blockStatement
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:0:0: blockStatement
             	    {
             	    pushFollow(FOLLOW_blockStatement_in_switchBlockStatementGroup3866);
             	    blockStatement();
@@ -8204,12 +8226,12 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start switchLabel
-    // src/junitconverter/Java.g:755:1: switchLabel : ( 'case' constantExpression ':' | 'case' enumConstantName ':' | 'default' ':' );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:777:1: switchLabel : ( 'case' constantExpression ':' | 'case' enumConstantName ':' | 'default' ':' );
     public final void switchLabel() throws RecognitionException {
         int switchLabel_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 96) ) { return ; }
-            // src/junitconverter/Java.g:756:5: ( 'case' constantExpression ':' | 'case' enumConstantName ':' | 'default' ':' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:778:5: ( 'case' constantExpression ':' | 'case' enumConstantName ':' | 'default' ':' )
             int alt120=3;
             int LA120_0 = input.LA(1);
 
@@ -8231,7 +8253,7 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("755:1: switchLabel : ( 'case' constantExpression ':' | 'case' enumConstantName ':' | 'default' ':' );", 120, 19, input);
+                            new NoViableAltException("777:1: switchLabel : ( 'case' constantExpression ':' | 'case' enumConstantName ':' | 'default' ':' );", 120, 19, input);
 
                         throw nvae;
                     }
@@ -8239,7 +8261,7 @@ public class JavaParser extends Parser {
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("755:1: switchLabel : ( 'case' constantExpression ':' | 'case' enumConstantName ':' | 'default' ':' );", 120, 1, input);
+                        new NoViableAltException("777:1: switchLabel : ( 'case' constantExpression ':' | 'case' enumConstantName ':' | 'default' ':' );", 120, 1, input);
 
                     throw nvae;
                 }
@@ -8250,13 +8272,13 @@ public class JavaParser extends Parser {
             else {
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("755:1: switchLabel : ( 'case' constantExpression ':' | 'case' enumConstantName ':' | 'default' ':' );", 120, 0, input);
+                    new NoViableAltException("777:1: switchLabel : ( 'case' constantExpression ':' | 'case' enumConstantName ':' | 'default' ':' );", 120, 0, input);
 
                 throw nvae;
             }
             switch (alt120) {
                 case 1 :
-                    // src/junitconverter/Java.g:756:9: 'case' constantExpression ':'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:778:9: 'case' constantExpression ':'
                     {
                     match(input,89,FOLLOW_89_in_switchLabel3890); if (failed) return ;
                     pushFollow(FOLLOW_constantExpression_in_switchLabel3892);
@@ -8268,7 +8290,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:757:9: 'case' enumConstantName ':'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:779:9: 'case' enumConstantName ':'
                     {
                     match(input,89,FOLLOW_89_in_switchLabel3904); if (failed) return ;
                     pushFollow(FOLLOW_enumConstantName_in_switchLabel3906);
@@ -8280,7 +8302,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // src/junitconverter/Java.g:758:9: 'default' ':'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:780:9: 'default' ':'
                     {
                     match(input,74,FOLLOW_74_in_switchLabel3918); if (failed) return ;
                     match(input,75,FOLLOW_75_in_switchLabel3920); if (failed) return ;
@@ -8303,12 +8325,12 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start forControl
-    // src/junitconverter/Java.g:761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );
     public final void forControl() throws RecognitionException {
         int forControl_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 97) ) { return ; }
-            // src/junitconverter/Java.g:763:5: ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:785:5: ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? )
             int alt124=2;
             switch ( input.LA(1) ) {
             case 35:
@@ -8330,7 +8352,7 @@ public class JavaParser extends Parser {
                         else {
                             if (backtracking>0) {failed=true; return ;}
                             NoViableAltException nvae =
-                                new NoViableAltException("761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 59, input);
+                                new NoViableAltException("783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 59, input);
 
                             throw nvae;
                         }
@@ -8349,7 +8371,7 @@ public class JavaParser extends Parser {
                         else {
                             if (backtracking>0) {failed=true; return ;}
                             NoViableAltException nvae =
-                                new NoViableAltException("761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 60, input);
+                                new NoViableAltException("783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 60, input);
 
                             throw nvae;
                         }
@@ -8368,7 +8390,7 @@ public class JavaParser extends Parser {
                         else {
                             if (backtracking>0) {failed=true; return ;}
                             NoViableAltException nvae =
-                                new NoViableAltException("761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 61, input);
+                                new NoViableAltException("783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 61, input);
 
                             throw nvae;
                         }
@@ -8387,7 +8409,7 @@ public class JavaParser extends Parser {
                         else {
                             if (backtracking>0) {failed=true; return ;}
                             NoViableAltException nvae =
-                                new NoViableAltException("761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 62, input);
+                                new NoViableAltException("783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 62, input);
 
                             throw nvae;
                         }
@@ -8396,7 +8418,7 @@ public class JavaParser extends Parser {
                     default:
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 23, input);
+                            new NoViableAltException("783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 23, input);
 
                         throw nvae;
                     }
@@ -8426,7 +8448,7 @@ public class JavaParser extends Parser {
                         else {
                             if (backtracking>0) {failed=true; return ;}
                             NoViableAltException nvae =
-                                new NoViableAltException("761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 63, input);
+                                new NoViableAltException("783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 63, input);
 
                             throw nvae;
                         }
@@ -8443,7 +8465,7 @@ public class JavaParser extends Parser {
                         else {
                             if (backtracking>0) {failed=true; return ;}
                             NoViableAltException nvae =
-                                new NoViableAltException("761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 64, input);
+                                new NoViableAltException("783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 64, input);
 
                             throw nvae;
                         }
@@ -8451,7 +8473,7 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 24, input);
+                            new NoViableAltException("783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 24, input);
 
                         throw nvae;
                     }
@@ -8473,7 +8495,7 @@ public class JavaParser extends Parser {
                         else {
                             if (backtracking>0) {failed=true; return ;}
                             NoViableAltException nvae =
-                                new NoViableAltException("761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 65, input);
+                                new NoViableAltException("783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 65, input);
 
                             throw nvae;
                         }
@@ -8499,7 +8521,7 @@ public class JavaParser extends Parser {
                         else {
                             if (backtracking>0) {failed=true; return ;}
                             NoViableAltException nvae =
-                                new NoViableAltException("761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 66, input);
+                                new NoViableAltException("783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 66, input);
 
                             throw nvae;
                         }
@@ -8518,7 +8540,7 @@ public class JavaParser extends Parser {
                         else {
                             if (backtracking>0) {failed=true; return ;}
                             NoViableAltException nvae =
-                                new NoViableAltException("761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 67, input);
+                                new NoViableAltException("783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 67, input);
 
                             throw nvae;
                         }
@@ -8537,7 +8559,7 @@ public class JavaParser extends Parser {
                         else {
                             if (backtracking>0) {failed=true; return ;}
                             NoViableAltException nvae =
-                                new NoViableAltException("761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 68, input);
+                                new NoViableAltException("783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 68, input);
 
                             throw nvae;
                         }
@@ -8546,7 +8568,7 @@ public class JavaParser extends Parser {
                     default:
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 25, input);
+                            new NoViableAltException("783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 25, input);
 
                         throw nvae;
                     }
@@ -8569,7 +8591,7 @@ public class JavaParser extends Parser {
                         else {
                             if (backtracking>0) {failed=true; return ;}
                             NoViableAltException nvae =
-                                new NoViableAltException("761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 69, input);
+                                new NoViableAltException("783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 69, input);
 
                             throw nvae;
                         }
@@ -8577,7 +8599,7 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 26, input);
+                            new NoViableAltException("783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 26, input);
 
                         throw nvae;
                     }
@@ -8586,7 +8608,7 @@ public class JavaParser extends Parser {
                 default:
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 1, input);
+                        new NoViableAltException("783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 1, input);
 
                     throw nvae;
                 }
@@ -8612,7 +8634,7 @@ public class JavaParser extends Parser {
                         else {
                             if (backtracking>0) {failed=true; return ;}
                             NoViableAltException nvae =
-                                new NoViableAltException("761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 70, input);
+                                new NoViableAltException("783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 70, input);
 
                             throw nvae;
                         }
@@ -8631,7 +8653,7 @@ public class JavaParser extends Parser {
                         else {
                             if (backtracking>0) {failed=true; return ;}
                             NoViableAltException nvae =
-                                new NoViableAltException("761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 71, input);
+                                new NoViableAltException("783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 71, input);
 
                             throw nvae;
                         }
@@ -8650,7 +8672,7 @@ public class JavaParser extends Parser {
                         else {
                             if (backtracking>0) {failed=true; return ;}
                             NoViableAltException nvae =
-                                new NoViableAltException("761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 72, input);
+                                new NoViableAltException("783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 72, input);
 
                             throw nvae;
                         }
@@ -8676,7 +8698,7 @@ public class JavaParser extends Parser {
                         else {
                             if (backtracking>0) {failed=true; return ;}
                             NoViableAltException nvae =
-                                new NoViableAltException("761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 73, input);
+                                new NoViableAltException("783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 73, input);
 
                             throw nvae;
                         }
@@ -8695,7 +8717,7 @@ public class JavaParser extends Parser {
                         else {
                             if (backtracking>0) {failed=true; return ;}
                             NoViableAltException nvae =
-                                new NoViableAltException("761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 74, input);
+                                new NoViableAltException("783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 74, input);
 
                             throw nvae;
                         }
@@ -8714,7 +8736,7 @@ public class JavaParser extends Parser {
                         else {
                             if (backtracking>0) {failed=true; return ;}
                             NoViableAltException nvae =
-                                new NoViableAltException("761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 75, input);
+                                new NoViableAltException("783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 75, input);
 
                             throw nvae;
                         }
@@ -8723,7 +8745,7 @@ public class JavaParser extends Parser {
                     default:
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 27, input);
+                            new NoViableAltException("783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 27, input);
 
                         throw nvae;
                     }
@@ -8732,7 +8754,7 @@ public class JavaParser extends Parser {
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 2, input);
+                        new NoViableAltException("783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 2, input);
 
                     throw nvae;
                 }
@@ -8741,63 +8763,14 @@ public class JavaParser extends Parser {
             case Identifier:
                 {
                 switch ( input.LA(2) ) {
-                case 40:
+                case 29:
                     {
-                    switch ( input.LA(3) ) {
-                    case FloatingPointLiteral:
-                    case CharacterLiteral:
-                    case StringLiteral:
-                    case HexLiteral:
-                    case OctalLiteral:
-                    case DecimalLiteral:
-                    case 40:
-                    case 47:
-                    case 51:
-                    case 65:
-                    case 66:
-                    case 69:
-                    case 70:
-                    case 71:
-                    case 72:
-                    case 105:
-                    case 106:
-                    case 109:
-                    case 110:
-                    case 111:
-                    case 112:
-                    case 113:
-                        {
+                    int LA124_28 = input.LA(3);
+
+                    if ( (LA124_28==37||LA124_28==40||LA124_28==65||LA124_28==69||LA124_28==113) ) {
                         alt124=2;
-                        }
-                        break;
-                    case Identifier:
-                        {
-                        int LA124_78 = input.LA(4);
-
-                        if ( (synpred182()) ) {
-                            alt124=1;
-                        }
-                        else if ( (true) ) {
-                            alt124=2;
-                        }
-                        else {
-                            if (backtracking>0) {failed=true; return ;}
-                            NoViableAltException nvae =
-                                new NoViableAltException("761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 78, input);
-
-                            throw nvae;
-                        }
-                        }
-                        break;
-                    case 56:
-                    case 57:
-                    case 58:
-                    case 59:
-                    case 60:
-                    case 61:
-                    case 62:
-                    case 63:
-                        {
+                    }
+                    else if ( (LA124_28==Identifier) ) {
                         int LA124_79 = input.LA(4);
 
                         if ( (synpred182()) ) {
@@ -8809,69 +8782,15 @@ public class JavaParser extends Parser {
                         else {
                             if (backtracking>0) {failed=true; return ;}
                             NoViableAltException nvae =
-                                new NoViableAltException("761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 79, input);
+                                new NoViableAltException("783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 79, input);
 
                             throw nvae;
                         }
-                        }
-                        break;
-                    case 64:
-                        {
-                        int LA124_80 = input.LA(4);
-
-                        if ( (synpred182()) ) {
-                            alt124=1;
-                        }
-                        else if ( (true) ) {
-                            alt124=2;
-                        }
-                        else {
-                            if (backtracking>0) {failed=true; return ;}
-                            NoViableAltException nvae =
-                                new NoViableAltException("761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 80, input);
-
-                            throw nvae;
-                        }
-                        }
-                        break;
-                    default:
-                        if (backtracking>0) {failed=true; return ;}
-                        NoViableAltException nvae =
-                            new NoViableAltException("761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 28, input);
-
-                        throw nvae;
-                    }
-
-                    }
-                    break;
-                case 29:
-                    {
-                    int LA124_29 = input.LA(3);
-
-                    if ( (LA124_29==Identifier) ) {
-                        int LA124_98 = input.LA(4);
-
-                        if ( (synpred182()) ) {
-                            alt124=1;
-                        }
-                        else if ( (true) ) {
-                            alt124=2;
-                        }
-                        else {
-                            if (backtracking>0) {failed=true; return ;}
-                            NoViableAltException nvae =
-                                new NoViableAltException("761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 98, input);
-
-                            throw nvae;
-                        }
-                    }
-                    else if ( (LA124_29==37||LA124_29==40||LA124_29==65||LA124_29==69||LA124_29==113) ) {
-                        alt124=2;
                     }
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 29, input);
+                            new NoViableAltException("783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 28, input);
 
                         throw nvae;
                     }
@@ -8879,10 +8798,10 @@ public class JavaParser extends Parser {
                     break;
                 case 48:
                     {
-                    int LA124_30 = input.LA(3);
+                    int LA124_29 = input.LA(3);
 
-                    if ( (LA124_30==49) ) {
-                        int LA124_104 = input.LA(4);
+                    if ( (LA124_29==49) ) {
+                        int LA124_82 = input.LA(4);
 
                         if ( (synpred182()) ) {
                             alt124=1;
@@ -8893,37 +8812,18 @@ public class JavaParser extends Parser {
                         else {
                             if (backtracking>0) {failed=true; return ;}
                             NoViableAltException nvae =
-                                new NoViableAltException("761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 104, input);
+                                new NoViableAltException("783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 82, input);
 
                             throw nvae;
                         }
                     }
-                    else if ( (LA124_30==Identifier||(LA124_30>=FloatingPointLiteral && LA124_30<=DecimalLiteral)||LA124_30==47||(LA124_30>=56 && LA124_30<=63)||(LA124_30>=65 && LA124_30<=66)||(LA124_30>=69 && LA124_30<=72)||(LA124_30>=105 && LA124_30<=106)||(LA124_30>=109 && LA124_30<=113)) ) {
+                    else if ( (LA124_29==Identifier||(LA124_29>=FloatingPointLiteral && LA124_29<=DecimalLiteral)||LA124_29==47||(LA124_29>=56 && LA124_29<=63)||(LA124_29>=65 && LA124_29<=66)||(LA124_29>=69 && LA124_29<=72)||(LA124_29>=105 && LA124_29<=106)||(LA124_29>=109 && LA124_29<=113)) ) {
                         alt124=2;
                     }
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 30, input);
-
-                        throw nvae;
-                    }
-                    }
-                    break;
-                case Identifier:
-                    {
-                    int LA124_31 = input.LA(3);
-
-                    if ( (LA124_31==75) ) {
-                        alt124=1;
-                    }
-                    else if ( (LA124_31==26||LA124_31==41||LA124_31==48||LA124_31==51) ) {
-                        alt124=2;
-                    }
-                    else {
-                        if (backtracking>0) {failed=true; return ;}
-                        NoViableAltException nvae =
-                            new NoViableAltException("761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 31, input);
+                            new NoViableAltException("783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 29, input);
 
                         throw nvae;
                     }
@@ -8962,10 +8862,132 @@ public class JavaParser extends Parser {
                     alt124=2;
                     }
                     break;
+                case 40:
+                    {
+                    switch ( input.LA(3) ) {
+                    case FloatingPointLiteral:
+                    case CharacterLiteral:
+                    case StringLiteral:
+                    case HexLiteral:
+                    case OctalLiteral:
+                    case DecimalLiteral:
+                    case 40:
+                    case 47:
+                    case 51:
+                    case 65:
+                    case 66:
+                    case 69:
+                    case 70:
+                    case 71:
+                    case 72:
+                    case 105:
+                    case 106:
+                    case 109:
+                    case 110:
+                    case 111:
+                    case 112:
+                    case 113:
+                        {
+                        alt124=2;
+                        }
+                        break;
+                    case Identifier:
+                        {
+                        int LA124_104 = input.LA(4);
+
+                        if ( (synpred182()) ) {
+                            alt124=1;
+                        }
+                        else if ( (true) ) {
+                            alt124=2;
+                        }
+                        else {
+                            if (backtracking>0) {failed=true; return ;}
+                            NoViableAltException nvae =
+                                new NoViableAltException("783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 104, input);
+
+                            throw nvae;
+                        }
+                        }
+                        break;
+                    case 56:
+                    case 57:
+                    case 58:
+                    case 59:
+                    case 60:
+                    case 61:
+                    case 62:
+                    case 63:
+                        {
+                        int LA124_105 = input.LA(4);
+
+                        if ( (synpred182()) ) {
+                            alt124=1;
+                        }
+                        else if ( (true) ) {
+                            alt124=2;
+                        }
+                        else {
+                            if (backtracking>0) {failed=true; return ;}
+                            NoViableAltException nvae =
+                                new NoViableAltException("783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 105, input);
+
+                            throw nvae;
+                        }
+                        }
+                        break;
+                    case 64:
+                        {
+                        int LA124_106 = input.LA(4);
+
+                        if ( (synpred182()) ) {
+                            alt124=1;
+                        }
+                        else if ( (true) ) {
+                            alt124=2;
+                        }
+                        else {
+                            if (backtracking>0) {failed=true; return ;}
+                            NoViableAltException nvae =
+                                new NoViableAltException("783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 106, input);
+
+                            throw nvae;
+                        }
+                        }
+                        break;
+                    default:
+                        if (backtracking>0) {failed=true; return ;}
+                        NoViableAltException nvae =
+                            new NoViableAltException("783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 34, input);
+
+                        throw nvae;
+                    }
+
+                    }
+                    break;
+                case Identifier:
+                    {
+                    int LA124_55 = input.LA(3);
+
+                    if ( (LA124_55==75) ) {
+                        alt124=1;
+                    }
+                    else if ( (LA124_55==26||LA124_55==41||LA124_55==48||LA124_55==51) ) {
+                        alt124=2;
+                    }
+                    else {
+                        if (backtracking>0) {failed=true; return ;}
+                        NoViableAltException nvae =
+                            new NoViableAltException("783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 55, input);
+
+                        throw nvae;
+                    }
+                    }
+                    break;
                 default:
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 3, input);
+                        new NoViableAltException("783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 3, input);
 
                     throw nvae;
                 }
@@ -8998,7 +9020,7 @@ public class JavaParser extends Parser {
                         else {
                             if (backtracking>0) {failed=true; return ;}
                             NoViableAltException nvae =
-                                new NoViableAltException("761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 129, input);
+                                new NoViableAltException("783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 129, input);
 
                             throw nvae;
                         }
@@ -9006,7 +9028,7 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 56, input);
+                            new NoViableAltException("783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 56, input);
 
                         throw nvae;
                     }
@@ -9025,7 +9047,7 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 57, input);
+                            new NoViableAltException("783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 57, input);
 
                         throw nvae;
                     }
@@ -9039,7 +9061,7 @@ public class JavaParser extends Parser {
                 default:
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 4, input);
+                        new NoViableAltException("783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 4, input);
 
                     throw nvae;
                 }
@@ -9074,14 +9096,14 @@ public class JavaParser extends Parser {
             default:
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("761:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 0, input);
+                    new NoViableAltException("783:1: forControl options {k=3; } : ( enhancedForControl | ( forInit )? ';' ( expression )? ';' ( forUpdate )? );", 124, 0, input);
 
                 throw nvae;
             }
 
             switch (alt124) {
                 case 1 :
-                    // src/junitconverter/Java.g:763:9: enhancedForControl
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:785:9: enhancedForControl
                     {
                     pushFollow(FOLLOW_enhancedForControl_in_forControl3951);
                     enhancedForControl();
@@ -9091,9 +9113,9 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:764:9: ( forInit )? ';' ( expression )? ';' ( forUpdate )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:786:9: ( forInit )? ';' ( expression )? ';' ( forUpdate )?
                     {
-                    // src/junitconverter/Java.g:764:9: ( forInit )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:786:9: ( forInit )?
                     int alt121=2;
                     int LA121_0 = input.LA(1);
 
@@ -9102,7 +9124,7 @@ public class JavaParser extends Parser {
                     }
                     switch (alt121) {
                         case 1 :
-                            // src/junitconverter/Java.g:0:0: forInit
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:0:0: forInit
                             {
                             pushFollow(FOLLOW_forInit_in_forControl3961);
                             forInit();
@@ -9115,7 +9137,7 @@ public class JavaParser extends Parser {
                     }
 
                     match(input,26,FOLLOW_26_in_forControl3964); if (failed) return ;
-                    // src/junitconverter/Java.g:764:22: ( expression )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:786:22: ( expression )?
                     int alt122=2;
                     int LA122_0 = input.LA(1);
 
@@ -9124,7 +9146,7 @@ public class JavaParser extends Parser {
                     }
                     switch (alt122) {
                         case 1 :
-                            // src/junitconverter/Java.g:0:0: expression
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:0:0: expression
                             {
                             pushFollow(FOLLOW_expression_in_forControl3966);
                             expression();
@@ -9137,7 +9159,7 @@ public class JavaParser extends Parser {
                     }
 
                     match(input,26,FOLLOW_26_in_forControl3969); if (failed) return ;
-                    // src/junitconverter/Java.g:764:38: ( forUpdate )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:786:38: ( forUpdate )?
                     int alt123=2;
                     int LA123_0 = input.LA(1);
 
@@ -9146,7 +9168,7 @@ public class JavaParser extends Parser {
                     }
                     switch (alt123) {
                         case 1 :
-                            // src/junitconverter/Java.g:0:0: forUpdate
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:0:0: forUpdate
                             {
                             pushFollow(FOLLOW_forUpdate_in_forControl3971);
                             forUpdate();
@@ -9177,12 +9199,12 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start forInit
-    // src/junitconverter/Java.g:767:1: forInit : ( localVariableDeclaration | expressionList );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:789:1: forInit : ( localVariableDeclaration | expressionList );
     public final void forInit() throws RecognitionException {
         int forInit_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 98) ) { return ; }
-            // src/junitconverter/Java.g:768:5: ( localVariableDeclaration | expressionList )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:790:5: ( localVariableDeclaration | expressionList )
             int alt125=2;
             switch ( input.LA(1) ) {
             case 35:
@@ -9207,7 +9229,7 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("767:1: forInit : ( localVariableDeclaration | expressionList );", 125, 22, input);
+                            new NoViableAltException("789:1: forInit : ( localVariableDeclaration | expressionList );", 125, 22, input);
 
                         throw nvae;
                     }
@@ -9226,7 +9248,7 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("767:1: forInit : ( localVariableDeclaration | expressionList );", 125, 23, input);
+                            new NoViableAltException("789:1: forInit : ( localVariableDeclaration | expressionList );", 125, 23, input);
 
                         throw nvae;
                     }
@@ -9245,7 +9267,7 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("767:1: forInit : ( localVariableDeclaration | expressionList );", 125, 24, input);
+                            new NoViableAltException("789:1: forInit : ( localVariableDeclaration | expressionList );", 125, 24, input);
 
                         throw nvae;
                     }
@@ -9293,7 +9315,7 @@ public class JavaParser extends Parser {
                 default:
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("767:1: forInit : ( localVariableDeclaration | expressionList );", 125, 3, input);
+                        new NoViableAltException("789:1: forInit : ( localVariableDeclaration | expressionList );", 125, 3, input);
 
                     throw nvae;
                 }
@@ -9323,7 +9345,7 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("767:1: forInit : ( localVariableDeclaration | expressionList );", 125, 51, input);
+                            new NoViableAltException("789:1: forInit : ( localVariableDeclaration | expressionList );", 125, 51, input);
 
                         throw nvae;
                     }
@@ -9342,7 +9364,7 @@ public class JavaParser extends Parser {
                 default:
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("767:1: forInit : ( localVariableDeclaration | expressionList );", 125, 4, input);
+                        new NoViableAltException("789:1: forInit : ( localVariableDeclaration | expressionList );", 125, 4, input);
 
                     throw nvae;
                 }
@@ -9376,14 +9398,14 @@ public class JavaParser extends Parser {
             default:
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("767:1: forInit : ( localVariableDeclaration | expressionList );", 125, 0, input);
+                    new NoViableAltException("789:1: forInit : ( localVariableDeclaration | expressionList );", 125, 0, input);
 
                 throw nvae;
             }
 
             switch (alt125) {
                 case 1 :
-                    // src/junitconverter/Java.g:768:9: localVariableDeclaration
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:790:9: localVariableDeclaration
                     {
                     pushFollow(FOLLOW_localVariableDeclaration_in_forInit3991);
                     localVariableDeclaration();
@@ -9393,7 +9415,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:769:9: expressionList
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:791:9: expressionList
                     {
                     pushFollow(FOLLOW_expressionList_in_forInit4001);
                     expressionList();
@@ -9418,13 +9440,13 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start enhancedForControl
-    // src/junitconverter/Java.g:772:1: enhancedForControl : variableModifiers type Identifier ':' expression ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:794:1: enhancedForControl : variableModifiers type Identifier ':' expression ;
     public final void enhancedForControl() throws RecognitionException {
         int enhancedForControl_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 99) ) { return ; }
-            // src/junitconverter/Java.g:773:5: ( variableModifiers type Identifier ':' expression )
-            // src/junitconverter/Java.g:773:9: variableModifiers type Identifier ':' expression
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:795:5: ( variableModifiers type Identifier ':' expression )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:795:9: variableModifiers type Identifier ':' expression
             {
             pushFollow(FOLLOW_variableModifiers_in_enhancedForControl4024);
             variableModifiers();
@@ -9457,13 +9479,13 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start forUpdate
-    // src/junitconverter/Java.g:776:1: forUpdate : expressionList ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:798:1: forUpdate : expressionList ;
     public final void forUpdate() throws RecognitionException {
         int forUpdate_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 100) ) { return ; }
-            // src/junitconverter/Java.g:777:5: ( expressionList )
-            // src/junitconverter/Java.g:777:9: expressionList
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:799:5: ( expressionList )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:799:9: expressionList
             {
             pushFollow(FOLLOW_expressionList_in_forUpdate4051);
             expressionList();
@@ -9486,13 +9508,13 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start parExpression
-    // src/junitconverter/Java.g:782:1: parExpression : '(' expression ')' ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:804:1: parExpression : '(' expression ')' ;
     public final void parExpression() throws RecognitionException {
         int parExpression_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 101) ) { return ; }
-            // src/junitconverter/Java.g:783:5: ( '(' expression ')' )
-            // src/junitconverter/Java.g:783:9: '(' expression ')'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:805:5: ( '(' expression ')' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:805:9: '(' expression ')'
             {
             match(input,66,FOLLOW_66_in_parExpression4072); if (failed) return ;
             pushFollow(FOLLOW_expression_in_parExpression4074);
@@ -9517,19 +9539,19 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start expressionList
-    // src/junitconverter/Java.g:786:1: expressionList : expression ( ',' expression )* ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:808:1: expressionList : expression ( ',' expression )* ;
     public final void expressionList() throws RecognitionException {
         int expressionList_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 102) ) { return ; }
-            // src/junitconverter/Java.g:787:5: ( expression ( ',' expression )* )
-            // src/junitconverter/Java.g:787:9: expression ( ',' expression )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:809:5: ( expression ( ',' expression )* )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:809:9: expression ( ',' expression )*
             {
             pushFollow(FOLLOW_expression_in_expressionList4099);
             expression();
             _fsp--;
             if (failed) return ;
-            // src/junitconverter/Java.g:787:20: ( ',' expression )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:809:20: ( ',' expression )*
             loop126:
             do {
                 int alt126=2;
@@ -9542,7 +9564,7 @@ public class JavaParser extends Parser {
 
                 switch (alt126) {
             	case 1 :
-            	    // src/junitconverter/Java.g:787:21: ',' expression
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:809:21: ',' expression
             	    {
             	    match(input,41,FOLLOW_41_in_expressionList4102); if (failed) return ;
             	    pushFollow(FOLLOW_expression_in_expressionList4104);
@@ -9575,13 +9597,13 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start statementExpression
-    // src/junitconverter/Java.g:790:1: statementExpression : expression ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:812:1: statementExpression : expression ;
     public final void statementExpression() throws RecognitionException {
         int statementExpression_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 103) ) { return ; }
-            // src/junitconverter/Java.g:791:5: ( expression )
-            // src/junitconverter/Java.g:791:9: expression
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:813:5: ( expression )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:813:9: expression
             {
             pushFollow(FOLLOW_expression_in_statementExpression4125);
             expression();
@@ -9604,13 +9626,13 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start constantExpression
-    // src/junitconverter/Java.g:794:1: constantExpression : expression ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:816:1: constantExpression : expression ;
     public final void constantExpression() throws RecognitionException {
         int constantExpression_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 104) ) { return ; }
-            // src/junitconverter/Java.g:795:5: ( expression )
-            // src/junitconverter/Java.g:795:9: expression
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:817:5: ( expression )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:817:9: expression
             {
             pushFollow(FOLLOW_expression_in_constantExpression4148);
             expression();
@@ -9633,19 +9655,19 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start expression
-    // src/junitconverter/Java.g:798:1: expression : conditionalExpression ( assignmentOperator expression )? ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:820:1: expression : conditionalExpression ( assignmentOperator expression )? ;
     public final void expression() throws RecognitionException {
         int expression_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 105) ) { return ; }
-            // src/junitconverter/Java.g:799:5: ( conditionalExpression ( assignmentOperator expression )? )
-            // src/junitconverter/Java.g:799:9: conditionalExpression ( assignmentOperator expression )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:821:5: ( conditionalExpression ( assignmentOperator expression )? )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:821:9: conditionalExpression ( assignmentOperator expression )?
             {
             pushFollow(FOLLOW_conditionalExpression_in_expression4171);
             conditionalExpression();
             _fsp--;
             if (failed) return ;
-            // src/junitconverter/Java.g:799:31: ( assignmentOperator expression )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:821:31: ( assignmentOperator expression )?
             int alt127=2;
             switch ( input.LA(1) ) {
                 case 51:
@@ -9751,7 +9773,7 @@ public class JavaParser extends Parser {
 
             switch (alt127) {
                 case 1 :
-                    // src/junitconverter/Java.g:799:32: assignmentOperator expression
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:821:32: assignmentOperator expression
                     {
                     pushFollow(FOLLOW_assignmentOperator_in_expression4174);
                     assignmentOperator();
@@ -9784,7 +9806,7 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start assignmentOperator
-    // src/junitconverter/Java.g:802:1: assignmentOperator : ( '=' | '+=' | '-=' | '*=' | '/=' | '&=' | '|=' | '^=' | '%=' | ( '<' '<' '=' )=>t1= '<' t2= '<' t3= '=' {...}? | ( '>' '>' '>' '=' )=>t1= '>' t2= '>' t3= '>' t4= '=' {...}? | ( '>' '>' '=' )=>t1= '>' t2= '>' t3= '=' {...}?);
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:824:1: assignmentOperator : ( '=' | '+=' | '-=' | '*=' | '/=' | '&=' | '|=' | '^=' | '%=' | ( '<' '<' '=' )=>t1= '<' t2= '<' t3= '=' {...}? | ( '>' '>' '>' '=' )=>t1= '>' t2= '>' t3= '>' t4= '=' {...}? | ( '>' '>' '=' )=>t1= '>' t2= '>' t3= '=' {...}?);
     public final void assignmentOperator() throws RecognitionException {
         int assignmentOperator_StartIndex = input.index();
         Token t1=null;
@@ -9794,7 +9816,7 @@ public class JavaParser extends Parser {
 
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 106) ) { return ; }
-            // src/junitconverter/Java.g:803:5: ( '=' | '+=' | '-=' | '*=' | '/=' | '&=' | '|=' | '^=' | '%=' | ( '<' '<' '=' )=>t1= '<' t2= '<' t3= '=' {...}? | ( '>' '>' '>' '=' )=>t1= '>' t2= '>' t3= '>' t4= '=' {...}? | ( '>' '>' '=' )=>t1= '>' t2= '>' t3= '=' {...}?)
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:825:5: ( '=' | '+=' | '-=' | '*=' | '/=' | '&=' | '|=' | '^=' | '%=' | ( '<' '<' '=' )=>t1= '<' t2= '<' t3= '=' {...}? | ( '>' '>' '>' '=' )=>t1= '>' t2= '>' t3= '>' t4= '=' {...}? | ( '>' '>' '=' )=>t1= '>' t2= '>' t3= '=' {...}?)
             int alt128=12;
             int LA128_0 = input.LA(1);
 
@@ -9843,7 +9865,7 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("802:1: assignmentOperator : ( '=' | '+=' | '-=' | '*=' | '/=' | '&=' | '|=' | '^=' | '%=' | ( '<' '<' '=' )=>t1= '<' t2= '<' t3= '=' {...}? | ( '>' '>' '>' '=' )=>t1= '>' t2= '>' t3= '>' t4= '=' {...}? | ( '>' '>' '=' )=>t1= '>' t2= '>' t3= '=' {...}?);", 128, 12, input);
+                            new NoViableAltException("824:1: assignmentOperator : ( '=' | '+=' | '-=' | '*=' | '/=' | '&=' | '|=' | '^=' | '%=' | ( '<' '<' '=' )=>t1= '<' t2= '<' t3= '=' {...}? | ( '>' '>' '>' '=' )=>t1= '>' t2= '>' t3= '>' t4= '=' {...}? | ( '>' '>' '=' )=>t1= '>' t2= '>' t3= '=' {...}?);", 128, 12, input);
 
                         throw nvae;
                     }
@@ -9851,7 +9873,7 @@ public class JavaParser extends Parser {
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("802:1: assignmentOperator : ( '=' | '+=' | '-=' | '*=' | '/=' | '&=' | '|=' | '^=' | '%=' | ( '<' '<' '=' )=>t1= '<' t2= '<' t3= '=' {...}? | ( '>' '>' '>' '=' )=>t1= '>' t2= '>' t3= '>' t4= '=' {...}? | ( '>' '>' '=' )=>t1= '>' t2= '>' t3= '=' {...}?);", 128, 11, input);
+                        new NoViableAltException("824:1: assignmentOperator : ( '=' | '+=' | '-=' | '*=' | '/=' | '&=' | '|=' | '^=' | '%=' | ( '<' '<' '=' )=>t1= '<' t2= '<' t3= '=' {...}? | ( '>' '>' '>' '=' )=>t1= '>' t2= '>' t3= '>' t4= '=' {...}? | ( '>' '>' '=' )=>t1= '>' t2= '>' t3= '=' {...}?);", 128, 11, input);
 
                     throw nvae;
                 }
@@ -9859,76 +9881,76 @@ public class JavaParser extends Parser {
             else {
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("802:1: assignmentOperator : ( '=' | '+=' | '-=' | '*=' | '/=' | '&=' | '|=' | '^=' | '%=' | ( '<' '<' '=' )=>t1= '<' t2= '<' t3= '=' {...}? | ( '>' '>' '>' '=' )=>t1= '>' t2= '>' t3= '>' t4= '=' {...}? | ( '>' '>' '=' )=>t1= '>' t2= '>' t3= '=' {...}?);", 128, 0, input);
+                    new NoViableAltException("824:1: assignmentOperator : ( '=' | '+=' | '-=' | '*=' | '/=' | '&=' | '|=' | '^=' | '%=' | ( '<' '<' '=' )=>t1= '<' t2= '<' t3= '=' {...}? | ( '>' '>' '>' '=' )=>t1= '>' t2= '>' t3= '>' t4= '=' {...}? | ( '>' '>' '=' )=>t1= '>' t2= '>' t3= '=' {...}?);", 128, 0, input);
 
                 throw nvae;
             }
             switch (alt128) {
                 case 1 :
-                    // src/junitconverter/Java.g:803:9: '='
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:825:9: '='
                     {
                     match(input,51,FOLLOW_51_in_assignmentOperator4201); if (failed) return ;
 
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:804:9: '+='
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:826:9: '+='
                     {
                     match(input,90,FOLLOW_90_in_assignmentOperator4211); if (failed) return ;
 
                     }
                     break;
                 case 3 :
-                    // src/junitconverter/Java.g:805:9: '-='
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:827:9: '-='
                     {
                     match(input,91,FOLLOW_91_in_assignmentOperator4221); if (failed) return ;
 
                     }
                     break;
                 case 4 :
-                    // src/junitconverter/Java.g:806:9: '*='
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:828:9: '*='
                     {
                     match(input,92,FOLLOW_92_in_assignmentOperator4231); if (failed) return ;
 
                     }
                     break;
                 case 5 :
-                    // src/junitconverter/Java.g:807:9: '/='
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:829:9: '/='
                     {
                     match(input,93,FOLLOW_93_in_assignmentOperator4241); if (failed) return ;
 
                     }
                     break;
                 case 6 :
-                    // src/junitconverter/Java.g:808:9: '&='
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:830:9: '&='
                     {
                     match(input,94,FOLLOW_94_in_assignmentOperator4251); if (failed) return ;
 
                     }
                     break;
                 case 7 :
-                    // src/junitconverter/Java.g:809:9: '|='
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:831:9: '|='
                     {
                     match(input,95,FOLLOW_95_in_assignmentOperator4261); if (failed) return ;
 
                     }
                     break;
                 case 8 :
-                    // src/junitconverter/Java.g:810:9: '^='
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:832:9: '^='
                     {
                     match(input,96,FOLLOW_96_in_assignmentOperator4271); if (failed) return ;
 
                     }
                     break;
                 case 9 :
-                    // src/junitconverter/Java.g:811:9: '%='
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:833:9: '%='
                     {
                     match(input,97,FOLLOW_97_in_assignmentOperator4281); if (failed) return ;
 
                     }
                     break;
                 case 10 :
-                    // src/junitconverter/Java.g:812:9: ( '<' '<' '=' )=>t1= '<' t2= '<' t3= '=' {...}?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:834:9: ( '<' '<' '=' )=>t1= '<' t2= '<' t3= '=' {...}?
                     {
                     t1=(Token)input.LT(1);
                     match(input,40,FOLLOW_40_in_assignmentOperator4302); if (failed) return ;
@@ -9947,7 +9969,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 11 :
-                    // src/junitconverter/Java.g:817:9: ( '>' '>' '>' '=' )=>t1= '>' t2= '>' t3= '>' t4= '=' {...}?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:839:9: ( '>' '>' '>' '=' )=>t1= '>' t2= '>' t3= '>' t4= '=' {...}?
                     {
                     t1=(Token)input.LT(1);
                     match(input,42,FOLLOW_42_in_assignmentOperator4344); if (failed) return ;
@@ -9970,7 +9992,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 12 :
-                    // src/junitconverter/Java.g:824:9: ( '>' '>' '=' )=>t1= '>' t2= '>' t3= '=' {...}?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:846:9: ( '>' '>' '=' )=>t1= '>' t2= '>' t3= '=' {...}?
                     {
                     t1=(Token)input.LT(1);
                     match(input,42,FOLLOW_42_in_assignmentOperator4387); if (failed) return ;
@@ -10004,19 +10026,19 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start conditionalExpression
-    // src/junitconverter/Java.g:831:1: conditionalExpression : conditionalOrExpression ( '?' expression ':' expression )? ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:853:1: conditionalExpression : conditionalOrExpression ( '?' expression ':' expression )? ;
     public final void conditionalExpression() throws RecognitionException {
         int conditionalExpression_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 107) ) { return ; }
-            // src/junitconverter/Java.g:832:5: ( conditionalOrExpression ( '?' expression ':' expression )? )
-            // src/junitconverter/Java.g:832:9: conditionalOrExpression ( '?' expression ':' expression )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:854:5: ( conditionalOrExpression ( '?' expression ':' expression )? )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:854:9: conditionalOrExpression ( '?' expression ':' expression )?
             {
             pushFollow(FOLLOW_conditionalOrExpression_in_conditionalExpression4424);
             conditionalOrExpression();
             _fsp--;
             if (failed) return ;
-            // src/junitconverter/Java.g:832:33: ( '?' expression ':' expression )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:854:33: ( '?' expression ':' expression )?
             int alt129=2;
             int LA129_0 = input.LA(1);
 
@@ -10025,7 +10047,7 @@ public class JavaParser extends Parser {
             }
             switch (alt129) {
                 case 1 :
-                    // src/junitconverter/Java.g:832:35: '?' expression ':' expression
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:854:35: '?' expression ':' expression
                     {
                     match(input,64,FOLLOW_64_in_conditionalExpression4428); if (failed) return ;
                     pushFollow(FOLLOW_expression_in_conditionalExpression4430);
@@ -10060,19 +10082,19 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start conditionalOrExpression
-    // src/junitconverter/Java.g:835:1: conditionalOrExpression : conditionalAndExpression ( '||' conditionalAndExpression )* ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:857:1: conditionalOrExpression : conditionalAndExpression ( '||' conditionalAndExpression )* ;
     public final void conditionalOrExpression() throws RecognitionException {
         int conditionalOrExpression_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 108) ) { return ; }
-            // src/junitconverter/Java.g:836:5: ( conditionalAndExpression ( '||' conditionalAndExpression )* )
-            // src/junitconverter/Java.g:836:9: conditionalAndExpression ( '||' conditionalAndExpression )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:858:5: ( conditionalAndExpression ( '||' conditionalAndExpression )* )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:858:9: conditionalAndExpression ( '||' conditionalAndExpression )*
             {
             pushFollow(FOLLOW_conditionalAndExpression_in_conditionalOrExpression4456);
             conditionalAndExpression();
             _fsp--;
             if (failed) return ;
-            // src/junitconverter/Java.g:836:34: ( '||' conditionalAndExpression )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:858:34: ( '||' conditionalAndExpression )*
             loop130:
             do {
                 int alt130=2;
@@ -10085,7 +10107,7 @@ public class JavaParser extends Parser {
 
                 switch (alt130) {
             	case 1 :
-            	    // src/junitconverter/Java.g:836:36: '||' conditionalAndExpression
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:858:36: '||' conditionalAndExpression
             	    {
             	    match(input,98,FOLLOW_98_in_conditionalOrExpression4460); if (failed) return ;
             	    pushFollow(FOLLOW_conditionalAndExpression_in_conditionalOrExpression4462);
@@ -10118,19 +10140,19 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start conditionalAndExpression
-    // src/junitconverter/Java.g:839:1: conditionalAndExpression : inclusiveOrExpression ( '&&' inclusiveOrExpression )* ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:861:1: conditionalAndExpression : inclusiveOrExpression ( '&&' inclusiveOrExpression )* ;
     public final void conditionalAndExpression() throws RecognitionException {
         int conditionalAndExpression_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 109) ) { return ; }
-            // src/junitconverter/Java.g:840:5: ( inclusiveOrExpression ( '&&' inclusiveOrExpression )* )
-            // src/junitconverter/Java.g:840:9: inclusiveOrExpression ( '&&' inclusiveOrExpression )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:862:5: ( inclusiveOrExpression ( '&&' inclusiveOrExpression )* )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:862:9: inclusiveOrExpression ( '&&' inclusiveOrExpression )*
             {
             pushFollow(FOLLOW_inclusiveOrExpression_in_conditionalAndExpression4484);
             inclusiveOrExpression();
             _fsp--;
             if (failed) return ;
-            // src/junitconverter/Java.g:840:31: ( '&&' inclusiveOrExpression )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:862:31: ( '&&' inclusiveOrExpression )*
             loop131:
             do {
                 int alt131=2;
@@ -10143,7 +10165,7 @@ public class JavaParser extends Parser {
 
                 switch (alt131) {
             	case 1 :
-            	    // src/junitconverter/Java.g:840:33: '&&' inclusiveOrExpression
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:862:33: '&&' inclusiveOrExpression
             	    {
             	    match(input,99,FOLLOW_99_in_conditionalAndExpression4488); if (failed) return ;
             	    pushFollow(FOLLOW_inclusiveOrExpression_in_conditionalAndExpression4490);
@@ -10176,19 +10198,19 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start inclusiveOrExpression
-    // src/junitconverter/Java.g:843:1: inclusiveOrExpression : exclusiveOrExpression ( '|' exclusiveOrExpression )* ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:865:1: inclusiveOrExpression : exclusiveOrExpression ( '|' exclusiveOrExpression )* ;
     public final void inclusiveOrExpression() throws RecognitionException {
         int inclusiveOrExpression_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 110) ) { return ; }
-            // src/junitconverter/Java.g:844:5: ( exclusiveOrExpression ( '|' exclusiveOrExpression )* )
-            // src/junitconverter/Java.g:844:9: exclusiveOrExpression ( '|' exclusiveOrExpression )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:866:5: ( exclusiveOrExpression ( '|' exclusiveOrExpression )* )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:866:9: exclusiveOrExpression ( '|' exclusiveOrExpression )*
             {
             pushFollow(FOLLOW_exclusiveOrExpression_in_inclusiveOrExpression4512);
             exclusiveOrExpression();
             _fsp--;
             if (failed) return ;
-            // src/junitconverter/Java.g:844:31: ( '|' exclusiveOrExpression )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:866:31: ( '|' exclusiveOrExpression )*
             loop132:
             do {
                 int alt132=2;
@@ -10201,7 +10223,7 @@ public class JavaParser extends Parser {
 
                 switch (alt132) {
             	case 1 :
-            	    // src/junitconverter/Java.g:844:33: '|' exclusiveOrExpression
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:866:33: '|' exclusiveOrExpression
             	    {
             	    match(input,100,FOLLOW_100_in_inclusiveOrExpression4516); if (failed) return ;
             	    pushFollow(FOLLOW_exclusiveOrExpression_in_inclusiveOrExpression4518);
@@ -10234,19 +10256,19 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start exclusiveOrExpression
-    // src/junitconverter/Java.g:847:1: exclusiveOrExpression : andExpression ( '^' andExpression )* ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:869:1: exclusiveOrExpression : andExpression ( '^' andExpression )* ;
     public final void exclusiveOrExpression() throws RecognitionException {
         int exclusiveOrExpression_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 111) ) { return ; }
-            // src/junitconverter/Java.g:848:5: ( andExpression ( '^' andExpression )* )
-            // src/junitconverter/Java.g:848:9: andExpression ( '^' andExpression )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:870:5: ( andExpression ( '^' andExpression )* )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:870:9: andExpression ( '^' andExpression )*
             {
             pushFollow(FOLLOW_andExpression_in_exclusiveOrExpression4540);
             andExpression();
             _fsp--;
             if (failed) return ;
-            // src/junitconverter/Java.g:848:23: ( '^' andExpression )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:870:23: ( '^' andExpression )*
             loop133:
             do {
                 int alt133=2;
@@ -10259,7 +10281,7 @@ public class JavaParser extends Parser {
 
                 switch (alt133) {
             	case 1 :
-            	    // src/junitconverter/Java.g:848:25: '^' andExpression
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:870:25: '^' andExpression
             	    {
             	    match(input,101,FOLLOW_101_in_exclusiveOrExpression4544); if (failed) return ;
             	    pushFollow(FOLLOW_andExpression_in_exclusiveOrExpression4546);
@@ -10292,19 +10314,19 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start andExpression
-    // src/junitconverter/Java.g:851:1: andExpression : equalityExpression ( '&' equalityExpression )* ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:873:1: andExpression : equalityExpression ( '&' equalityExpression )* ;
     public final void andExpression() throws RecognitionException {
         int andExpression_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 112) ) { return ; }
-            // src/junitconverter/Java.g:852:5: ( equalityExpression ( '&' equalityExpression )* )
-            // src/junitconverter/Java.g:852:9: equalityExpression ( '&' equalityExpression )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:874:5: ( equalityExpression ( '&' equalityExpression )* )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:874:9: equalityExpression ( '&' equalityExpression )*
             {
             pushFollow(FOLLOW_equalityExpression_in_andExpression4568);
             equalityExpression();
             _fsp--;
             if (failed) return ;
-            // src/junitconverter/Java.g:852:28: ( '&' equalityExpression )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:874:28: ( '&' equalityExpression )*
             loop134:
             do {
                 int alt134=2;
@@ -10317,7 +10339,7 @@ public class JavaParser extends Parser {
 
                 switch (alt134) {
             	case 1 :
-            	    // src/junitconverter/Java.g:852:30: '&' equalityExpression
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:874:30: '&' equalityExpression
             	    {
             	    match(input,43,FOLLOW_43_in_andExpression4572); if (failed) return ;
             	    pushFollow(FOLLOW_equalityExpression_in_andExpression4574);
@@ -10350,19 +10372,19 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start equalityExpression
-    // src/junitconverter/Java.g:855:1: equalityExpression : instanceOfExpression ( ( '==' | '!=' ) instanceOfExpression )* ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:877:1: equalityExpression : instanceOfExpression ( ( '==' | '!=' ) instanceOfExpression )* ;
     public final void equalityExpression() throws RecognitionException {
         int equalityExpression_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 113) ) { return ; }
-            // src/junitconverter/Java.g:856:5: ( instanceOfExpression ( ( '==' | '!=' ) instanceOfExpression )* )
-            // src/junitconverter/Java.g:856:9: instanceOfExpression ( ( '==' | '!=' ) instanceOfExpression )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:878:5: ( instanceOfExpression ( ( '==' | '!=' ) instanceOfExpression )* )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:878:9: instanceOfExpression ( ( '==' | '!=' ) instanceOfExpression )*
             {
             pushFollow(FOLLOW_instanceOfExpression_in_equalityExpression4596);
             instanceOfExpression();
             _fsp--;
             if (failed) return ;
-            // src/junitconverter/Java.g:856:30: ( ( '==' | '!=' ) instanceOfExpression )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:878:30: ( ( '==' | '!=' ) instanceOfExpression )*
             loop135:
             do {
                 int alt135=2;
@@ -10375,7 +10397,7 @@ public class JavaParser extends Parser {
 
                 switch (alt135) {
             	case 1 :
-            	    // src/junitconverter/Java.g:856:32: ( '==' | '!=' ) instanceOfExpression
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:878:32: ( '==' | '!=' ) instanceOfExpression
             	    {
             	    if ( (input.LA(1)>=102 && input.LA(1)<=103) ) {
             	        input.consume();
@@ -10418,19 +10440,19 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start instanceOfExpression
-    // src/junitconverter/Java.g:859:1: instanceOfExpression : relationalExpression ( 'instanceof' type )? ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:881:1: instanceOfExpression : relationalExpression ( 'instanceof' type )? ;
     public final void instanceOfExpression() throws RecognitionException {
         int instanceOfExpression_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 114) ) { return ; }
-            // src/junitconverter/Java.g:860:5: ( relationalExpression ( 'instanceof' type )? )
-            // src/junitconverter/Java.g:860:9: relationalExpression ( 'instanceof' type )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:882:5: ( relationalExpression ( 'instanceof' type )? )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:882:9: relationalExpression ( 'instanceof' type )?
             {
             pushFollow(FOLLOW_relationalExpression_in_instanceOfExpression4630);
             relationalExpression();
             _fsp--;
             if (failed) return ;
-            // src/junitconverter/Java.g:860:30: ( 'instanceof' type )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:882:30: ( 'instanceof' type )?
             int alt136=2;
             int LA136_0 = input.LA(1);
 
@@ -10439,7 +10461,7 @@ public class JavaParser extends Parser {
             }
             switch (alt136) {
                 case 1 :
-                    // src/junitconverter/Java.g:860:31: 'instanceof' type
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:882:31: 'instanceof' type
                     {
                     match(input,104,FOLLOW_104_in_instanceOfExpression4633); if (failed) return ;
                     pushFollow(FOLLOW_type_in_instanceOfExpression4635);
@@ -10469,19 +10491,19 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start relationalExpression
-    // src/junitconverter/Java.g:863:1: relationalExpression : shiftExpression ( relationalOp shiftExpression )* ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:885:1: relationalExpression : shiftExpression ( relationalOp shiftExpression )* ;
     public final void relationalExpression() throws RecognitionException {
         int relationalExpression_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 115) ) { return ; }
-            // src/junitconverter/Java.g:864:5: ( shiftExpression ( relationalOp shiftExpression )* )
-            // src/junitconverter/Java.g:864:9: shiftExpression ( relationalOp shiftExpression )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:886:5: ( shiftExpression ( relationalOp shiftExpression )* )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:886:9: shiftExpression ( relationalOp shiftExpression )*
             {
             pushFollow(FOLLOW_shiftExpression_in_relationalExpression4656);
             shiftExpression();
             _fsp--;
             if (failed) return ;
-            // src/junitconverter/Java.g:864:25: ( relationalOp shiftExpression )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:886:25: ( relationalOp shiftExpression )*
             loop137:
             do {
                 int alt137=2;
@@ -10509,7 +10531,7 @@ public class JavaParser extends Parser {
 
                 switch (alt137) {
             	case 1 :
-            	    // src/junitconverter/Java.g:864:27: relationalOp shiftExpression
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:886:27: relationalOp shiftExpression
             	    {
             	    pushFollow(FOLLOW_relationalOp_in_relationalExpression4660);
             	    relationalOp();
@@ -10545,7 +10567,7 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start relationalOp
-    // src/junitconverter/Java.g:867:1: relationalOp : ( ( '<' '=' )=>t1= '<' t2= '=' {...}? | ( '>' '=' )=>t1= '>' t2= '=' {...}? | '<' | '>' );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:889:1: relationalOp : ( ( '<' '=' )=>t1= '<' t2= '=' {...}? | ( '>' '=' )=>t1= '>' t2= '=' {...}? | '<' | '>' );
     public final void relationalOp() throws RecognitionException {
         int relationalOp_StartIndex = input.index();
         Token t1=null;
@@ -10553,7 +10575,7 @@ public class JavaParser extends Parser {
 
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 116) ) { return ; }
-            // src/junitconverter/Java.g:868:5: ( ( '<' '=' )=>t1= '<' t2= '=' {...}? | ( '>' '=' )=>t1= '>' t2= '=' {...}? | '<' | '>' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:890:5: ( ( '<' '=' )=>t1= '<' t2= '=' {...}? | ( '>' '=' )=>t1= '>' t2= '=' {...}? | '<' | '>' )
             int alt138=4;
             int LA138_0 = input.LA(1);
 
@@ -10569,7 +10591,7 @@ public class JavaParser extends Parser {
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("867:1: relationalOp : ( ( '<' '=' )=>t1= '<' t2= '=' {...}? | ( '>' '=' )=>t1= '>' t2= '=' {...}? | '<' | '>' );", 138, 1, input);
+                        new NoViableAltException("889:1: relationalOp : ( ( '<' '=' )=>t1= '<' t2= '=' {...}? | ( '>' '=' )=>t1= '>' t2= '=' {...}? | '<' | '>' );", 138, 1, input);
 
                     throw nvae;
                 }
@@ -10586,7 +10608,7 @@ public class JavaParser extends Parser {
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("867:1: relationalOp : ( ( '<' '=' )=>t1= '<' t2= '=' {...}? | ( '>' '=' )=>t1= '>' t2= '=' {...}? | '<' | '>' );", 138, 2, input);
+                        new NoViableAltException("889:1: relationalOp : ( ( '<' '=' )=>t1= '<' t2= '=' {...}? | ( '>' '=' )=>t1= '>' t2= '=' {...}? | '<' | '>' );", 138, 2, input);
 
                     throw nvae;
                 }
@@ -10594,13 +10616,13 @@ public class JavaParser extends Parser {
             else {
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("867:1: relationalOp : ( ( '<' '=' )=>t1= '<' t2= '=' {...}? | ( '>' '=' )=>t1= '>' t2= '=' {...}? | '<' | '>' );", 138, 0, input);
+                    new NoViableAltException("889:1: relationalOp : ( ( '<' '=' )=>t1= '<' t2= '=' {...}? | ( '>' '=' )=>t1= '>' t2= '=' {...}? | '<' | '>' );", 138, 0, input);
 
                 throw nvae;
             }
             switch (alt138) {
                 case 1 :
-                    // src/junitconverter/Java.g:868:9: ( '<' '=' )=>t1= '<' t2= '=' {...}?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:890:9: ( '<' '=' )=>t1= '<' t2= '=' {...}?
                     {
                     t1=(Token)input.LT(1);
                     match(input,40,FOLLOW_40_in_relationalOp4697); if (failed) return ;
@@ -10615,7 +10637,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:871:9: ( '>' '=' )=>t1= '>' t2= '=' {...}?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:893:9: ( '>' '=' )=>t1= '>' t2= '=' {...}?
                     {
                     t1=(Token)input.LT(1);
                     match(input,42,FOLLOW_42_in_relationalOp4731); if (failed) return ;
@@ -10630,14 +10652,14 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // src/junitconverter/Java.g:874:9: '<'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:896:9: '<'
                     {
                     match(input,40,FOLLOW_40_in_relationalOp4756); if (failed) return ;
 
                     }
                     break;
                 case 4 :
-                    // src/junitconverter/Java.g:875:9: '>'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:897:9: '>'
                     {
                     match(input,42,FOLLOW_42_in_relationalOp4767); if (failed) return ;
 
@@ -10659,19 +10681,19 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start shiftExpression
-    // src/junitconverter/Java.g:878:1: shiftExpression : additiveExpression ( shiftOp additiveExpression )* ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:900:1: shiftExpression : additiveExpression ( shiftOp additiveExpression )* ;
     public final void shiftExpression() throws RecognitionException {
         int shiftExpression_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 117) ) { return ; }
-            // src/junitconverter/Java.g:879:5: ( additiveExpression ( shiftOp additiveExpression )* )
-            // src/junitconverter/Java.g:879:9: additiveExpression ( shiftOp additiveExpression )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:901:5: ( additiveExpression ( shiftOp additiveExpression )* )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:901:9: additiveExpression ( shiftOp additiveExpression )*
             {
             pushFollow(FOLLOW_additiveExpression_in_shiftExpression4787);
             additiveExpression();
             _fsp--;
             if (failed) return ;
-            // src/junitconverter/Java.g:879:28: ( shiftOp additiveExpression )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:901:28: ( shiftOp additiveExpression )*
             loop139:
             do {
                 int alt139=2;
@@ -10711,7 +10733,7 @@ public class JavaParser extends Parser {
 
                 switch (alt139) {
             	case 1 :
-            	    // src/junitconverter/Java.g:879:30: shiftOp additiveExpression
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:901:30: shiftOp additiveExpression
             	    {
             	    pushFollow(FOLLOW_shiftOp_in_shiftExpression4791);
             	    shiftOp();
@@ -10747,7 +10769,7 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start shiftOp
-    // src/junitconverter/Java.g:882:1: shiftOp : ( ( '<' '<' )=>t1= '<' t2= '<' {...}? | ( '>' '>' '>' )=>t1= '>' t2= '>' t3= '>' {...}? | ( '>' '>' )=>t1= '>' t2= '>' {...}?);
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:904:1: shiftOp : ( ( '<' '<' )=>t1= '<' t2= '<' {...}? | ( '>' '>' '>' )=>t1= '>' t2= '>' t3= '>' {...}? | ( '>' '>' )=>t1= '>' t2= '>' {...}?);
     public final void shiftOp() throws RecognitionException {
         int shiftOp_StartIndex = input.index();
         Token t1=null;
@@ -10756,7 +10778,7 @@ public class JavaParser extends Parser {
 
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 118) ) { return ; }
-            // src/junitconverter/Java.g:883:5: ( ( '<' '<' )=>t1= '<' t2= '<' {...}? | ( '>' '>' '>' )=>t1= '>' t2= '>' t3= '>' {...}? | ( '>' '>' )=>t1= '>' t2= '>' {...}?)
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:905:5: ( ( '<' '<' )=>t1= '<' t2= '<' {...}? | ( '>' '>' '>' )=>t1= '>' t2= '>' t3= '>' {...}? | ( '>' '>' )=>t1= '>' t2= '>' {...}?)
             int alt140=3;
             int LA140_0 = input.LA(1);
 
@@ -10778,7 +10800,7 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("882:1: shiftOp : ( ( '<' '<' )=>t1= '<' t2= '<' {...}? | ( '>' '>' '>' )=>t1= '>' t2= '>' t3= '>' {...}? | ( '>' '>' )=>t1= '>' t2= '>' {...}?);", 140, 3, input);
+                            new NoViableAltException("904:1: shiftOp : ( ( '<' '<' )=>t1= '<' t2= '<' {...}? | ( '>' '>' '>' )=>t1= '>' t2= '>' t3= '>' {...}? | ( '>' '>' )=>t1= '>' t2= '>' {...}?);", 140, 3, input);
 
                         throw nvae;
                     }
@@ -10786,7 +10808,7 @@ public class JavaParser extends Parser {
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("882:1: shiftOp : ( ( '<' '<' )=>t1= '<' t2= '<' {...}? | ( '>' '>' '>' )=>t1= '>' t2= '>' t3= '>' {...}? | ( '>' '>' )=>t1= '>' t2= '>' {...}?);", 140, 2, input);
+                        new NoViableAltException("904:1: shiftOp : ( ( '<' '<' )=>t1= '<' t2= '<' {...}? | ( '>' '>' '>' )=>t1= '>' t2= '>' t3= '>' {...}? | ( '>' '>' )=>t1= '>' t2= '>' {...}?);", 140, 2, input);
 
                     throw nvae;
                 }
@@ -10794,13 +10816,13 @@ public class JavaParser extends Parser {
             else {
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("882:1: shiftOp : ( ( '<' '<' )=>t1= '<' t2= '<' {...}? | ( '>' '>' '>' )=>t1= '>' t2= '>' t3= '>' {...}? | ( '>' '>' )=>t1= '>' t2= '>' {...}?);", 140, 0, input);
+                    new NoViableAltException("904:1: shiftOp : ( ( '<' '<' )=>t1= '<' t2= '<' {...}? | ( '>' '>' '>' )=>t1= '>' t2= '>' t3= '>' {...}? | ( '>' '>' )=>t1= '>' t2= '>' {...}?);", 140, 0, input);
 
                 throw nvae;
             }
             switch (alt140) {
                 case 1 :
-                    // src/junitconverter/Java.g:883:9: ( '<' '<' )=>t1= '<' t2= '<' {...}?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:905:9: ( '<' '<' )=>t1= '<' t2= '<' {...}?
                     {
                     t1=(Token)input.LT(1);
                     match(input,40,FOLLOW_40_in_shiftOp4824); if (failed) return ;
@@ -10815,7 +10837,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:886:9: ( '>' '>' '>' )=>t1= '>' t2= '>' t3= '>' {...}?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:908:9: ( '>' '>' '>' )=>t1= '>' t2= '>' t3= '>' {...}?
                     {
                     t1=(Token)input.LT(1);
                     match(input,42,FOLLOW_42_in_shiftOp4860); if (failed) return ;
@@ -10834,7 +10856,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // src/junitconverter/Java.g:891:9: ( '>' '>' )=>t1= '>' t2= '>' {...}?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:913:9: ( '>' '>' )=>t1= '>' t2= '>' {...}?
                     {
                     t1=(Token)input.LT(1);
                     match(input,42,FOLLOW_42_in_shiftOp4898); if (failed) return ;
@@ -10864,19 +10886,19 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start additiveExpression
-    // src/junitconverter/Java.g:897:1: additiveExpression : multiplicativeExpression ( ( '+' | '-' ) multiplicativeExpression )* ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:919:1: additiveExpression : multiplicativeExpression ( ( '+' | '-' ) multiplicativeExpression )* ;
     public final void additiveExpression() throws RecognitionException {
         int additiveExpression_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 119) ) { return ; }
-            // src/junitconverter/Java.g:898:5: ( multiplicativeExpression ( ( '+' | '-' ) multiplicativeExpression )* )
-            // src/junitconverter/Java.g:898:9: multiplicativeExpression ( ( '+' | '-' ) multiplicativeExpression )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:920:5: ( multiplicativeExpression ( ( '+' | '-' ) multiplicativeExpression )* )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:920:9: multiplicativeExpression ( ( '+' | '-' ) multiplicativeExpression )*
             {
             pushFollow(FOLLOW_multiplicativeExpression_in_additiveExpression4932);
             multiplicativeExpression();
             _fsp--;
             if (failed) return ;
-            // src/junitconverter/Java.g:898:34: ( ( '+' | '-' ) multiplicativeExpression )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:920:34: ( ( '+' | '-' ) multiplicativeExpression )*
             loop141:
             do {
                 int alt141=2;
@@ -10889,7 +10911,7 @@ public class JavaParser extends Parser {
 
                 switch (alt141) {
             	case 1 :
-            	    // src/junitconverter/Java.g:898:36: ( '+' | '-' ) multiplicativeExpression
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:920:36: ( '+' | '-' ) multiplicativeExpression
             	    {
             	    if ( (input.LA(1)>=105 && input.LA(1)<=106) ) {
             	        input.consume();
@@ -10932,19 +10954,19 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start multiplicativeExpression
-    // src/junitconverter/Java.g:901:1: multiplicativeExpression : unaryExpression ( ( '*' | '/' | '%' ) unaryExpression )* ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:923:1: multiplicativeExpression : unaryExpression ( ( '*' | '/' | '%' ) unaryExpression )* ;
     public final void multiplicativeExpression() throws RecognitionException {
         int multiplicativeExpression_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 120) ) { return ; }
-            // src/junitconverter/Java.g:902:5: ( unaryExpression ( ( '*' | '/' | '%' ) unaryExpression )* )
-            // src/junitconverter/Java.g:902:9: unaryExpression ( ( '*' | '/' | '%' ) unaryExpression )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:924:5: ( unaryExpression ( ( '*' | '/' | '%' ) unaryExpression )* )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:924:9: unaryExpression ( ( '*' | '/' | '%' ) unaryExpression )*
             {
             pushFollow(FOLLOW_unaryExpression_in_multiplicativeExpression4966);
             unaryExpression();
             _fsp--;
             if (failed) return ;
-            // src/junitconverter/Java.g:902:25: ( ( '*' | '/' | '%' ) unaryExpression )*
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:924:25: ( ( '*' | '/' | '%' ) unaryExpression )*
             loop142:
             do {
                 int alt142=2;
@@ -10957,7 +10979,7 @@ public class JavaParser extends Parser {
 
                 switch (alt142) {
             	case 1 :
-            	    // src/junitconverter/Java.g:902:27: ( '*' | '/' | '%' ) unaryExpression
+            	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:924:27: ( '*' | '/' | '%' ) unaryExpression
             	    {
             	    if ( input.LA(1)==30||(input.LA(1)>=107 && input.LA(1)<=108) ) {
             	        input.consume();
@@ -11000,12 +11022,12 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start unaryExpression
-    // src/junitconverter/Java.g:905:1: unaryExpression : ( '+' unaryExpression | '-' unaryExpression | '++' unaryExpression | '--' unaryExpression | unaryExpressionNotPlusMinus );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:927:1: unaryExpression : ( '+' unaryExpression | '-' unaryExpression | '++' unaryExpression | '--' unaryExpression | unaryExpressionNotPlusMinus );
     public final void unaryExpression() throws RecognitionException {
         int unaryExpression_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 121) ) { return ; }
-            // src/junitconverter/Java.g:906:5: ( '+' unaryExpression | '-' unaryExpression | '++' unaryExpression | '--' unaryExpression | unaryExpressionNotPlusMinus )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:928:5: ( '+' unaryExpression | '-' unaryExpression | '++' unaryExpression | '--' unaryExpression | unaryExpressionNotPlusMinus )
             int alt143=5;
             switch ( input.LA(1) ) {
             case 105:
@@ -11060,14 +11082,14 @@ public class JavaParser extends Parser {
             default:
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("905:1: unaryExpression : ( '+' unaryExpression | '-' unaryExpression | '++' unaryExpression | '--' unaryExpression | unaryExpressionNotPlusMinus );", 143, 0, input);
+                    new NoViableAltException("927:1: unaryExpression : ( '+' unaryExpression | '-' unaryExpression | '++' unaryExpression | '--' unaryExpression | unaryExpressionNotPlusMinus );", 143, 0, input);
 
                 throw nvae;
             }
 
             switch (alt143) {
                 case 1 :
-                    // src/junitconverter/Java.g:906:9: '+' unaryExpression
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:928:9: '+' unaryExpression
                     {
                     match(input,105,FOLLOW_105_in_unaryExpression5010); if (failed) return ;
                     pushFollow(FOLLOW_unaryExpression_in_unaryExpression5012);
@@ -11078,7 +11100,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:907:9: '-' unaryExpression
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:929:9: '-' unaryExpression
                     {
                     match(input,106,FOLLOW_106_in_unaryExpression5022); if (failed) return ;
                     pushFollow(FOLLOW_unaryExpression_in_unaryExpression5024);
@@ -11089,7 +11111,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // src/junitconverter/Java.g:908:9: '++' unaryExpression
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:930:9: '++' unaryExpression
                     {
                     match(input,109,FOLLOW_109_in_unaryExpression5034); if (failed) return ;
                     pushFollow(FOLLOW_unaryExpression_in_unaryExpression5036);
@@ -11100,7 +11122,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 4 :
-                    // src/junitconverter/Java.g:909:9: '--' unaryExpression
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:931:9: '--' unaryExpression
                     {
                     match(input,110,FOLLOW_110_in_unaryExpression5046); if (failed) return ;
                     pushFollow(FOLLOW_unaryExpression_in_unaryExpression5048);
@@ -11111,7 +11133,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 5 :
-                    // src/junitconverter/Java.g:910:9: unaryExpressionNotPlusMinus
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:932:9: unaryExpressionNotPlusMinus
                     {
                     pushFollow(FOLLOW_unaryExpressionNotPlusMinus_in_unaryExpression5058);
                     unaryExpressionNotPlusMinus();
@@ -11136,12 +11158,12 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start unaryExpressionNotPlusMinus
-    // src/junitconverter/Java.g:913:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:935:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );
     public final void unaryExpressionNotPlusMinus() throws RecognitionException {
         int unaryExpressionNotPlusMinus_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 122) ) { return ; }
-            // src/junitconverter/Java.g:914:5: ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:936:5: ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? )
             int alt146=4;
             switch ( input.LA(1) ) {
             case 111:
@@ -11157,14 +11179,7 @@ public class JavaParser extends Parser {
             case 66:
                 {
                 switch ( input.LA(2) ) {
-                case 56:
-                case 57:
-                case 58:
-                case 59:
-                case 60:
-                case 61:
-                case 62:
-                case 63:
+                case Identifier:
                     {
                     int LA146_16 = input.LA(3);
 
@@ -11177,13 +11192,20 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("913:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 16, input);
+                            new NoViableAltException("935:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 16, input);
 
                         throw nvae;
                     }
                     }
                     break;
-                case 105:
+                case 56:
+                case 57:
+                case 58:
+                case 59:
+                case 60:
+                case 61:
+                case 62:
+                case 63:
                     {
                     int LA146_17 = input.LA(3);
 
@@ -11196,13 +11218,13 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("913:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 17, input);
+                            new NoViableAltException("935:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 17, input);
 
                         throw nvae;
                     }
                     }
                     break;
-                case 106:
+                case 105:
                     {
                     int LA146_18 = input.LA(3);
 
@@ -11215,13 +11237,13 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("913:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 18, input);
+                            new NoViableAltException("935:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 18, input);
 
                         throw nvae;
                     }
                     }
                     break;
-                case 109:
+                case 106:
                     {
                     int LA146_19 = input.LA(3);
 
@@ -11234,13 +11256,13 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("913:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 19, input);
+                            new NoViableAltException("935:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 19, input);
 
                         throw nvae;
                     }
                     }
                     break;
-                case 110:
+                case 109:
                     {
                     int LA146_20 = input.LA(3);
 
@@ -11253,13 +11275,13 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("913:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 20, input);
+                            new NoViableAltException("935:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 20, input);
 
                         throw nvae;
                     }
                     }
                     break;
-                case 111:
+                case 110:
                     {
                     int LA146_21 = input.LA(3);
 
@@ -11272,13 +11294,13 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("913:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 21, input);
+                            new NoViableAltException("935:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 21, input);
 
                         throw nvae;
                     }
                     }
                     break;
-                case 112:
+                case 111:
                     {
                     int LA146_22 = input.LA(3);
 
@@ -11291,13 +11313,13 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("913:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 22, input);
+                            new NoViableAltException("935:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 22, input);
 
                         throw nvae;
                     }
                     }
                     break;
-                case 66:
+                case 112:
                     {
                     int LA146_23 = input.LA(3);
 
@@ -11310,13 +11332,13 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("913:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 23, input);
+                            new NoViableAltException("935:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 23, input);
 
                         throw nvae;
                     }
                     }
                     break;
-                case 69:
+                case 66:
                     {
                     int LA146_24 = input.LA(3);
 
@@ -11329,13 +11351,13 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("913:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 24, input);
+                            new NoViableAltException("935:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 24, input);
 
                         throw nvae;
                     }
                     }
                     break;
-                case 65:
+                case 69:
                     {
                     int LA146_25 = input.LA(3);
 
@@ -11348,15 +11370,13 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("913:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 25, input);
+                            new NoViableAltException("935:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 25, input);
 
                         throw nvae;
                     }
                     }
                     break;
-                case HexLiteral:
-                case OctalLiteral:
-                case DecimalLiteral:
+                case 65:
                     {
                     int LA146_26 = input.LA(3);
 
@@ -11369,13 +11389,15 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("913:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 26, input);
+                            new NoViableAltException("935:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 26, input);
 
                         throw nvae;
                     }
                     }
                     break;
-                case FloatingPointLiteral:
+                case HexLiteral:
+                case OctalLiteral:
+                case DecimalLiteral:
                     {
                     int LA146_27 = input.LA(3);
 
@@ -11388,13 +11410,13 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("913:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 27, input);
+                            new NoViableAltException("935:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 27, input);
 
                         throw nvae;
                     }
                     }
                     break;
-                case CharacterLiteral:
+                case FloatingPointLiteral:
                     {
                     int LA146_28 = input.LA(3);
 
@@ -11407,13 +11429,13 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("913:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 28, input);
+                            new NoViableAltException("935:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 28, input);
 
                         throw nvae;
                     }
                     }
                     break;
-                case StringLiteral:
+                case CharacterLiteral:
                     {
                     int LA146_29 = input.LA(3);
 
@@ -11426,14 +11448,13 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("913:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 29, input);
+                            new NoViableAltException("935:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 29, input);
 
                         throw nvae;
                     }
                     }
                     break;
-                case 71:
-                case 72:
+                case StringLiteral:
                     {
                     int LA146_30 = input.LA(3);
 
@@ -11446,13 +11467,14 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("913:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 30, input);
+                            new NoViableAltException("935:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 30, input);
 
                         throw nvae;
                     }
                     }
                     break;
-                case 70:
+                case 71:
+                case 72:
                     {
                     int LA146_31 = input.LA(3);
 
@@ -11465,13 +11487,13 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("913:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 31, input);
+                            new NoViableAltException("935:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 31, input);
 
                         throw nvae;
                     }
                     }
                     break;
-                case 113:
+                case 70:
                     {
                     int LA146_32 = input.LA(3);
 
@@ -11484,13 +11506,13 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("913:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 32, input);
+                            new NoViableAltException("935:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 32, input);
 
                         throw nvae;
                     }
                     }
                     break;
-                case Identifier:
+                case 113:
                     {
                     int LA146_33 = input.LA(3);
 
@@ -11503,7 +11525,7 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("913:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 33, input);
+                            new NoViableAltException("935:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 33, input);
 
                         throw nvae;
                     }
@@ -11522,7 +11544,7 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("913:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 34, input);
+                            new NoViableAltException("935:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 34, input);
 
                         throw nvae;
                     }
@@ -11531,7 +11553,7 @@ public class JavaParser extends Parser {
                 default:
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("913:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 3, input);
+                        new NoViableAltException("935:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 3, input);
 
                     throw nvae;
                 }
@@ -11567,14 +11589,14 @@ public class JavaParser extends Parser {
             default:
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("913:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 0, input);
+                    new NoViableAltException("935:1: unaryExpressionNotPlusMinus : ( '~' unaryExpression | '!' unaryExpression | castExpression | primary ( selector )* ( '++' | '--' )? );", 146, 0, input);
 
                 throw nvae;
             }
 
             switch (alt146) {
                 case 1 :
-                    // src/junitconverter/Java.g:914:9: '~' unaryExpression
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:936:9: '~' unaryExpression
                     {
                     match(input,111,FOLLOW_111_in_unaryExpressionNotPlusMinus5077); if (failed) return ;
                     pushFollow(FOLLOW_unaryExpression_in_unaryExpressionNotPlusMinus5079);
@@ -11585,7 +11607,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:915:9: '!' unaryExpression
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:937:9: '!' unaryExpression
                     {
                     match(input,112,FOLLOW_112_in_unaryExpressionNotPlusMinus5089); if (failed) return ;
                     pushFollow(FOLLOW_unaryExpression_in_unaryExpressionNotPlusMinus5091);
@@ -11596,7 +11618,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // src/junitconverter/Java.g:916:9: castExpression
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:938:9: castExpression
                     {
                     pushFollow(FOLLOW_castExpression_in_unaryExpressionNotPlusMinus5101);
                     castExpression();
@@ -11606,13 +11628,13 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 4 :
-                    // src/junitconverter/Java.g:917:9: primary ( selector )* ( '++' | '--' )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:939:9: primary ( selector )* ( '++' | '--' )?
                     {
                     pushFollow(FOLLOW_primary_in_unaryExpressionNotPlusMinus5111);
                     primary();
                     _fsp--;
                     if (failed) return ;
-                    // src/junitconverter/Java.g:917:17: ( selector )*
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:939:17: ( selector )*
                     loop144:
                     do {
                         int alt144=2;
@@ -11625,7 +11647,7 @@ public class JavaParser extends Parser {
 
                         switch (alt144) {
                     	case 1 :
-                    	    // src/junitconverter/Java.g:0:0: selector
+                    	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:0:0: selector
                     	    {
                     	    pushFollow(FOLLOW_selector_in_unaryExpressionNotPlusMinus5113);
                     	    selector();
@@ -11640,7 +11662,7 @@ public class JavaParser extends Parser {
                         }
                     } while (true);
 
-                    // src/junitconverter/Java.g:917:27: ( '++' | '--' )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:939:27: ( '++' | '--' )?
                     int alt145=2;
                     int LA145_0 = input.LA(1);
 
@@ -11649,7 +11671,7 @@ public class JavaParser extends Parser {
                     }
                     switch (alt145) {
                         case 1 :
-                            // src/junitconverter/Java.g:
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:
                             {
                             if ( (input.LA(1)>=109 && input.LA(1)<=110) ) {
                                 input.consume();
@@ -11687,12 +11709,12 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start castExpression
-    // src/junitconverter/Java.g:920:1: castExpression : ( '(' primitiveType ')' unaryExpression | '(' ( type | expression ) ')' unaryExpressionNotPlusMinus );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:942:1: castExpression : ( '(' primitiveType ')' unaryExpression | '(' ( type | expression ) ')' unaryExpressionNotPlusMinus );
     public final void castExpression() throws RecognitionException {
         int castExpression_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 123) ) { return ; }
-            // src/junitconverter/Java.g:921:5: ( '(' primitiveType ')' unaryExpression | '(' ( type | expression ) ')' unaryExpressionNotPlusMinus )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:943:5: ( '(' primitiveType ')' unaryExpression | '(' ( type | expression ) ')' unaryExpressionNotPlusMinus )
             int alt148=2;
             int LA148_0 = input.LA(1);
 
@@ -11714,7 +11736,7 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("920:1: castExpression : ( '(' primitiveType ')' unaryExpression | '(' ( type | expression ) ')' unaryExpressionNotPlusMinus );", 148, 3, input);
+                            new NoViableAltException("942:1: castExpression : ( '(' primitiveType ')' unaryExpression | '(' ( type | expression ) ')' unaryExpressionNotPlusMinus );", 148, 3, input);
 
                         throw nvae;
                     }
@@ -11722,7 +11744,7 @@ public class JavaParser extends Parser {
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("920:1: castExpression : ( '(' primitiveType ')' unaryExpression | '(' ( type | expression ) ')' unaryExpressionNotPlusMinus );", 148, 1, input);
+                        new NoViableAltException("942:1: castExpression : ( '(' primitiveType ')' unaryExpression | '(' ( type | expression ) ')' unaryExpressionNotPlusMinus );", 148, 1, input);
 
                     throw nvae;
                 }
@@ -11730,13 +11752,13 @@ public class JavaParser extends Parser {
             else {
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("920:1: castExpression : ( '(' primitiveType ')' unaryExpression | '(' ( type | expression ) ')' unaryExpressionNotPlusMinus );", 148, 0, input);
+                    new NoViableAltException("942:1: castExpression : ( '(' primitiveType ')' unaryExpression | '(' ( type | expression ) ')' unaryExpressionNotPlusMinus );", 148, 0, input);
 
                 throw nvae;
             }
             switch (alt148) {
                 case 1 :
-                    // src/junitconverter/Java.g:921:8: '(' primitiveType ')' unaryExpression
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:943:8: '(' primitiveType ')' unaryExpression
                     {
                     match(input,66,FOLLOW_66_in_castExpression5139); if (failed) return ;
                     pushFollow(FOLLOW_primitiveType_in_castExpression5141);
@@ -11752,10 +11774,10 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:922:8: '(' ( type | expression ) ')' unaryExpressionNotPlusMinus
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:944:8: '(' ( type | expression ) ')' unaryExpressionNotPlusMinus
                     {
                     match(input,66,FOLLOW_66_in_castExpression5154); if (failed) return ;
-                    // src/junitconverter/Java.g:922:12: ( type | expression )
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:944:12: ( type | expression )
                     int alt147=2;
                     switch ( input.LA(1) ) {
                     case Identifier:
@@ -11771,7 +11793,7 @@ public class JavaParser extends Parser {
                         else {
                             if (backtracking>0) {failed=true; return ;}
                             NoViableAltException nvae =
-                                new NoViableAltException("922:12: ( type | expression )", 147, 1, input);
+                                new NoViableAltException("944:12: ( type | expression )", 147, 1, input);
 
                             throw nvae;
                         }
@@ -11800,15 +11822,10 @@ public class JavaParser extends Parser {
                             else {
                                 if (backtracking>0) {failed=true; return ;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("922:12: ( type | expression )", 147, 47, input);
+                                    new NoViableAltException("944:12: ( type | expression )", 147, 47, input);
 
                                 throw nvae;
                             }
-                            }
-                            break;
-                        case 67:
-                            {
-                            alt147=1;
                             }
                             break;
                         case 29:
@@ -11816,10 +11833,15 @@ public class JavaParser extends Parser {
                             alt147=2;
                             }
                             break;
+                        case 67:
+                            {
+                            alt147=1;
+                            }
+                            break;
                         default:
                             if (backtracking>0) {failed=true; return ;}
                             NoViableAltException nvae =
-                                new NoViableAltException("922:12: ( type | expression )", 147, 2, input);
+                                new NoViableAltException("944:12: ( type | expression )", 147, 2, input);
 
                             throw nvae;
                         }
@@ -11853,14 +11875,14 @@ public class JavaParser extends Parser {
                     default:
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("922:12: ( type | expression )", 147, 0, input);
+                            new NoViableAltException("944:12: ( type | expression )", 147, 0, input);
 
                         throw nvae;
                     }
 
                     switch (alt147) {
                         case 1 :
-                            // src/junitconverter/Java.g:922:13: type
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:944:13: type
                             {
                             pushFollow(FOLLOW_type_in_castExpression5157);
                             type();
@@ -11870,7 +11892,7 @@ public class JavaParser extends Parser {
                             }
                             break;
                         case 2 :
-                            // src/junitconverter/Java.g:922:20: expression
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:944:20: expression
                             {
                             pushFollow(FOLLOW_expression_in_castExpression5161);
                             expression();
@@ -11906,14 +11928,14 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start primary
-    // src/junitconverter/Java.g:925:1: primary : ( parExpression | 'this' ( '.' Identifier )* ( identifierSuffix )? | t1= 'super' superSuffix | literal | 'new' creator | Identifier ( '.' Identifier )* ( identifierSuffix )? | primitiveType ( '[' ']' )* '.' 'class' | 'void' '.' 'class' );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:947:1: primary : ( parExpression | 'this' ( '.' Identifier )* ( identifierSuffix )? | t1= 'super' superSuffix | literal | 'new' creator | Identifier ( '.' Identifier )* ( identifierSuffix )? | primitiveType ( '[' ']' )* '.' 'class' | 'void' '.' 'class' );
     public final void primary() throws RecognitionException {
         int primary_StartIndex = input.index();
         Token t1=null;
 
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 124) ) { return ; }
-            // src/junitconverter/Java.g:926:5: ( parExpression | 'this' ( '.' Identifier )* ( identifierSuffix )? | t1= 'super' superSuffix | literal | 'new' creator | Identifier ( '.' Identifier )* ( identifierSuffix )? | primitiveType ( '[' ']' )* '.' 'class' | 'void' '.' 'class' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:948:5: ( parExpression | 'this' ( '.' Identifier )* ( identifierSuffix )? | t1= 'super' superSuffix | literal | 'new' creator | Identifier ( '.' Identifier )* ( identifierSuffix )? | primitiveType ( '[' ']' )* '.' 'class' | 'void' '.' 'class' )
             int alt154=8;
             switch ( input.LA(1) ) {
             case 66:
@@ -11974,14 +11996,14 @@ public class JavaParser extends Parser {
             default:
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("925:1: primary : ( parExpression | 'this' ( '.' Identifier )* ( identifierSuffix )? | t1= 'super' superSuffix | literal | 'new' creator | Identifier ( '.' Identifier )* ( identifierSuffix )? | primitiveType ( '[' ']' )* '.' 'class' | 'void' '.' 'class' );", 154, 0, input);
+                    new NoViableAltException("947:1: primary : ( parExpression | 'this' ( '.' Identifier )* ( identifierSuffix )? | t1= 'super' superSuffix | literal | 'new' creator | Identifier ( '.' Identifier )* ( identifierSuffix )? | primitiveType ( '[' ']' )* '.' 'class' | 'void' '.' 'class' );", 154, 0, input);
 
                 throw nvae;
             }
 
             switch (alt154) {
                 case 1 :
-                    // src/junitconverter/Java.g:926:9: parExpression
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:948:9: parExpression
                     {
                     pushFollow(FOLLOW_parExpression_in_primary5185);
                     parExpression();
@@ -11991,10 +12013,10 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:927:9: 'this' ( '.' Identifier )* ( identifierSuffix )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:949:9: 'this' ( '.' Identifier )* ( identifierSuffix )?
                     {
                     match(input,69,FOLLOW_69_in_primary5195); if (failed) return ;
-                    // src/junitconverter/Java.g:927:16: ( '.' Identifier )*
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:949:16: ( '.' Identifier )*
                     loop149:
                     do {
                         int alt149=2;
@@ -12004,7 +12026,7 @@ public class JavaParser extends Parser {
                             int LA149_3 = input.LA(2);
 
                             if ( (LA149_3==Identifier) ) {
-                                int LA149_33 = input.LA(3);
+                                int LA149_34 = input.LA(3);
 
                                 if ( (synpred236()) ) {
                                     alt149=1;
@@ -12019,7 +12041,7 @@ public class JavaParser extends Parser {
 
                         switch (alt149) {
                     	case 1 :
-                    	    // src/junitconverter/Java.g:927:17: '.' Identifier
+                    	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:949:17: '.' Identifier
                     	    {
                     	    match(input,29,FOLLOW_29_in_primary5198); if (failed) return ;
                     	    match(input,Identifier,FOLLOW_Identifier_in_primary5200); if (failed) return ;
@@ -12032,7 +12054,7 @@ public class JavaParser extends Parser {
                         }
                     } while (true);
 
-                    // src/junitconverter/Java.g:927:34: ( identifierSuffix )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:949:34: ( identifierSuffix )?
                     int alt150=2;
                     switch ( input.LA(1) ) {
                         case 48:
@@ -12236,16 +12258,16 @@ public class JavaParser extends Parser {
                         case 29:
                             {
                             switch ( input.LA(2) ) {
-                                case 69:
+                                case 113:
                                     {
-                                    int LA150_54 = input.LA(3);
+                                    int LA150_53 = input.LA(3);
 
                                     if ( (synpred237()) ) {
                                         alt150=1;
                                     }
                                     }
                                     break;
-                                case 65:
+                                case 69:
                                     {
                                     int LA150_55 = input.LA(3);
 
@@ -12254,7 +12276,7 @@ public class JavaParser extends Parser {
                                     }
                                     }
                                     break;
-                                case 113:
+                                case 65:
                                     {
                                     int LA150_56 = input.LA(3);
 
@@ -12285,7 +12307,7 @@ public class JavaParser extends Parser {
 
                     switch (alt150) {
                         case 1 :
-                            // src/junitconverter/Java.g:927:35: identifierSuffix
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:949:35: identifierSuffix
                             {
                             pushFollow(FOLLOW_identifierSuffix_in_primary5205);
                             identifierSuffix();
@@ -12301,7 +12323,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // src/junitconverter/Java.g:928:9: t1= 'super' superSuffix
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:950:9: t1= 'super' superSuffix
                     {
                     t1=(Token)input.LT(1);
                     match(input,65,FOLLOW_65_in_primary5219); if (failed) return ;
@@ -12316,7 +12338,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 4 :
-                    // src/junitconverter/Java.g:929:9: literal
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:951:9: literal
                     {
                     pushFollow(FOLLOW_literal_in_primary5233);
                     literal();
@@ -12326,7 +12348,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 5 :
-                    // src/junitconverter/Java.g:930:9: 'new' creator
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:952:9: 'new' creator
                     {
                     match(input,113,FOLLOW_113_in_primary5243); if (failed) return ;
                     pushFollow(FOLLOW_creator_in_primary5245);
@@ -12337,10 +12359,10 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 6 :
-                    // src/junitconverter/Java.g:931:9: Identifier ( '.' Identifier )* ( identifierSuffix )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:953:9: Identifier ( '.' Identifier )* ( identifierSuffix )?
                     {
                     match(input,Identifier,FOLLOW_Identifier_in_primary5255); if (failed) return ;
-                    // src/junitconverter/Java.g:931:20: ( '.' Identifier )*
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:953:20: ( '.' Identifier )*
                     loop151:
                     do {
                         int alt151=2;
@@ -12350,7 +12372,7 @@ public class JavaParser extends Parser {
                             int LA151_3 = input.LA(2);
 
                             if ( (LA151_3==Identifier) ) {
-                                int LA151_33 = input.LA(3);
+                                int LA151_34 = input.LA(3);
 
                                 if ( (synpred242()) ) {
                                     alt151=1;
@@ -12365,7 +12387,7 @@ public class JavaParser extends Parser {
 
                         switch (alt151) {
                     	case 1 :
-                    	    // src/junitconverter/Java.g:931:21: '.' Identifier
+                    	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:953:21: '.' Identifier
                     	    {
                     	    match(input,29,FOLLOW_29_in_primary5258); if (failed) return ;
                     	    match(input,Identifier,FOLLOW_Identifier_in_primary5260); if (failed) return ;
@@ -12378,7 +12400,7 @@ public class JavaParser extends Parser {
                         }
                     } while (true);
 
-                    // src/junitconverter/Java.g:931:38: ( identifierSuffix )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:953:38: ( identifierSuffix )?
                     int alt152=2;
                     switch ( input.LA(1) ) {
                         case 48:
@@ -12582,9 +12604,27 @@ public class JavaParser extends Parser {
                         case 29:
                             {
                             switch ( input.LA(2) ) {
+                                case 113:
+                                    {
+                                    int LA152_53 = input.LA(3);
+
+                                    if ( (synpred243()) ) {
+                                        alt152=1;
+                                    }
+                                    }
+                                    break;
+                                case 69:
+                                    {
+                                    int LA152_55 = input.LA(3);
+
+                                    if ( (synpred243()) ) {
+                                        alt152=1;
+                                    }
+                                    }
+                                    break;
                                 case 65:
                                     {
-                                    int LA152_54 = input.LA(3);
+                                    int LA152_56 = input.LA(3);
 
                                     if ( (synpred243()) ) {
                                         alt152=1;
@@ -12594,24 +12634,6 @@ public class JavaParser extends Parser {
                                 case 37:
                                     {
                                     alt152=1;
-                                    }
-                                    break;
-                                case 69:
-                                    {
-                                    int LA152_56 = input.LA(3);
-
-                                    if ( (synpred243()) ) {
-                                        alt152=1;
-                                    }
-                                    }
-                                    break;
-                                case 113:
-                                    {
-                                    int LA152_57 = input.LA(3);
-
-                                    if ( (synpred243()) ) {
-                                        alt152=1;
-                                    }
                                     }
                                     break;
                                 case 40:
@@ -12631,7 +12653,7 @@ public class JavaParser extends Parser {
 
                     switch (alt152) {
                         case 1 :
-                            // src/junitconverter/Java.g:931:39: identifierSuffix
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:953:39: identifierSuffix
                             {
                             pushFollow(FOLLOW_identifierSuffix_in_primary5265);
                             identifierSuffix();
@@ -12647,13 +12669,13 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 7 :
-                    // src/junitconverter/Java.g:932:9: primitiveType ( '[' ']' )* '.' 'class'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:954:9: primitiveType ( '[' ']' )* '.' 'class'
                     {
                     pushFollow(FOLLOW_primitiveType_in_primary5277);
                     primitiveType();
                     _fsp--;
                     if (failed) return ;
-                    // src/junitconverter/Java.g:932:23: ( '[' ']' )*
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:954:23: ( '[' ']' )*
                     loop153:
                     do {
                         int alt153=2;
@@ -12666,7 +12688,7 @@ public class JavaParser extends Parser {
 
                         switch (alt153) {
                     	case 1 :
-                    	    // src/junitconverter/Java.g:932:24: '[' ']'
+                    	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:954:24: '[' ']'
                     	    {
                     	    match(input,48,FOLLOW_48_in_primary5280); if (failed) return ;
                     	    match(input,49,FOLLOW_49_in_primary5282); if (failed) return ;
@@ -12685,7 +12707,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 8 :
-                    // src/junitconverter/Java.g:933:9: 'void' '.' 'class'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:955:9: 'void' '.' 'class'
                     {
                     match(input,47,FOLLOW_47_in_primary5298); if (failed) return ;
                     match(input,29,FOLLOW_29_in_primary5300); if (failed) return ;
@@ -12709,12 +12731,12 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start identifierSuffix
-    // src/junitconverter/Java.g:936:1: identifierSuffix : ( ( '[' ']' )+ '.' 'class' | ( '[' expression ']' )+ | arguments | '.' 'class' | '.' explicitGenericInvocation | '.' 'this' | '.' 'super' arguments | '.' 'new' innerCreator );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:958:1: identifierSuffix : ( ( '[' ']' )+ '.' 'class' | ( '[' expression ']' )+ | arguments | '.' 'class' | '.' explicitGenericInvocation | '.' 'this' | '.' 'super' arguments | '.' 'new' innerCreator );
     public final void identifierSuffix() throws RecognitionException {
         int identifierSuffix_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 125) ) { return ; }
-            // src/junitconverter/Java.g:937:5: ( ( '[' ']' )+ '.' 'class' | ( '[' expression ']' )+ | arguments | '.' 'class' | '.' explicitGenericInvocation | '.' 'this' | '.' 'super' arguments | '.' 'new' innerCreator )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:959:5: ( ( '[' ']' )+ '.' 'class' | ( '[' expression ']' )+ | arguments | '.' 'class' | '.' explicitGenericInvocation | '.' 'this' | '.' 'super' arguments | '.' 'new' innerCreator )
             int alt157=8;
             switch ( input.LA(1) ) {
             case 48:
@@ -12730,7 +12752,7 @@ public class JavaParser extends Parser {
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("936:1: identifierSuffix : ( ( '[' ']' )+ '.' 'class' | ( '[' expression ']' )+ | arguments | '.' 'class' | '.' explicitGenericInvocation | '.' 'this' | '.' 'super' arguments | '.' 'new' innerCreator );", 157, 1, input);
+                        new NoViableAltException("958:1: identifierSuffix : ( ( '[' ']' )+ '.' 'class' | ( '[' expression ']' )+ | arguments | '.' 'class' | '.' explicitGenericInvocation | '.' 'this' | '.' 'super' arguments | '.' 'new' innerCreator );", 157, 1, input);
 
                     throw nvae;
                 }
@@ -12744,6 +12766,11 @@ public class JavaParser extends Parser {
             case 29:
                 {
                 switch ( input.LA(2) ) {
+                case 65:
+                    {
+                    alt157=7;
+                    }
+                    break;
                 case 69:
                     {
                     alt157=6;
@@ -12759,11 +12786,6 @@ public class JavaParser extends Parser {
                     alt157=4;
                     }
                     break;
-                case 65:
-                    {
-                    alt157=7;
-                    }
-                    break;
                 case 40:
                     {
                     alt157=5;
@@ -12772,7 +12794,7 @@ public class JavaParser extends Parser {
                 default:
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("936:1: identifierSuffix : ( ( '[' ']' )+ '.' 'class' | ( '[' expression ']' )+ | arguments | '.' 'class' | '.' explicitGenericInvocation | '.' 'this' | '.' 'super' arguments | '.' 'new' innerCreator );", 157, 3, input);
+                        new NoViableAltException("958:1: identifierSuffix : ( ( '[' ']' )+ '.' 'class' | ( '[' expression ']' )+ | arguments | '.' 'class' | '.' explicitGenericInvocation | '.' 'this' | '.' 'super' arguments | '.' 'new' innerCreator );", 157, 3, input);
 
                     throw nvae;
                 }
@@ -12782,16 +12804,16 @@ public class JavaParser extends Parser {
             default:
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("936:1: identifierSuffix : ( ( '[' ']' )+ '.' 'class' | ( '[' expression ']' )+ | arguments | '.' 'class' | '.' explicitGenericInvocation | '.' 'this' | '.' 'super' arguments | '.' 'new' innerCreator );", 157, 0, input);
+                    new NoViableAltException("958:1: identifierSuffix : ( ( '[' ']' )+ '.' 'class' | ( '[' expression ']' )+ | arguments | '.' 'class' | '.' explicitGenericInvocation | '.' 'this' | '.' 'super' arguments | '.' 'new' innerCreator );", 157, 0, input);
 
                 throw nvae;
             }
 
             switch (alt157) {
                 case 1 :
-                    // src/junitconverter/Java.g:937:9: ( '[' ']' )+ '.' 'class'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:959:9: ( '[' ']' )+ '.' 'class'
                     {
-                    // src/junitconverter/Java.g:937:9: ( '[' ']' )+
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:959:9: ( '[' ']' )+
                     int cnt155=0;
                     loop155:
                     do {
@@ -12805,7 +12827,7 @@ public class JavaParser extends Parser {
 
                         switch (alt155) {
                     	case 1 :
-                    	    // src/junitconverter/Java.g:937:10: '[' ']'
+                    	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:959:10: '[' ']'
                     	    {
                     	    match(input,48,FOLLOW_48_in_identifierSuffix5322); if (failed) return ;
                     	    match(input,49,FOLLOW_49_in_identifierSuffix5324); if (failed) return ;
@@ -12829,9 +12851,9 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:938:9: ( '[' expression ']' )+
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:960:9: ( '[' expression ']' )+
                     {
-                    // src/junitconverter/Java.g:938:9: ( '[' expression ']' )+
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:960:9: ( '[' expression ']' )+
                     int cnt156=0;
                     loop156:
                     do {
@@ -13067,7 +13089,7 @@ public class JavaParser extends Parser {
 
                         switch (alt156) {
                     	case 1 :
-                    	    // src/junitconverter/Java.g:938:10: '[' expression ']'
+                    	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:960:10: '[' expression ']'
                     	    {
                     	    match(input,48,FOLLOW_48_in_identifierSuffix5341); if (failed) return ;
                     	    pushFollow(FOLLOW_expression_in_identifierSuffix5343);
@@ -13093,7 +13115,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // src/junitconverter/Java.g:939:9: arguments
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:961:9: arguments
                     {
                     pushFollow(FOLLOW_arguments_in_identifierSuffix5358);
                     arguments();
@@ -13103,7 +13125,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 4 :
-                    // src/junitconverter/Java.g:940:9: '.' 'class'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:962:9: '.' 'class'
                     {
                     match(input,29,FOLLOW_29_in_identifierSuffix5368); if (failed) return ;
                     match(input,37,FOLLOW_37_in_identifierSuffix5370); if (failed) return ;
@@ -13111,7 +13133,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 5 :
-                    // src/junitconverter/Java.g:941:9: '.' explicitGenericInvocation
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:963:9: '.' explicitGenericInvocation
                     {
                     match(input,29,FOLLOW_29_in_identifierSuffix5380); if (failed) return ;
                     pushFollow(FOLLOW_explicitGenericInvocation_in_identifierSuffix5382);
@@ -13122,7 +13144,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 6 :
-                    // src/junitconverter/Java.g:942:9: '.' 'this'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:964:9: '.' 'this'
                     {
                     match(input,29,FOLLOW_29_in_identifierSuffix5392); if (failed) return ;
                     match(input,69,FOLLOW_69_in_identifierSuffix5394); if (failed) return ;
@@ -13130,7 +13152,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 7 :
-                    // src/junitconverter/Java.g:943:9: '.' 'super' arguments
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:965:9: '.' 'super' arguments
                     {
                     match(input,29,FOLLOW_29_in_identifierSuffix5404); if (failed) return ;
                     match(input,65,FOLLOW_65_in_identifierSuffix5406); if (failed) return ;
@@ -13142,7 +13164,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 8 :
-                    // src/junitconverter/Java.g:944:9: '.' 'new' innerCreator
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:966:9: '.' 'new' innerCreator
                     {
                     match(input,29,FOLLOW_29_in_identifierSuffix5418); if (failed) return ;
                     match(input,113,FOLLOW_113_in_identifierSuffix5420); if (failed) return ;
@@ -13169,12 +13191,12 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start creator
-    // src/junitconverter/Java.g:947:1: creator : ( nonWildcardTypeArguments createdName classCreatorRest | createdName ( arrayCreatorRest | classCreatorRest ) );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:969:1: creator : ( nonWildcardTypeArguments createdName classCreatorRest | createdName ( arrayCreatorRest | classCreatorRest ) );
     public final void creator() throws RecognitionException {
         int creator_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 126) ) { return ; }
-            // src/junitconverter/Java.g:948:5: ( nonWildcardTypeArguments createdName classCreatorRest | createdName ( arrayCreatorRest | classCreatorRest ) )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:970:5: ( nonWildcardTypeArguments createdName classCreatorRest | createdName ( arrayCreatorRest | classCreatorRest ) )
             int alt159=2;
             int LA159_0 = input.LA(1);
 
@@ -13187,13 +13209,13 @@ public class JavaParser extends Parser {
             else {
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("947:1: creator : ( nonWildcardTypeArguments createdName classCreatorRest | createdName ( arrayCreatorRest | classCreatorRest ) );", 159, 0, input);
+                    new NoViableAltException("969:1: creator : ( nonWildcardTypeArguments createdName classCreatorRest | createdName ( arrayCreatorRest | classCreatorRest ) );", 159, 0, input);
 
                 throw nvae;
             }
             switch (alt159) {
                 case 1 :
-                    // src/junitconverter/Java.g:948:9: nonWildcardTypeArguments createdName classCreatorRest
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:970:9: nonWildcardTypeArguments createdName classCreatorRest
                     {
                     pushFollow(FOLLOW_nonWildcardTypeArguments_in_creator5441);
                     nonWildcardTypeArguments();
@@ -13211,13 +13233,13 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:949:9: createdName ( arrayCreatorRest | classCreatorRest )
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:971:9: createdName ( arrayCreatorRest | classCreatorRest )
                     {
                     pushFollow(FOLLOW_createdName_in_creator5455);
                     createdName();
                     _fsp--;
                     if (failed) return ;
-                    // src/junitconverter/Java.g:949:21: ( arrayCreatorRest | classCreatorRest )
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:971:21: ( arrayCreatorRest | classCreatorRest )
                     int alt158=2;
                     int LA158_0 = input.LA(1);
 
@@ -13230,13 +13252,13 @@ public class JavaParser extends Parser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("949:21: ( arrayCreatorRest | classCreatorRest )", 158, 0, input);
+                            new NoViableAltException("971:21: ( arrayCreatorRest | classCreatorRest )", 158, 0, input);
 
                         throw nvae;
                     }
                     switch (alt158) {
                         case 1 :
-                            // src/junitconverter/Java.g:949:22: arrayCreatorRest
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:971:22: arrayCreatorRest
                             {
                             pushFollow(FOLLOW_arrayCreatorRest_in_creator5458);
                             arrayCreatorRest();
@@ -13246,7 +13268,7 @@ public class JavaParser extends Parser {
                             }
                             break;
                         case 2 :
-                            // src/junitconverter/Java.g:949:41: classCreatorRest
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:971:41: classCreatorRest
                             {
                             pushFollow(FOLLOW_classCreatorRest_in_creator5462);
                             classCreatorRest();
@@ -13277,12 +13299,12 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start createdName
-    // src/junitconverter/Java.g:952:1: createdName : ( classOrInterfaceType | primitiveType );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:974:1: createdName : ( classOrInterfaceType | primitiveType );
     public final void createdName() throws RecognitionException {
         int createdName_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 127) ) { return ; }
-            // src/junitconverter/Java.g:953:5: ( classOrInterfaceType | primitiveType )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:975:5: ( classOrInterfaceType | primitiveType )
             int alt160=2;
             int LA160_0 = input.LA(1);
 
@@ -13295,13 +13317,13 @@ public class JavaParser extends Parser {
             else {
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("952:1: createdName : ( classOrInterfaceType | primitiveType );", 160, 0, input);
+                    new NoViableAltException("974:1: createdName : ( classOrInterfaceType | primitiveType );", 160, 0, input);
 
                 throw nvae;
             }
             switch (alt160) {
                 case 1 :
-                    // src/junitconverter/Java.g:953:9: classOrInterfaceType
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:975:9: classOrInterfaceType
                     {
                     pushFollow(FOLLOW_classOrInterfaceType_in_createdName5482);
                     classOrInterfaceType();
@@ -13311,7 +13333,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:954:9: primitiveType
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:976:9: primitiveType
                     {
                     pushFollow(FOLLOW_primitiveType_in_createdName5492);
                     primitiveType();
@@ -13336,15 +13358,15 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start innerCreator
-    // src/junitconverter/Java.g:957:1: innerCreator : ( nonWildcardTypeArguments )? Identifier classCreatorRest ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:979:1: innerCreator : ( nonWildcardTypeArguments )? Identifier classCreatorRest ;
     public final void innerCreator() throws RecognitionException {
         int innerCreator_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 128) ) { return ; }
-            // src/junitconverter/Java.g:958:5: ( ( nonWildcardTypeArguments )? Identifier classCreatorRest )
-            // src/junitconverter/Java.g:958:9: ( nonWildcardTypeArguments )? Identifier classCreatorRest
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:980:5: ( ( nonWildcardTypeArguments )? Identifier classCreatorRest )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:980:9: ( nonWildcardTypeArguments )? Identifier classCreatorRest
             {
-            // src/junitconverter/Java.g:958:9: ( nonWildcardTypeArguments )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:980:9: ( nonWildcardTypeArguments )?
             int alt161=2;
             int LA161_0 = input.LA(1);
 
@@ -13353,7 +13375,7 @@ public class JavaParser extends Parser {
             }
             switch (alt161) {
                 case 1 :
-                    // src/junitconverter/Java.g:958:10: nonWildcardTypeArguments
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:980:10: nonWildcardTypeArguments
                     {
                     pushFollow(FOLLOW_nonWildcardTypeArguments_in_innerCreator5516);
                     nonWildcardTypeArguments();
@@ -13387,16 +13409,16 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start arrayCreatorRest
-    // src/junitconverter/Java.g:961:1: arrayCreatorRest : '[' ( ']' ( '[' ']' )* arrayInitializer | expression ']' ( '[' expression ']' )* ( '[' ']' )* ) ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:983:1: arrayCreatorRest : '[' ( ']' ( '[' ']' )* arrayInitializer | expression ']' ( '[' expression ']' )* ( '[' ']' )* ) ;
     public final void arrayCreatorRest() throws RecognitionException {
         int arrayCreatorRest_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 129) ) { return ; }
-            // src/junitconverter/Java.g:962:5: ( '[' ( ']' ( '[' ']' )* arrayInitializer | expression ']' ( '[' expression ']' )* ( '[' ']' )* ) )
-            // src/junitconverter/Java.g:962:9: '[' ( ']' ( '[' ']' )* arrayInitializer | expression ']' ( '[' expression ']' )* ( '[' ']' )* )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:984:5: ( '[' ( ']' ( '[' ']' )* arrayInitializer | expression ']' ( '[' expression ']' )* ( '[' ']' )* ) )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:984:9: '[' ( ']' ( '[' ']' )* arrayInitializer | expression ']' ( '[' expression ']' )* ( '[' ']' )* )
             {
             match(input,48,FOLLOW_48_in_arrayCreatorRest5541); if (failed) return ;
-            // src/junitconverter/Java.g:963:9: ( ']' ( '[' ']' )* arrayInitializer | expression ']' ( '[' expression ']' )* ( '[' ']' )* )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:985:9: ( ']' ( '[' ']' )* arrayInitializer | expression ']' ( '[' expression ']' )* ( '[' ']' )* )
             int alt165=2;
             int LA165_0 = input.LA(1);
 
@@ -13409,16 +13431,16 @@ public class JavaParser extends Parser {
             else {
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("963:9: ( ']' ( '[' ']' )* arrayInitializer | expression ']' ( '[' expression ']' )* ( '[' ']' )* )", 165, 0, input);
+                    new NoViableAltException("985:9: ( ']' ( '[' ']' )* arrayInitializer | expression ']' ( '[' expression ']' )* ( '[' ']' )* )", 165, 0, input);
 
                 throw nvae;
             }
             switch (alt165) {
                 case 1 :
-                    // src/junitconverter/Java.g:963:13: ']' ( '[' ']' )* arrayInitializer
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:985:13: ']' ( '[' ']' )* arrayInitializer
                     {
                     match(input,49,FOLLOW_49_in_arrayCreatorRest5555); if (failed) return ;
-                    // src/junitconverter/Java.g:963:17: ( '[' ']' )*
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:985:17: ( '[' ']' )*
                     loop162:
                     do {
                         int alt162=2;
@@ -13431,7 +13453,7 @@ public class JavaParser extends Parser {
 
                         switch (alt162) {
                     	case 1 :
-                    	    // src/junitconverter/Java.g:963:18: '[' ']'
+                    	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:985:18: '[' ']'
                     	    {
                     	    match(input,48,FOLLOW_48_in_arrayCreatorRest5558); if (failed) return ;
                     	    match(input,49,FOLLOW_49_in_arrayCreatorRest5560); if (failed) return ;
@@ -13452,14 +13474,14 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:964:13: expression ']' ( '[' expression ']' )* ( '[' ']' )*
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:986:13: expression ']' ( '[' expression ']' )* ( '[' ']' )*
                     {
                     pushFollow(FOLLOW_expression_in_arrayCreatorRest5578);
                     expression();
                     _fsp--;
                     if (failed) return ;
                     match(input,49,FOLLOW_49_in_arrayCreatorRest5580); if (failed) return ;
-                    // src/junitconverter/Java.g:964:28: ( '[' expression ']' )*
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:986:28: ( '[' expression ']' )*
                     loop163:
                     do {
                         int alt163=2;
@@ -13694,7 +13716,7 @@ public class JavaParser extends Parser {
 
                         switch (alt163) {
                     	case 1 :
-                    	    // src/junitconverter/Java.g:964:29: '[' expression ']'
+                    	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:986:29: '[' expression ']'
                     	    {
                     	    match(input,48,FOLLOW_48_in_arrayCreatorRest5583); if (failed) return ;
                     	    pushFollow(FOLLOW_expression_in_arrayCreatorRest5585);
@@ -13711,7 +13733,7 @@ public class JavaParser extends Parser {
                         }
                     } while (true);
 
-                    // src/junitconverter/Java.g:964:50: ( '[' ']' )*
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:986:50: ( '[' ']' )*
                     loop164:
                     do {
                         int alt164=2;
@@ -13730,7 +13752,7 @@ public class JavaParser extends Parser {
 
                         switch (alt164) {
                     	case 1 :
-                    	    // src/junitconverter/Java.g:964:51: '[' ']'
+                    	    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:986:51: '[' ']'
                     	    {
                     	    match(input,48,FOLLOW_48_in_arrayCreatorRest5592); if (failed) return ;
                     	    match(input,49,FOLLOW_49_in_arrayCreatorRest5594); if (failed) return ;
@@ -13766,13 +13788,13 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start classCreatorRest
-    // src/junitconverter/Java.g:968:1: classCreatorRest : arguments ( classBody )? ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:990:1: classCreatorRest : arguments ( classBody )? ;
     public final void classCreatorRest() throws RecognitionException {
         int classCreatorRest_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 130) ) { return ; }
-            // src/junitconverter/Java.g:969:5: ( arguments ( classBody )? )
-            // src/junitconverter/Java.g:969:9: arguments ( classBody )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:991:5: ( arguments ( classBody )? )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:991:9: arguments ( classBody )?
             {
             if ( backtracking==0 ) {
                classDepth++; 
@@ -13781,7 +13803,7 @@ public class JavaParser extends Parser {
             arguments();
             _fsp--;
             if (failed) return ;
-            // src/junitconverter/Java.g:969:37: ( classBody )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:991:37: ( classBody )?
             int alt166=2;
             int LA166_0 = input.LA(1);
 
@@ -13790,7 +13812,7 @@ public class JavaParser extends Parser {
             }
             switch (alt166) {
                 case 1 :
-                    // src/junitconverter/Java.g:0:0: classBody
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:0:0: classBody
                     {
                     pushFollow(FOLLOW_classBody_in_classCreatorRest5629);
                     classBody();
@@ -13822,13 +13844,13 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start explicitGenericInvocation
-    // src/junitconverter/Java.g:972:1: explicitGenericInvocation : nonWildcardTypeArguments Identifier arguments ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:994:1: explicitGenericInvocation : nonWildcardTypeArguments Identifier arguments ;
     public final void explicitGenericInvocation() throws RecognitionException {
         int explicitGenericInvocation_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 131) ) { return ; }
-            // src/junitconverter/Java.g:973:5: ( nonWildcardTypeArguments Identifier arguments )
-            // src/junitconverter/Java.g:973:9: nonWildcardTypeArguments Identifier arguments
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:995:5: ( nonWildcardTypeArguments Identifier arguments )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:995:9: nonWildcardTypeArguments Identifier arguments
             {
             pushFollow(FOLLOW_nonWildcardTypeArguments_in_explicitGenericInvocation5655);
             nonWildcardTypeArguments();
@@ -13856,13 +13878,13 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start nonWildcardTypeArguments
-    // src/junitconverter/Java.g:976:1: nonWildcardTypeArguments : '<' typeList '>' ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:998:1: nonWildcardTypeArguments : '<' typeList '>' ;
     public final void nonWildcardTypeArguments() throws RecognitionException {
         int nonWildcardTypeArguments_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 132) ) { return ; }
-            // src/junitconverter/Java.g:977:5: ( '<' typeList '>' )
-            // src/junitconverter/Java.g:977:9: '<' typeList '>'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:999:5: ( '<' typeList '>' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:999:9: '<' typeList '>'
             {
             match(input,40,FOLLOW_40_in_nonWildcardTypeArguments5682); if (failed) return ;
             pushFollow(FOLLOW_typeList_in_nonWildcardTypeArguments5684);
@@ -13887,27 +13909,17 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start selector
-    // src/junitconverter/Java.g:980:1: selector : ( '.' Identifier ( arguments )? | '.' 'this' | '.' 'super' superSuffix | '.' 'new' innerCreator | '[' expression ']' );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1002:1: selector : ( '.' Identifier ( arguments )? | '.' 'this' | '.' 'super' superSuffix | '.' 'new' innerCreator | '[' expression ']' );
     public final void selector() throws RecognitionException {
         int selector_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 133) ) { return ; }
-            // src/junitconverter/Java.g:981:5: ( '.' Identifier ( arguments )? | '.' 'this' | '.' 'super' superSuffix | '.' 'new' innerCreator | '[' expression ']' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1003:5: ( '.' Identifier ( arguments )? | '.' 'this' | '.' 'super' superSuffix | '.' 'new' innerCreator | '[' expression ']' )
             int alt168=5;
             int LA168_0 = input.LA(1);
 
             if ( (LA168_0==29) ) {
                 switch ( input.LA(2) ) {
-                case Identifier:
-                    {
-                    alt168=1;
-                    }
-                    break;
-                case 65:
-                    {
-                    alt168=3;
-                    }
-                    break;
                 case 113:
                     {
                     alt168=4;
@@ -13918,10 +13930,20 @@ public class JavaParser extends Parser {
                     alt168=2;
                     }
                     break;
+                case 65:
+                    {
+                    alt168=3;
+                    }
+                    break;
+                case Identifier:
+                    {
+                    alt168=1;
+                    }
+                    break;
                 default:
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("980:1: selector : ( '.' Identifier ( arguments )? | '.' 'this' | '.' 'super' superSuffix | '.' 'new' innerCreator | '[' expression ']' );", 168, 1, input);
+                        new NoViableAltException("1002:1: selector : ( '.' Identifier ( arguments )? | '.' 'this' | '.' 'super' superSuffix | '.' 'new' innerCreator | '[' expression ']' );", 168, 1, input);
 
                     throw nvae;
                 }
@@ -13933,17 +13955,17 @@ public class JavaParser extends Parser {
             else {
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("980:1: selector : ( '.' Identifier ( arguments )? | '.' 'this' | '.' 'super' superSuffix | '.' 'new' innerCreator | '[' expression ']' );", 168, 0, input);
+                    new NoViableAltException("1002:1: selector : ( '.' Identifier ( arguments )? | '.' 'this' | '.' 'super' superSuffix | '.' 'new' innerCreator | '[' expression ']' );", 168, 0, input);
 
                 throw nvae;
             }
             switch (alt168) {
                 case 1 :
-                    // src/junitconverter/Java.g:981:9: '.' Identifier ( arguments )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1003:9: '.' Identifier ( arguments )?
                     {
                     match(input,29,FOLLOW_29_in_selector5709); if (failed) return ;
                     match(input,Identifier,FOLLOW_Identifier_in_selector5711); if (failed) return ;
-                    // src/junitconverter/Java.g:981:24: ( arguments )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1003:24: ( arguments )?
                     int alt167=2;
                     int LA167_0 = input.LA(1);
 
@@ -13952,7 +13974,7 @@ public class JavaParser extends Parser {
                     }
                     switch (alt167) {
                         case 1 :
-                            // src/junitconverter/Java.g:981:25: arguments
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1003:25: arguments
                             {
                             pushFollow(FOLLOW_arguments_in_selector5714);
                             arguments();
@@ -13968,7 +13990,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:982:9: '.' 'this'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1004:9: '.' 'this'
                     {
                     match(input,29,FOLLOW_29_in_selector5726); if (failed) return ;
                     match(input,69,FOLLOW_69_in_selector5728); if (failed) return ;
@@ -13976,7 +13998,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // src/junitconverter/Java.g:983:9: '.' 'super' superSuffix
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1005:9: '.' 'super' superSuffix
                     {
                     match(input,29,FOLLOW_29_in_selector5738); if (failed) return ;
                     match(input,65,FOLLOW_65_in_selector5740); if (failed) return ;
@@ -13988,7 +14010,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 4 :
-                    // src/junitconverter/Java.g:984:9: '.' 'new' innerCreator
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1006:9: '.' 'new' innerCreator
                     {
                     match(input,29,FOLLOW_29_in_selector5752); if (failed) return ;
                     match(input,113,FOLLOW_113_in_selector5754); if (failed) return ;
@@ -14000,7 +14022,7 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 5 :
-                    // src/junitconverter/Java.g:985:9: '[' expression ']'
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1007:9: '[' expression ']'
                     {
                     match(input,48,FOLLOW_48_in_selector5766); if (failed) return ;
                     pushFollow(FOLLOW_expression_in_selector5768);
@@ -14027,12 +14049,12 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start superSuffix
-    // src/junitconverter/Java.g:988:1: superSuffix : ( arguments | '.' Identifier ( arguments )? );
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1010:1: superSuffix : ( arguments | '.' Identifier ( arguments )? );
     public final void superSuffix() throws RecognitionException {
         int superSuffix_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 134) ) { return ; }
-            // src/junitconverter/Java.g:989:5: ( arguments | '.' Identifier ( arguments )? )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1011:5: ( arguments | '.' Identifier ( arguments )? )
             int alt170=2;
             int LA170_0 = input.LA(1);
 
@@ -14045,13 +14067,13 @@ public class JavaParser extends Parser {
             else {
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("988:1: superSuffix : ( arguments | '.' Identifier ( arguments )? );", 170, 0, input);
+                    new NoViableAltException("1010:1: superSuffix : ( arguments | '.' Identifier ( arguments )? );", 170, 0, input);
 
                 throw nvae;
             }
             switch (alt170) {
                 case 1 :
-                    // src/junitconverter/Java.g:989:9: arguments
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1011:9: arguments
                     {
                     pushFollow(FOLLOW_arguments_in_superSuffix5793);
                     arguments();
@@ -14061,11 +14083,11 @@ public class JavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/junitconverter/Java.g:990:9: '.' Identifier ( arguments )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1012:9: '.' Identifier ( arguments )?
                     {
                     match(input,29,FOLLOW_29_in_superSuffix5803); if (failed) return ;
                     match(input,Identifier,FOLLOW_Identifier_in_superSuffix5805); if (failed) return ;
-                    // src/junitconverter/Java.g:990:24: ( arguments )?
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1012:24: ( arguments )?
                     int alt169=2;
                     int LA169_0 = input.LA(1);
 
@@ -14074,7 +14096,7 @@ public class JavaParser extends Parser {
                     }
                     switch (alt169) {
                         case 1 :
-                            // src/junitconverter/Java.g:990:25: arguments
+                            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1012:25: arguments
                             {
                             pushFollow(FOLLOW_arguments_in_superSuffix5808);
                             arguments();
@@ -14105,16 +14127,16 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start arguments
-    // src/junitconverter/Java.g:993:1: arguments : '(' ( expressionList )? ')' ;
+    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1015:1: arguments : '(' ( expressionList )? ')' ;
     public final void arguments() throws RecognitionException {
         int arguments_StartIndex = input.index();
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 135) ) { return ; }
-            // src/junitconverter/Java.g:994:5: ( '(' ( expressionList )? ')' )
-            // src/junitconverter/Java.g:994:9: '(' ( expressionList )? ')'
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1016:5: ( '(' ( expressionList )? ')' )
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1016:9: '(' ( expressionList )? ')'
             {
             match(input,66,FOLLOW_66_in_arguments5829); if (failed) return ;
-            // src/junitconverter/Java.g:994:13: ( expressionList )?
+            // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:1016:13: ( expressionList )?
             int alt171=2;
             int LA171_0 = input.LA(1);
 
@@ -14123,7 +14145,7 @@ public class JavaParser extends Parser {
             }
             switch (alt171) {
                 case 1 :
-                    // src/junitconverter/Java.g:0:0: expressionList
+                    // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:0:0: expressionList
                     {
                     pushFollow(FOLLOW_expressionList_in_arguments5831);
                     expressionList();
@@ -14153,8 +14175,8 @@ public class JavaParser extends Parser {
 
     // $ANTLR start synpred1
     public final void synpred1_fragment() throws RecognitionException {   
-        // src/junitconverter/Java.g:256:9: ( '@' )
-        // src/junitconverter/Java.g:256:10: '@'
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:275:9: ( '@' )
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:275:10: '@'
         {
         match(input,73,FOLLOW_73_in_synpred168); if (failed) return ;
 
@@ -14164,8 +14186,8 @@ public class JavaParser extends Parser {
 
     // $ANTLR start synpred113
     public final void synpred113_fragment() throws RecognitionException {   
-        // src/junitconverter/Java.g:578:13: ( explicitConstructorInvocation )
-        // src/junitconverter/Java.g:578:13: explicitConstructorInvocation
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:597:13: ( explicitConstructorInvocation )
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:597:13: explicitConstructorInvocation
         {
         pushFollow(FOLLOW_explicitConstructorInvocation_in_synpred1132528);
         explicitConstructorInvocation();
@@ -14178,10 +14200,10 @@ public class JavaParser extends Parser {
 
     // $ANTLR start synpred117
     public final void synpred117_fragment() throws RecognitionException {   
-        // src/junitconverter/Java.g:582:9: ( ( nonWildcardTypeArguments )? ( 'this' | 'super' ) arguments ';' )
-        // src/junitconverter/Java.g:582:9: ( nonWildcardTypeArguments )? ( 'this' | 'super' ) arguments ';'
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:601:9: ( ( nonWildcardTypeArguments )? ( 'this' | 'super' ) arguments ';' )
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:601:9: ( nonWildcardTypeArguments )? ( 'this' | 'super' ) arguments ';'
         {
-        // src/junitconverter/Java.g:582:9: ( nonWildcardTypeArguments )?
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:601:9: ( nonWildcardTypeArguments )?
         int alt181=2;
         int LA181_0 = input.LA(1);
 
@@ -14190,7 +14212,7 @@ public class JavaParser extends Parser {
         }
         switch (alt181) {
             case 1 :
-                // src/junitconverter/Java.g:582:10: nonWildcardTypeArguments
+                // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:601:10: nonWildcardTypeArguments
                 {
                 pushFollow(FOLLOW_nonWildcardTypeArguments_in_synpred1172554);
                 nonWildcardTypeArguments();
@@ -14225,8 +14247,8 @@ public class JavaParser extends Parser {
 
     // $ANTLR start synpred128
     public final void synpred128_fragment() throws RecognitionException {   
-        // src/junitconverter/Java.g:614:9: ( annotation )
-        // src/junitconverter/Java.g:614:9: annotation
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:633:9: ( annotation )
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:633:9: annotation
         {
         pushFollow(FOLLOW_annotation_in_synpred1282787);
         annotation();
@@ -14239,8 +14261,8 @@ public class JavaParser extends Parser {
 
     // $ANTLR start synpred151
     public final void synpred151_fragment() throws RecognitionException {   
-        // src/junitconverter/Java.g:691:9: ( localVariableDeclarationStatement )
-        // src/junitconverter/Java.g:691:9: localVariableDeclarationStatement
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:713:9: ( localVariableDeclarationStatement )
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:713:9: localVariableDeclarationStatement
         {
         pushFollow(FOLLOW_localVariableDeclarationStatement_in_synpred1513323);
         localVariableDeclarationStatement();
@@ -14253,8 +14275,8 @@ public class JavaParser extends Parser {
 
     // $ANTLR start synpred152
     public final void synpred152_fragment() throws RecognitionException {   
-        // src/junitconverter/Java.g:692:9: ( classOrInterfaceDeclaration )
-        // src/junitconverter/Java.g:692:9: classOrInterfaceDeclaration
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:714:9: ( classOrInterfaceDeclaration )
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:714:9: classOrInterfaceDeclaration
         {
         pushFollow(FOLLOW_classOrInterfaceDeclaration_in_synpred1523333);
         classOrInterfaceDeclaration();
@@ -14267,8 +14289,8 @@ public class JavaParser extends Parser {
 
     // $ANTLR start synpred157
     public final void synpred157_fragment() throws RecognitionException {   
-        // src/junitconverter/Java.g:711:54: ( 'else' statement )
-        // src/junitconverter/Java.g:711:54: 'else' statement
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:733:54: ( 'else' statement )
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:733:54: 'else' statement
         {
         match(input,77,FOLLOW_77_in_synpred1573478); if (failed) return ;
         pushFollow(FOLLOW_statement_in_synpred1573480);
@@ -14282,8 +14304,8 @@ public class JavaParser extends Parser {
 
     // $ANTLR start synpred162
     public final void synpred162_fragment() throws RecognitionException {   
-        // src/junitconverter/Java.g:716:11: ( catches 'finally' block )
-        // src/junitconverter/Java.g:716:11: catches 'finally' block
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:738:11: ( catches 'finally' block )
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:738:11: catches 'finally' block
         {
         pushFollow(FOLLOW_catches_in_synpred1623556);
         catches();
@@ -14301,8 +14323,8 @@ public class JavaParser extends Parser {
 
     // $ANTLR start synpred163
     public final void synpred163_fragment() throws RecognitionException {   
-        // src/junitconverter/Java.g:717:11: ( catches )
-        // src/junitconverter/Java.g:717:11: catches
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:739:11: ( catches )
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:739:11: catches
         {
         pushFollow(FOLLOW_catches_in_synpred1633572);
         catches();
@@ -14315,8 +14337,8 @@ public class JavaParser extends Parser {
 
     // $ANTLR start synpred178
     public final void synpred178_fragment() throws RecognitionException {   
-        // src/junitconverter/Java.g:752:9: ( switchLabel )
-        // src/junitconverter/Java.g:752:9: switchLabel
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:774:9: ( switchLabel )
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:774:9: switchLabel
         {
         pushFollow(FOLLOW_switchLabel_in_synpred1783863);
         switchLabel();
@@ -14329,8 +14351,8 @@ public class JavaParser extends Parser {
 
     // $ANTLR start synpred180
     public final void synpred180_fragment() throws RecognitionException {   
-        // src/junitconverter/Java.g:756:9: ( 'case' constantExpression ':' )
-        // src/junitconverter/Java.g:756:9: 'case' constantExpression ':'
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:778:9: ( 'case' constantExpression ':' )
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:778:9: 'case' constantExpression ':'
         {
         match(input,89,FOLLOW_89_in_synpred1803890); if (failed) return ;
         pushFollow(FOLLOW_constantExpression_in_synpred1803892);
@@ -14345,8 +14367,8 @@ public class JavaParser extends Parser {
 
     // $ANTLR start synpred181
     public final void synpred181_fragment() throws RecognitionException {   
-        // src/junitconverter/Java.g:757:9: ( 'case' enumConstantName ':' )
-        // src/junitconverter/Java.g:757:9: 'case' enumConstantName ':'
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:779:9: ( 'case' enumConstantName ':' )
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:779:9: 'case' enumConstantName ':'
         {
         match(input,89,FOLLOW_89_in_synpred1813904); if (failed) return ;
         pushFollow(FOLLOW_enumConstantName_in_synpred1813906);
@@ -14361,8 +14383,8 @@ public class JavaParser extends Parser {
 
     // $ANTLR start synpred182
     public final void synpred182_fragment() throws RecognitionException {   
-        // src/junitconverter/Java.g:763:9: ( enhancedForControl )
-        // src/junitconverter/Java.g:763:9: enhancedForControl
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:785:9: ( enhancedForControl )
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:785:9: enhancedForControl
         {
         pushFollow(FOLLOW_enhancedForControl_in_synpred1823951);
         enhancedForControl();
@@ -14375,8 +14397,8 @@ public class JavaParser extends Parser {
 
     // $ANTLR start synpred186
     public final void synpred186_fragment() throws RecognitionException {   
-        // src/junitconverter/Java.g:768:9: ( localVariableDeclaration )
-        // src/junitconverter/Java.g:768:9: localVariableDeclaration
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:790:9: ( localVariableDeclaration )
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:790:9: localVariableDeclaration
         {
         pushFollow(FOLLOW_localVariableDeclaration_in_synpred1863991);
         localVariableDeclaration();
@@ -14389,8 +14411,8 @@ public class JavaParser extends Parser {
 
     // $ANTLR start synpred188
     public final void synpred188_fragment() throws RecognitionException {   
-        // src/junitconverter/Java.g:799:32: ( assignmentOperator expression )
-        // src/junitconverter/Java.g:799:32: assignmentOperator expression
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:821:32: ( assignmentOperator expression )
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:821:32: assignmentOperator expression
         {
         pushFollow(FOLLOW_assignmentOperator_in_synpred1884174);
         assignmentOperator();
@@ -14407,8 +14429,8 @@ public class JavaParser extends Parser {
 
     // $ANTLR start synpred198
     public final void synpred198_fragment() throws RecognitionException {   
-        // src/junitconverter/Java.g:812:9: ( '<' '<' '=' )
-        // src/junitconverter/Java.g:812:10: '<' '<' '='
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:834:9: ( '<' '<' '=' )
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:834:10: '<' '<' '='
         {
         match(input,40,FOLLOW_40_in_synpred1984292); if (failed) return ;
         match(input,40,FOLLOW_40_in_synpred1984294); if (failed) return ;
@@ -14420,8 +14442,8 @@ public class JavaParser extends Parser {
 
     // $ANTLR start synpred199
     public final void synpred199_fragment() throws RecognitionException {   
-        // src/junitconverter/Java.g:817:9: ( '>' '>' '>' '=' )
-        // src/junitconverter/Java.g:817:10: '>' '>' '>' '='
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:839:9: ( '>' '>' '>' '=' )
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:839:10: '>' '>' '>' '='
         {
         match(input,42,FOLLOW_42_in_synpred1994332); if (failed) return ;
         match(input,42,FOLLOW_42_in_synpred1994334); if (failed) return ;
@@ -14434,8 +14456,8 @@ public class JavaParser extends Parser {
 
     // $ANTLR start synpred200
     public final void synpred200_fragment() throws RecognitionException {   
-        // src/junitconverter/Java.g:824:9: ( '>' '>' '=' )
-        // src/junitconverter/Java.g:824:10: '>' '>' '='
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:846:9: ( '>' '>' '=' )
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:846:10: '>' '>' '='
         {
         match(input,42,FOLLOW_42_in_synpred2004377); if (failed) return ;
         match(input,42,FOLLOW_42_in_synpred2004379); if (failed) return ;
@@ -14447,8 +14469,8 @@ public class JavaParser extends Parser {
 
     // $ANTLR start synpred211
     public final void synpred211_fragment() throws RecognitionException {   
-        // src/junitconverter/Java.g:868:9: ( '<' '=' )
-        // src/junitconverter/Java.g:868:10: '<' '='
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:890:9: ( '<' '=' )
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:890:10: '<' '='
         {
         match(input,40,FOLLOW_40_in_synpred2114689); if (failed) return ;
         match(input,51,FOLLOW_51_in_synpred2114691); if (failed) return ;
@@ -14459,8 +14481,8 @@ public class JavaParser extends Parser {
 
     // $ANTLR start synpred212
     public final void synpred212_fragment() throws RecognitionException {   
-        // src/junitconverter/Java.g:871:9: ( '>' '=' )
-        // src/junitconverter/Java.g:871:10: '>' '='
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:893:9: ( '>' '=' )
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:893:10: '>' '='
         {
         match(input,42,FOLLOW_42_in_synpred2124723); if (failed) return ;
         match(input,51,FOLLOW_51_in_synpred2124725); if (failed) return ;
@@ -14471,8 +14493,8 @@ public class JavaParser extends Parser {
 
     // $ANTLR start synpred214
     public final void synpred214_fragment() throws RecognitionException {   
-        // src/junitconverter/Java.g:879:30: ( shiftOp additiveExpression )
-        // src/junitconverter/Java.g:879:30: shiftOp additiveExpression
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:901:30: ( shiftOp additiveExpression )
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:901:30: shiftOp additiveExpression
         {
         pushFollow(FOLLOW_shiftOp_in_synpred2144791);
         shiftOp();
@@ -14489,8 +14511,8 @@ public class JavaParser extends Parser {
 
     // $ANTLR start synpred215
     public final void synpred215_fragment() throws RecognitionException {   
-        // src/junitconverter/Java.g:883:9: ( '<' '<' )
-        // src/junitconverter/Java.g:883:10: '<' '<'
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:905:9: ( '<' '<' )
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:905:10: '<' '<'
         {
         match(input,40,FOLLOW_40_in_synpred2154816); if (failed) return ;
         match(input,40,FOLLOW_40_in_synpred2154818); if (failed) return ;
@@ -14501,8 +14523,8 @@ public class JavaParser extends Parser {
 
     // $ANTLR start synpred216
     public final void synpred216_fragment() throws RecognitionException {   
-        // src/junitconverter/Java.g:886:9: ( '>' '>' '>' )
-        // src/junitconverter/Java.g:886:10: '>' '>' '>'
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:908:9: ( '>' '>' '>' )
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:908:10: '>' '>' '>'
         {
         match(input,42,FOLLOW_42_in_synpred2164850); if (failed) return ;
         match(input,42,FOLLOW_42_in_synpred2164852); if (failed) return ;
@@ -14514,8 +14536,8 @@ public class JavaParser extends Parser {
 
     // $ANTLR start synpred217
     public final void synpred217_fragment() throws RecognitionException {   
-        // src/junitconverter/Java.g:891:9: ( '>' '>' )
-        // src/junitconverter/Java.g:891:10: '>' '>'
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:913:9: ( '>' '>' )
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:913:10: '>' '>'
         {
         match(input,42,FOLLOW_42_in_synpred2174890); if (failed) return ;
         match(input,42,FOLLOW_42_in_synpred2174892); if (failed) return ;
@@ -14526,8 +14548,8 @@ public class JavaParser extends Parser {
 
     // $ANTLR start synpred229
     public final void synpred229_fragment() throws RecognitionException {   
-        // src/junitconverter/Java.g:916:9: ( castExpression )
-        // src/junitconverter/Java.g:916:9: castExpression
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:938:9: ( castExpression )
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:938:9: castExpression
         {
         pushFollow(FOLLOW_castExpression_in_synpred2295101);
         castExpression();
@@ -14540,8 +14562,8 @@ public class JavaParser extends Parser {
 
     // $ANTLR start synpred233
     public final void synpred233_fragment() throws RecognitionException {   
-        // src/junitconverter/Java.g:921:8: ( '(' primitiveType ')' unaryExpression )
-        // src/junitconverter/Java.g:921:8: '(' primitiveType ')' unaryExpression
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:943:8: ( '(' primitiveType ')' unaryExpression )
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:943:8: '(' primitiveType ')' unaryExpression
         {
         match(input,66,FOLLOW_66_in_synpred2335139); if (failed) return ;
         pushFollow(FOLLOW_primitiveType_in_synpred2335141);
@@ -14560,8 +14582,8 @@ public class JavaParser extends Parser {
 
     // $ANTLR start synpred234
     public final void synpred234_fragment() throws RecognitionException {   
-        // src/junitconverter/Java.g:922:13: ( type )
-        // src/junitconverter/Java.g:922:13: type
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:944:13: ( type )
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:944:13: type
         {
         pushFollow(FOLLOW_type_in_synpred2345157);
         type();
@@ -14574,8 +14596,8 @@ public class JavaParser extends Parser {
 
     // $ANTLR start synpred236
     public final void synpred236_fragment() throws RecognitionException {   
-        // src/junitconverter/Java.g:927:17: ( '.' Identifier )
-        // src/junitconverter/Java.g:927:17: '.' Identifier
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:949:17: ( '.' Identifier )
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:949:17: '.' Identifier
         {
         match(input,29,FOLLOW_29_in_synpred2365198); if (failed) return ;
         match(input,Identifier,FOLLOW_Identifier_in_synpred2365200); if (failed) return ;
@@ -14586,8 +14608,8 @@ public class JavaParser extends Parser {
 
     // $ANTLR start synpred237
     public final void synpred237_fragment() throws RecognitionException {   
-        // src/junitconverter/Java.g:927:35: ( identifierSuffix )
-        // src/junitconverter/Java.g:927:35: identifierSuffix
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:949:35: ( identifierSuffix )
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:949:35: identifierSuffix
         {
         pushFollow(FOLLOW_identifierSuffix_in_synpred2375205);
         identifierSuffix();
@@ -14600,8 +14622,8 @@ public class JavaParser extends Parser {
 
     // $ANTLR start synpred242
     public final void synpred242_fragment() throws RecognitionException {   
-        // src/junitconverter/Java.g:931:21: ( '.' Identifier )
-        // src/junitconverter/Java.g:931:21: '.' Identifier
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:953:21: ( '.' Identifier )
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:953:21: '.' Identifier
         {
         match(input,29,FOLLOW_29_in_synpred2425258); if (failed) return ;
         match(input,Identifier,FOLLOW_Identifier_in_synpred2425260); if (failed) return ;
@@ -14612,8 +14634,8 @@ public class JavaParser extends Parser {
 
     // $ANTLR start synpred243
     public final void synpred243_fragment() throws RecognitionException {   
-        // src/junitconverter/Java.g:931:39: ( identifierSuffix )
-        // src/junitconverter/Java.g:931:39: identifierSuffix
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:953:39: ( identifierSuffix )
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:953:39: identifierSuffix
         {
         pushFollow(FOLLOW_identifierSuffix_in_synpred2435265);
         identifierSuffix();
@@ -14626,8 +14648,8 @@ public class JavaParser extends Parser {
 
     // $ANTLR start synpred249
     public final void synpred249_fragment() throws RecognitionException {   
-        // src/junitconverter/Java.g:938:10: ( '[' expression ']' )
-        // src/junitconverter/Java.g:938:10: '[' expression ']'
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:960:10: ( '[' expression ']' )
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:960:10: '[' expression ']'
         {
         match(input,48,FOLLOW_48_in_synpred2495341); if (failed) return ;
         pushFollow(FOLLOW_expression_in_synpred2495343);
@@ -14642,8 +14664,8 @@ public class JavaParser extends Parser {
 
     // $ANTLR start synpred262
     public final void synpred262_fragment() throws RecognitionException {   
-        // src/junitconverter/Java.g:964:29: ( '[' expression ']' )
-        // src/junitconverter/Java.g:964:29: '[' expression ']'
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:986:29: ( '[' expression ']' )
+        // /home/abyx/work/junit-converter/trunk/src/junitconverter/Java.g:986:29: '[' expression ']'
         {
         match(input,48,FOLLOW_48_in_synpred2625583); if (failed) return ;
         pushFollow(FOLLOW_expression_in_synpred2625585);
@@ -14656,193 +14678,11 @@ public class JavaParser extends Parser {
     }
     // $ANTLR end synpred262
 
-    public final boolean synpred229() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred229_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
-    public final boolean synpred242() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred242_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
-    public final boolean synpred163() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred163_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
-    public final boolean synpred178() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred178_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
-    public final boolean synpred162() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred162_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
-    public final boolean synpred151() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred151_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
-    public final boolean synpred243() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred243_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
-    public final boolean synpred117() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred117_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
     public final boolean synpred128() {
         backtracking++;
         int start = input.mark();
         try {
             synpred128_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
-    public final boolean synpred249() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred249_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
-    public final boolean synpred199() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred199_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
-    public final boolean synpred1() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred1_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
-    public final boolean synpred234() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred234_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
-    public final boolean synpred200() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred200_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -14866,95 +14706,11 @@ public class JavaParser extends Parser {
         failed=false;
         return success;
     }
-    public final boolean synpred198() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred198_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
-    public final boolean synpred233() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred233_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
     public final boolean synpred182() {
         backtracking++;
         int start = input.mark();
         try {
             synpred182_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
-    public final boolean synpred211() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred211_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
-    public final boolean synpred152() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred152_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
-    public final boolean synpred236() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred236_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
-    public final boolean synpred214() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred214_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -14978,67 +14734,11 @@ public class JavaParser extends Parser {
         failed=false;
         return success;
     }
-    public final boolean synpred113() {
+    public final boolean synpred163() {
         backtracking++;
         int start = input.mark();
         try {
-            synpred113_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
-    public final boolean synpred217() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred217_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
-    public final boolean synpred157() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred157_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
-    public final boolean synpred216() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred216_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
-    public final boolean synpred188() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred188_fragment(); // can never throw exception
+            synpred163_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -15062,6 +14762,48 @@ public class JavaParser extends Parser {
         failed=false;
         return success;
     }
+    public final boolean synpred162() {
+        backtracking++;
+        int start = input.mark();
+        try {
+            synpred162_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !failed;
+        input.rewind(start);
+        backtracking--;
+        failed=false;
+        return success;
+    }
+    public final boolean synpred211() {
+        backtracking++;
+        int start = input.mark();
+        try {
+            synpred211_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !failed;
+        input.rewind(start);
+        backtracking--;
+        failed=false;
+        return success;
+    }
+    public final boolean synpred216() {
+        backtracking++;
+        int start = input.mark();
+        try {
+            synpred216_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !failed;
+        input.rewind(start);
+        backtracking--;
+        failed=false;
+        return success;
+    }
     public final boolean synpred186() {
         backtracking++;
         int start = input.mark();
@@ -15076,11 +14818,39 @@ public class JavaParser extends Parser {
         failed=false;
         return success;
     }
-    public final boolean synpred262() {
+    public final boolean synpred217() {
         backtracking++;
         int start = input.mark();
         try {
-            synpred262_fragment(); // can never throw exception
+            synpred217_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !failed;
+        input.rewind(start);
+        backtracking--;
+        failed=false;
+        return success;
+    }
+    public final boolean synpred214() {
+        backtracking++;
+        int start = input.mark();
+        try {
+            synpred214_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !failed;
+        input.rewind(start);
+        backtracking--;
+        failed=false;
+        return success;
+    }
+    public final boolean synpred215() {
+        backtracking++;
+        int start = input.mark();
+        try {
+            synpred215_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -15104,11 +14874,263 @@ public class JavaParser extends Parser {
         failed=false;
         return success;
     }
-    public final boolean synpred215() {
+    public final boolean synpred236() {
         backtracking++;
         int start = input.mark();
         try {
-            synpred215_fragment(); // can never throw exception
+            synpred236_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !failed;
+        input.rewind(start);
+        backtracking--;
+        failed=false;
+        return success;
+    }
+    public final boolean synpred188() {
+        backtracking++;
+        int start = input.mark();
+        try {
+            synpred188_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !failed;
+        input.rewind(start);
+        backtracking--;
+        failed=false;
+        return success;
+    }
+    public final boolean synpred234() {
+        backtracking++;
+        int start = input.mark();
+        try {
+            synpred234_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !failed;
+        input.rewind(start);
+        backtracking--;
+        failed=false;
+        return success;
+    }
+    public final boolean synpred233() {
+        backtracking++;
+        int start = input.mark();
+        try {
+            synpred233_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !failed;
+        input.rewind(start);
+        backtracking--;
+        failed=false;
+        return success;
+    }
+    public final boolean synpred117() {
+        backtracking++;
+        int start = input.mark();
+        try {
+            synpred117_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !failed;
+        input.rewind(start);
+        backtracking--;
+        failed=false;
+        return success;
+    }
+    public final boolean synpred113() {
+        backtracking++;
+        int start = input.mark();
+        try {
+            synpred113_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !failed;
+        input.rewind(start);
+        backtracking--;
+        failed=false;
+        return success;
+    }
+    public final boolean synpred229() {
+        backtracking++;
+        int start = input.mark();
+        try {
+            synpred229_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !failed;
+        input.rewind(start);
+        backtracking--;
+        failed=false;
+        return success;
+    }
+    public final boolean synpred1() {
+        backtracking++;
+        int start = input.mark();
+        try {
+            synpred1_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !failed;
+        input.rewind(start);
+        backtracking--;
+        failed=false;
+        return success;
+    }
+    public final boolean synpred152() {
+        backtracking++;
+        int start = input.mark();
+        try {
+            synpred152_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !failed;
+        input.rewind(start);
+        backtracking--;
+        failed=false;
+        return success;
+    }
+    public final boolean synpred151() {
+        backtracking++;
+        int start = input.mark();
+        try {
+            synpred151_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !failed;
+        input.rewind(start);
+        backtracking--;
+        failed=false;
+        return success;
+    }
+    public final boolean synpred242() {
+        backtracking++;
+        int start = input.mark();
+        try {
+            synpred242_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !failed;
+        input.rewind(start);
+        backtracking--;
+        failed=false;
+        return success;
+    }
+    public final boolean synpred262() {
+        backtracking++;
+        int start = input.mark();
+        try {
+            synpred262_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !failed;
+        input.rewind(start);
+        backtracking--;
+        failed=false;
+        return success;
+    }
+    public final boolean synpred199() {
+        backtracking++;
+        int start = input.mark();
+        try {
+            synpred199_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !failed;
+        input.rewind(start);
+        backtracking--;
+        failed=false;
+        return success;
+    }
+    public final boolean synpred200() {
+        backtracking++;
+        int start = input.mark();
+        try {
+            synpred200_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !failed;
+        input.rewind(start);
+        backtracking--;
+        failed=false;
+        return success;
+    }
+    public final boolean synpred178() {
+        backtracking++;
+        int start = input.mark();
+        try {
+            synpred178_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !failed;
+        input.rewind(start);
+        backtracking--;
+        failed=false;
+        return success;
+    }
+    public final boolean synpred249() {
+        backtracking++;
+        int start = input.mark();
+        try {
+            synpred249_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !failed;
+        input.rewind(start);
+        backtracking--;
+        failed=false;
+        return success;
+    }
+    public final boolean synpred198() {
+        backtracking++;
+        int start = input.mark();
+        try {
+            synpred198_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !failed;
+        input.rewind(start);
+        backtracking--;
+        failed=false;
+        return success;
+    }
+    public final boolean synpred243() {
+        backtracking++;
+        int start = input.mark();
+        try {
+            synpred243_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !failed;
+        input.rewind(start);
+        backtracking--;
+        failed=false;
+        return success;
+    }
+    public final boolean synpred157() {
+        backtracking++;
+        int start = input.mark();
+        try {
+            synpred157_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
