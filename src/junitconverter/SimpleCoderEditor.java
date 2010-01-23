@@ -31,6 +31,9 @@ public class SimpleCoderEditor implements CodeEditor {
 	 */
 	public void annotateMethod(TestCaseClass testCaseClass,
 			TestCaseMethod method, Class<? extends Annotation> annotation) {
+		if (method.hasAnnotation(annotation)) {
+			return;
+		}
 		String methodLine = testCaseClass.getLines().get(method.getLine());
 		String indent = extractIndent(methodLine);
 		classWriter.insertLine(testCaseClass, method.getLine(), 

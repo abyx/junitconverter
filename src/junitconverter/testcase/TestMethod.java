@@ -1,16 +1,15 @@
 package junitconverter.testcase;
 
-/**
- * 
- *
- * @author abyx
- */
+import java.util.Collections;
+import java.util.List;
+
 public class TestMethod extends TestCaseMethod {
 
-	/**
-	 * @param methodLine
-	 */
 	public TestMethod(int methodLine) {
-		super(methodLine);
+		this(methodLine, Collections.<String>emptyList());
+	}
+
+	public TestMethod(int methodLine, List<String> annotations) {
+		super(methodLine, annotations);
 	}
 }

@@ -1,5 +1,9 @@
 package junitconverter.testcase;
 
+import java.lang.annotation.Annotation;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * 
  *
@@ -8,12 +12,15 @@ package junitconverter.testcase;
 public class TestCaseMethod {
 
 	protected final int methodLine;
+	private List<String> annotations;
 
-	/**
-	 * @param methodLine2
-	 */
 	public TestCaseMethod(int methodLine) {
+		this(methodLine, Collections.<String>emptyList());
+	}
+
+	public TestCaseMethod(int methodLine, List<String> annotations) {
 		this.methodLine = methodLine - 1;
+		this.annotations = annotations;
 	}
 
 	/**
@@ -21,6 +28,11 @@ public class TestCaseMethod {
 	 */
 	public int getLine() {
 		return methodLine;
+	}
+
+	public boolean hasAnnotation(Class<? extends Annotation> annotation) {
+		return annotations.contains(annotation.getSimpleName())
+			|| annotations.contains(annotation.getName());
 	}
 
 }

@@ -3,6 +3,7 @@ package tests.junitconverter;
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.verify;
+import static org.junit.Assert.*;
 
 import java.util.*;
 
@@ -54,6 +55,49 @@ public class SimpleCodeEditorTest {
 		// Annotate a method
 		mock.insertLine(testCaseClass, methodLine, 
 				indent + "@" + annotation.getSimpleName());
+		replay(mock);
+		
+		codeEditor.annotateMethod(testCaseClass, testMethod, annotation);
+		verify(mock);
+	}
+	
+	@Test
+	public void doesNotAddAnnotationsTwice() throws Exception {
+		// Create a random test class
+		List<String> lines = getEmptyLines();
+		int methodLine = rand.nextInt(lines.size());
+		String indent = randomWhiteSpaces();
+		lines.add(methodLine, indent + "bla bla");
+		
+		Class<Test> annotation = Test.class;
+		TestMethod testMethod = new TestMethod(methodLine + 1, 
+				Collections.singletonList(annotation.getSimpleName()));
+		TestCaseClass testCaseClass = 
+			new TestCaseClass(lines, Collections.singletonList(testMethod));
+		
+		// Nothing should happen to the method
+		replay(mock);
+		
+		codeEditor.annotateMethod(testCaseClass, testMethod, annotation);
+		verify(mock);
+	}
+	
+	@Test
+	public void doesNotAddAnnotationsTwiceWithFullAnnotationName() 
+			throws Exception {
+		// Create a random test class
+		List<String> lines = getEmptyLines();
+		int methodLine = rand.nextInt(lines.size());
+		String indent = randomWhiteSpaces();
+		lines.add(methodLine, indent + "bla bla");
+		
+		Class<Test> annotation = Test.class;
+		TestMethod testMethod = new TestMethod(methodLine + 1, 
+				Collections.singletonList(annotation.getName()));
+		TestCaseClass testCaseClass = 
+			new TestCaseClass(lines, Collections.singletonList(testMethod));
+		
+		// Nothing should happen to the method
 		replay(mock);
 		
 		codeEditor.annotateMethod(testCaseClass, testMethod, annotation);
