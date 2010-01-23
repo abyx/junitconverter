@@ -3,8 +3,8 @@
 	<property name="src" value="src"/>
 	<property name="build" value="build"/>
 	<property name="dist" value="dist"/>
-	<property name="grammar-file" value="${src}/junitconverter/Java.g"/>
-	<property name="grammar-java-file" value="${src}/junitconverter/JavaParser.java"/>
+	<property name="grammar-file" location="${src}/junitconverter/Java.g"/>
+	<property name="grammar-java-file" location="${src}/junitconverter/JavaParser.java"/>
 	
 	<path id="classpath.antlr">
 		<pathelement location="${jars-dir}/antlr-2.7.7.jar"/>
