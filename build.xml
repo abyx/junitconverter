@@ -36,8 +36,14 @@
 	</target>
 	
     <target name="-check_grammar_needs_compile">
-		<uptodate property="grammarBuildRequired" targetfile="${grammar-file}" 
-			srcfile="${grammar-java-file}"/>
+		<condition property="grammarBuildRequired">
+			<or>
+				<not>
+					<available file="${grammar-java-file}"/>
+				</not>
+				<uptodate targetfile="${grammar-file}" 	srcfile="${grammar-java-file}"/>
+			</or>
+		</condition>
     </target>
 
 	
