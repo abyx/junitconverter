@@ -195,18 +195,34 @@ import java.util.Collections;
 	private String currentAnnotations = "";
 	private Map<String, List<String>> annotations = 
 			new HashMap<String, List<String>>();
+	private Map<String, String> visibilities = new HashMap<String, String>();
+	
+	private String visibility = "";
 		
+	private void setVisibility(String visibility) {
+		if (classDepth == 1) {
+			this.visibility = visibility;
+		}
+	}
 	public String getType() { return type; }
 	public Set<String> getMethods() { return new HashSet<String>(methods.keySet()); }
 	public Map<String, Integer> getMethodsWithLines() { return methods; }
-	private void addMethod(String method, int line) { 
+	private void addMethod(String method, int line) {
+	    if (classDepth != 1) { return; } 
 		methods.put(method, line);
 		if ("".equals(currentAnnotations)) {
 			annotations.put(method, Collections.<String>emptyList());
 		} else {
 			annotations.put(method, Arrays.asList(currentAnnotations.split("\\s+")));
 		}
+		
+		visibilities.put(method, visibility);
+		visibility = "";
 		currentAnnotations = "";
+	}
+	
+	public String getVisibility(String method) {
+		return visibilities.get(method);
 	}
 	
 	public List<String> getAnnotations(String method) {
@@ -322,8 +338,10 @@ classDeclaration // We mark entrances into classes to track inner classes
     
 normalClassDeclaration
     :   'class' Identifier (typeParameters)? {
-    			// We track the type we're in 
-    			setType($Identifier.getText()); 
+    			// We track the type we're in
+    			if (classDepth == 1 && type == null) { 
+    				setType($Identifier.getText());
+    			} 
     	  }
         ('extends' type { 
         		if (!foundSuper) setSuper($type.text, lastTypeLine, lastTypePos);
@@ -397,7 +415,7 @@ classBodyDeclaration
 memberDecl
     :   genericMethodOrConstructorDecl
     |   memberDeclaration
-    |   'void' Identifier voidMethodDeclaratorRest   { if (classDepth == 1) {addMethod($Identifier.getText(), $Identifier.getLine());} }
+    |   'void' Identifier voidMethodDeclaratorRest   { addMethod($Identifier.getText(), $Identifier.getLine()); }
     |   Identifier constructorDeclaratorRest
     |   interfaceDeclaration
     |   classDeclaration
@@ -513,9 +531,9 @@ arrayInitializer
 
 modifier
     :   annotation
-    |   'public'
-    |   'protected'
-    |   'private'
+    |   'public' { setVisibility("public"); }
+    |   'protected' { setVisibility("protected"); }
+    |   'private' { setVisibility("private"); }
     |   'static'
     |   'abstract'
     |   'final'

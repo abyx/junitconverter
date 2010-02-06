@@ -16,7 +16,8 @@ import tests.junitconverter.stages.*;
 	PreperationMethodsAnnotationStageTest.class, 
 	TestMethodsAnnotationStageTest.class, SimpleCodeEditorTest.class,
 	VisibilityAdaptionStageTest.class, AssertImportingStageTest.class,
-	SuperRemovingStageTest.class, JavaParserTest.class })
+	SuperRemovingStageTest.class, JavaParserTest.class,
+	SimpleClassWriterTest.class })
 public class AllTests {
 	// Blank
 }

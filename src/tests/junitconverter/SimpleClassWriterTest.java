@@ -45,7 +45,7 @@ public class SimpleClassWriterTest {
 		assertEquals("Line changes weren't handled correctly", 
 				lines, writer.result());
 	}
-	
+		
 	@Test
 	public void writingNothing() {
 		List<String> lines = nextLines();

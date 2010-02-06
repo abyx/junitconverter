@@ -31,7 +31,7 @@ public class TestClassConverter {
 				new ANTLRFileStream(inputFile.getAbsolutePath()))));
 		parser.compilationUnit();
 		
-		if (!isTestCase(parser)) {
+		if (!isTestCase(parser, inputFile)) {
 			return;
 		}
 		
@@ -58,7 +58,6 @@ public class TestClassConverter {
 
 	private List<String> runConversion(File inputFile, JavaParser parser)
 			throws FileNotFoundException, IOException {
-                System.out.println("Running on: " + inputFile);
 		List<String> lines = readLines(inputFile);
 		
 		TestCaseClass testCaseClass = buildTestCaseClass(parser, lines);
@@ -77,7 +76,7 @@ public class TestClassConverter {
 		return newLines;
 	}
 
-	private boolean isTestCase(JavaParser parser) {
+	private boolean isTestCase(JavaParser parser, File inputFile) {
 		if (!TestCase.class.getSimpleName().equals(parser.getSuperName()) &&
 				!TestCase.class.getName().equals(parser.getSuperName())) {
 			try {
@@ -98,20 +97,26 @@ public class TestClassConverter {
 		SetUpMethod setUpMethod = null;
 		if (parser.getMethodsWithLines().containsKey("setUp")) {
 			setUpMethod = 
-				new SetUpMethod(parser.getMethodsWithLines().get("setUp"));
+				new SetUpMethod(parser.getMethodsWithLines().get("setUp"),
+						parser.getAnnotations("setUp"));
 		}
 		
 		TearDownMethod tearDownMethod = null;
 		if (parser.getMethodsWithLines().containsKey("tearDown")) {
 			tearDownMethod = new TearDownMethod(
-					parser.getMethodsWithLines().get("tearDown"));
+					parser.getMethodsWithLines().get("tearDown"),
+					parser.getAnnotations("tearDown"));
 		}
 		
 		List<TestMethod> testMethods = new ArrayList<TestMethod>();
 		for (String methodName : parser.getMethods()) {
-			if (methodName.startsWith("test")) {
+			if (methodName.startsWith("test") 
+					&& isVisibleEnough(parser, methodName)) {
 				testMethods.add(new TestMethod(
-						parser.getMethodsWithLines().get(methodName)));
+						parser.getMethodsWithLines().get(methodName),
+						parser.getAnnotations(methodName)));
+			} else {
+				System.out.println("Decided not: " + methodName + " " + parser.getVisibility(methodName) + " " + parser.getFullName());
 			}
 		}
 		
@@ -127,6 +132,11 @@ public class TestClassConverter {
 		testCaseClass.setSuperMethodInvocations(
 				new LinkedList<Integer>(parser.getSuperMethodInvocations()));
 		return testCaseClass;
+	}
+
+	private boolean isVisibleEnough(JavaParser parser, String methodName) {
+		return (parser.getVisibility(methodName).equals(Visibility.PUBLIC.toString())
+				|| parser.getVisibility(methodName).equals(Visibility.PROTECTED.toString()));
 	}
 
 	private List<String> readLines(File inputFile)

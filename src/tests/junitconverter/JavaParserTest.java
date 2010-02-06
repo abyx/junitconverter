@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import junitconverter.JavaLexer;
 import junitconverter.JavaParser;
+import junitconverter.Visibility;
 
 
 /**
@@ -213,6 +214,25 @@ public class JavaParserTest {
 	}
 	
 	@Test
+	public void findClassNameWithInnerClasses() throws Exception {
+		JavaParser parser = createParser(
+				"package test;\n" +
+				"public class MyTest {\n" +
+				"    public static class WrongClass {}\n" +
+				"}");
+		assertEquals("test.MyTest", parser.getFullName());
+	}
+	
+	@Test
+	public void findClassNameWithOtherClassesInFile() throws Exception {
+		JavaParser parser = createParser(
+				"package test;\n" +
+				"public class MyTest {}\n" +
+				"public class WrongClass {}");
+		assertEquals("test.MyTest", parser.getFullName());
+	}
+	
+	@Test
 	public void savesSingleAnnotation() throws Exception {
 		JavaParser parser = createParser(
 				"public class MyTest {\n" +
@@ -271,6 +291,30 @@ public class JavaParserTest {
 				"}");
 		assertEquals(new ArrayList<String>(),
 				parser.getAnnotations("testNoAnnotations"));
+	}
+	
+	@Test
+	public void savesMethodVisibility() throws Exception {
+		JavaParser parser = createParser(
+				"public class MyTest {\n" +
+				"    private void testSomething() {}\n" +
+				"}");
+		assertEquals(Visibility.PRIVATE.toString(), 
+				parser.getVisibility("testSomething"));
+	}
+	
+	@Test
+	public void savesMethodsVisibilityEvenWithAnonClass() throws Exception {
+		JavaParser parser = createParser("public class A {\n" +
+			"		public void testSomething() {\n" +
+			"	    Delta delta = new Delta() {\n" +
+			"	      public int somethingThatReturnsValue() {\n" +
+			"	        return 0;\n" +
+			"	      }\n" +
+			"	    };\n" +
+			"}}");
+		assertEquals(Visibility.PUBLIC.toString(), 
+				parser.getVisibility("testSomething"));
 	}
 	
 	/* --- Helper Methods --- */
