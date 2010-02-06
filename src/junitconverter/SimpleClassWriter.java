@@ -1,8 +1,8 @@
 package junitconverter;
 
+import java.io.IOException;
 import java.util.*;
 
-import junitconverter.testcase.TestCaseClass;
 
 /**
  * 
@@ -24,20 +24,18 @@ public class SimpleClassWriter implements ClassWriter {
 	}
 
 	/**
-	 * @see junitconverter.ClassWriter#insertLine(TestCaseClass, int, String)
+	 * @see junitconverter.ClassWriter#insertLine(int, String)
 	 */
-	public void insertLine(TestCaseClass testCaseClass, int lineNumber,
-			String line) {
+	public void insertLine(int lineNumber, String line) {
 		int realLine = linesChanges.getRealLinePosition(lineNumber);
 		lines.add(realLine, line);
 		linesChanges.addLineAt(lineNumber);
 	}
 
 	/**
-	 * @see junitconverter.ClassWriter#replaceLine(TestCaseClass, int, String)
+	 * @see junitconverter.ClassWriter#replaceLine(int, String)
 	 */
-	public void replaceLine(TestCaseClass testCaseClass, int lineNumber,
-			String line) {
+	public void replaceLine(int lineNumber, String line) {
 		int realLine = linesChanges.getRealLinePosition(lineNumber);
 		lines.remove(realLine);
 		lines.add(realLine, line);
@@ -54,7 +52,7 @@ public class SimpleClassWriter implements ClassWriter {
 		public int getRealLinePosition(int origLine) {
 			int realLine = origLine;
 			for (LineOffset offset : offsets) {
-				if (offset.getLine() <= origLine) {
+				if (offset.getLine() < origLine) {
 					realLine += offset.getOffset();
 				}
 			}
@@ -62,7 +60,7 @@ public class SimpleClassWriter implements ClassWriter {
 		}
 		
 		public void addLineAt(int origLine) {
-			offsets.add(new LineOffset(getRealLinePosition(origLine), 1));
+			offsets.add(new LineOffset(origLine, 1));
 			Collections.sort(offsets);
 		}
 	}

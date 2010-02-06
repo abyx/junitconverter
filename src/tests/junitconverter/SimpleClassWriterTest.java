@@ -5,7 +5,6 @@ import static org.junit.Assert.assertEquals;
 import java.util.*;
 
 import junitconverter.SimpleClassWriter;
-import junitconverter.testcase.TestCaseClass;
 
 import org.junit.Test;
 
@@ -33,9 +32,9 @@ public class SimpleClassWriterTest {
 		lines.add("}");
 		
 		SimpleClassWriter writer = new SimpleClassWriter(lines);
-		writer.insertLine(null, 3, "A"); // Add before second
-		writer.insertLine(null, 1, "A"); // Add before first
-		writer.insertLine(null, 5, "A"); // Add before third
+		writer.insertLine(2, "A"); // Add before second
+		writer.insertLine(0, "A"); // Add before first
+		writer.insertLine(4, "A"); // Add before third
 		
 		// Add it at the expected locations
 		lines.add(0, "A");
@@ -45,7 +44,7 @@ public class SimpleClassWriterTest {
 		assertEquals("Line changes weren't handled correctly", 
 				lines, writer.result());
 	}
-		
+
 	@Test
 	public void writingNothing() {
 		List<String> lines = nextLines();
@@ -61,8 +60,8 @@ public class SimpleClassWriterTest {
 		SimpleClassWriter writer = new SimpleClassWriter(lines);
 		String lineToInsert = "Hello";
 		int lineNumber = 1;
-		writer.insertLine(new TestCaseClass(lines), lineNumber, lineToInsert);
-		lines.add(lineNumber - 1, lineToInsert);
+		writer.insertLine(lineNumber, lineToInsert);
+		lines.add(lineNumber, lineToInsert);
 		assertEquals(lines, writer.result());
 	}
 
@@ -72,19 +71,16 @@ public class SimpleClassWriterTest {
 		SimpleClassWriter writer = new SimpleClassWriter(lines);
 		
 		int lineNumber = 1;
-		String newLine = lines.get(lineNumber - 1) + "Hello";
+		String newLine = lines.get(lineNumber) + "Hello";
 		
-		lines.remove(lineNumber - 1);
-		lines.add(lineNumber - 1, newLine);
+		lines.remove(lineNumber);
+		lines.add(lineNumber, newLine);
 		
-		writer.replaceLine(new TestCaseClass(lines), lineNumber, newLine);
+		writer.replaceLine(lineNumber, newLine);
 		
 		assertEquals(lines, writer.result());
 	}
 	
-	/**
-	 * @return
-	 */
 	private List<String> nextLines() {
 		int numLines = rand.nextInt(200) + 1;
 		List<String> lines = new LinkedList<String>();

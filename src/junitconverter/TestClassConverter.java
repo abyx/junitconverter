@@ -115,8 +115,6 @@ public class TestClassConverter {
 				testMethods.add(new TestMethod(
 						parser.getMethodsWithLines().get(methodName),
 						parser.getAnnotations(methodName)));
-			} else {
-				System.out.println("Decided not: " + methodName + " " + parser.getVisibility(methodName) + " " + parser.getFullName());
 			}
 		}
 		
@@ -176,14 +174,14 @@ public class TestClassConverter {
 			System.exit(-1);
 		}
 		
-		File dir = new File(args[0]);
-		if (!dir.isDirectory()) {
-			System.err.println("Argument should be a directory");
-			System.exit(-1);
-		}
+		File rootFile = new File(args[0]);
 		
 		List<File> files = new LinkedList<File>();
-		listJavaFilesRecursively(dir, files);
+		if (rootFile.isDirectory()) {
+			listJavaFilesRecursively(rootFile, files);
+		} else {
+			files.add(rootFile);
+		}
 		TestClassConverter testClassConverter = new TestClassConverter();
 		for (File file : files) {
 			testClassConverter.convert(file, file);

@@ -3,7 +3,6 @@ package tests.junitconverter;
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.verify;
-import static org.junit.Assert.*;
 
 import java.util.*;
 
@@ -53,8 +52,7 @@ public class SimpleCodeEditorTest {
 			new TestCaseClass(lines, Collections.singletonList(testMethod));
 		Class<Test> annotation = Test.class;
 		// Annotate a method
-		mock.insertLine(testCaseClass, methodLine, 
-				indent + "@" + annotation.getSimpleName());
+		mock.insertLine(methodLine, indent + "@" + annotation.getSimpleName());
 		replay(mock);
 		
 		codeEditor.annotateMethod(testCaseClass, testMethod, annotation);
@@ -114,8 +112,7 @@ public class SimpleCodeEditorTest {
 		TestCaseClass testCaseClass = new TestCaseClass(lines);
 		
 		Class<?> importedClass = randomClass();
-		mock.insertLine(testCaseClass, firstImport, 
-				IMPORT_PREFIX + importedClass.getName() + ";");
+		mock.insertLine(firstImport, IMPORT_PREFIX + importedClass.getName() + ";");
 		replay(mock);
 		
 		codeEditor.importClass(testCaseClass, importedClass);
@@ -129,8 +126,7 @@ public class SimpleCodeEditorTest {
 		TestCaseClass testCaseClass = new TestCaseClass(lines);
 		
 		Class<?> importedClass = randomClass();
-		mock.insertLine(testCaseClass, 0, 
-				IMPORT_PREFIX + importedClass.getName() + ";");
+		mock.insertLine(0, IMPORT_PREFIX + importedClass.getName() + ";");
 		replay(mock);
 		
 		codeEditor.importClass(testCaseClass, importedClass);
@@ -144,8 +140,7 @@ public class SimpleCodeEditorTest {
 		
 		TestCaseClass testCaseClass = new TestCaseClass(lines);
 		Class<?> importedClass = Assert.class;
-		mock.insertLine(testCaseClass, firstImport, 
-				IMPORT_PREFIX + "static " + importedClass.getName() + ".*;");
+		mock.insertLine(firstImport, IMPORT_PREFIX + "static " + importedClass.getName() + ".*;");
 		
 		replay(mock);
 		
@@ -159,8 +154,7 @@ public class SimpleCodeEditorTest {
 		
 		TestCaseClass testCaseClass = new TestCaseClass(lines);
 		Class<?> importedClass = Assert.class;
-		mock.insertLine(testCaseClass, 0, 
-				IMPORT_PREFIX + "static " + importedClass.getName() + ".*;");
+		mock.insertLine(0, IMPORT_PREFIX + "static " + importedClass.getName() + ".*;");
 		
 		replay(mock);
 		
@@ -175,8 +169,7 @@ public class SimpleCodeEditorTest {
 		lines.add(0, PACKAGE_PREFIX + "something;");
 		TestCaseClass testCaseClass = new TestCaseClass(lines);
 		Class<?> importedClass = Assert.class;
-		mock.insertLine(testCaseClass, 1, 
-				IMPORT_PREFIX + "static " + importedClass.getName() + ".*;");
+		mock.insertLine(1, IMPORT_PREFIX + "static " + importedClass.getName() + ".*;");
 		
 		replay(mock);
 		
@@ -198,8 +191,7 @@ public class SimpleCodeEditorTest {
 		TestMethod testMethod = new TestMethod(methodLine + 1);
 		TestCaseClass testCaseClass = 
 			new TestCaseClass(lines, Collections.singletonList(testMethod));
-		mock.replaceLine(testCaseClass, methodLine, 
-				indent + newVisibility + restOfLine);
+		mock.replaceLine(methodLine, indent + newVisibility + restOfLine);
 		replay(mock);
 		
 		codeEditor.changeVisiblity(testCaseClass, testMethod, newVisibility);
@@ -216,8 +208,7 @@ public class SimpleCodeEditorTest {
 				Collections.<TestMethod>emptyList(), "TestCase");
 		testCaseClass.setExtendsLine(extendsLine);
 		
-		mock.replaceLine(testCaseClass, extendsLine - 1, 
-				"public class Something {}");
+		mock.replaceLine(extendsLine - 1, "public class Something {}");
 		replay(mock);
 		
 		codeEditor.removeSuper(testCaseClass);
@@ -234,8 +225,8 @@ public class SimpleCodeEditorTest {
 				Collections.<TestMethod>emptyList(), null);
 		testCaseClass.setSuperConstructorInvocations(Arrays.asList(2+1, 5+1));
 		
-		mock.replaceLine(testCaseClass, 2, "//" + lines.get(2));
-		mock.replaceLine(testCaseClass, 5, "//" + lines.get(5));
+		mock.replaceLine(2, "//" + lines.get(2));
+		mock.replaceLine(5, "//" + lines.get(5));
 		replay(mock);
 		
 		codeEditor.removeSuper(testCaseClass);
@@ -252,8 +243,8 @@ public class SimpleCodeEditorTest {
 				Collections.<TestMethod>emptyList(), null);
 		testCaseClass.setSuperMethodInvocations(Arrays.asList(2+1, 5+1));
 		
-		mock.replaceLine(testCaseClass, 2, "//" + lines.get(2));
-		mock.replaceLine(testCaseClass, 5, "//" + lines.get(5));
+		mock.replaceLine(2, "//" + lines.get(2));
+		mock.replaceLine(5, "//" + lines.get(5));
 		replay(mock);
 		
 		codeEditor.removeSuper(testCaseClass);
@@ -270,8 +261,8 @@ public class SimpleCodeEditorTest {
 				Collections.<TestMethod>emptyList(), null);
 		testCaseClass.setOverrideAnnotationsLines(Arrays.asList(2+1, 5+1));
 		
-		mock.replaceLine(testCaseClass, 2, "//" + lines.get(2));
-		mock.replaceLine(testCaseClass, 5, "//" + lines.get(5));
+		mock.replaceLine(2, "//" + lines.get(2));
+		mock.replaceLine(5, "//" + lines.get(5));
 		replay(mock);
 		
 		codeEditor.removeSuper(testCaseClass);

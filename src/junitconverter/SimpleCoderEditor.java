@@ -36,8 +36,7 @@ public class SimpleCoderEditor implements CodeEditor {
 		}
 		String methodLine = testCaseClass.getLines().get(method.getLine());
 		String indent = extractIndent(methodLine);
-		classWriter.insertLine(testCaseClass, method.getLine(), 
-				indent + "@" + annotation.getSimpleName());
+		classWriter.insertLine(method.getLine(), indent + "@" + annotation.getSimpleName());
 
 	}
 	
@@ -45,8 +44,7 @@ public class SimpleCoderEditor implements CodeEditor {
 	 * @see junitconverter.CodeEditor#importClass(junitconverter.testcase.TestCaseClass, java.lang.Class)
 	 */
 	public void importClass(TestCaseClass testCaseClass, Class<?> klass) {
-		classWriter.insertLine(testCaseClass, 
-				indexForInsertingImports(testCaseClass.getLines()), 
+		classWriter.insertLine(indexForInsertingImports(testCaseClass.getLines()), 
 				IMPORT_PREFIX + klass.getName() + ";");
 	}
 
@@ -59,17 +57,15 @@ public class SimpleCoderEditor implements CodeEditor {
 
 		Visibility oldVisibility = extractVisibility(line);
 		
-		classWriter.replaceLine(testCaseClass, method.getLine(), 
-				line.replaceFirst(
-						oldVisibility.toString(), visibility.toString()));
+		classWriter.replaceLine(method.getLine(), line.replaceFirst(
+				oldVisibility.toString(), visibility.toString()));
 	}
 
 	/**
 	 * @see junitconverter.CodeEditor#importStaticClass(junitconverter.testcase.TestCaseClass, java.lang.Class)
 	 */
 	public void importStaticClass(TestCaseClass testCaseClass, Class<?> klass) {
-		classWriter.insertLine(testCaseClass, 
-				indexForInsertingImports(testCaseClass.getLines()), 
+		classWriter.insertLine(indexForInsertingImports(testCaseClass.getLines()), 
 				IMPORT_PREFIX + "static " + klass.getName() + ".*;");
 	}
 
@@ -188,8 +184,7 @@ public class SimpleCoderEditor implements CodeEditor {
 			definitionWithExtends.replaceFirst(
 					"\\s*extends\\s+" 
 						+ Pattern.quote(testCaseClass.getSuperName()), "");
-		classWriter.replaceLine(testCaseClass, testCaseClass.getExtendsLine(), 
-				definitionWithoutExtends);
+		classWriter.replaceLine(testCaseClass.getExtendsLine(), definitionWithoutExtends);
 	}
 
 	private boolean hasExtendsClause(TestCaseClass testCaseClass) {
@@ -213,8 +208,7 @@ public class SimpleCoderEditor implements CodeEditor {
 	private void commentOutLines(
 			TestCaseClass testCaseClass, List<Integer> lines) {
 		for (int line : lines) {
-			classWriter.replaceLine(testCaseClass, line, 
-					"//" + testCaseClass.getLines().get(line));
+			classWriter.replaceLine(line, "//" + testCaseClass.getLines().get(line));
 		}
 	}
 }
