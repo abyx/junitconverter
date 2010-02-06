@@ -1,14 +1,8 @@
 package junitconverter;
 
-import java.io.IOException;
 import java.util.*;
 
 
-/**
- * 
- *
- * @author abyx
- */
 public class SimpleClassWriter implements ClassWriter {
 
 	private final List<String> lines;
@@ -23,18 +17,12 @@ public class SimpleClassWriter implements ClassWriter {
 		this.lines = new ArrayList<String>(lines);
 	}
 
-	/**
-	 * @see junitconverter.ClassWriter#insertLine(int, String)
-	 */
 	public void insertLine(int lineNumber, String line) {
 		int realLine = linesChanges.getRealLinePosition(lineNumber);
 		lines.add(realLine, line);
 		linesChanges.addLineAt(lineNumber);
 	}
 
-	/**
-	 * @see junitconverter.ClassWriter#replaceLine(int, String)
-	 */
 	public void replaceLine(int lineNumber, String line) {
 		int realLine = linesChanges.getRealLinePosition(lineNumber);
 		lines.remove(realLine);
@@ -53,44 +41,29 @@ public class SimpleClassWriter implements ClassWriter {
 			int realLine = origLine;
 			for (LineOffset offset : offsets) {
 				if (offset.getLine() < origLine) {
-					realLine += offset.getOffset();
+					realLine++;
 				}
 			}
 			return realLine;
 		}
 		
 		public void addLineAt(int origLine) {
-			offsets.add(new LineOffset(origLine, 1));
+			offsets.add(new LineOffset(origLine));
 			Collections.sort(offsets);
 		}
 	}
 	
 	private static class LineOffset implements Comparable<LineOffset> {
 		private int line;
-		private int offset;
 
-		public LineOffset(int line, int offset) {
+		public LineOffset(int line) {
 			this.line = line;
-			this.offset = offset;
 		}
 		
-		/**
-		 * @return the line
-		 */
 		public int getLine() {
 			return line;
 		}
 		
-		/**
-		 * @return the offset
-		 */
-		public int getOffset() {
-			return offset;
-		}
-
-		/**
-		 * @see java.lang.Comparable#compareTo(java.lang.Object)
-		 */
 		public int compareTo(LineOffset o) {
 			if (getLine() > o.getLine()) {
 				return 1;
@@ -101,12 +74,9 @@ public class SimpleClassWriter implements ClassWriter {
 			}
 		}
 		
-		/**
-		 * @see java.lang.Object#toString()
-		 */
 		@Override
 		public String toString() {
-			return String.format("[Line: %d Offset %d]", line, offset);
+			return String.format("[Line: %d]", line);
 		}
 	}
 }

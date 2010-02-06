@@ -69,8 +69,9 @@ public class TestClassConverter {
 			stage.setCodeEditor(codeEditor);
 		}
 		
-		for (TestConversionStage stage : stages)
+		for (TestConversionStage stage : stages) {
 			stage.convertClass(testCaseClass);
+		}
 		
 		List<String> newLines = classWriter.result();
 		return newLines;

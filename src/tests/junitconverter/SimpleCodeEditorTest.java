@@ -12,11 +12,6 @@ import junitconverter.testcase.TestMethod;
 
 import org.junit.*;
 
-/**
- * Tests the {@link SimpleCodeEditor} class.
- *
- * @author abyx
- */
 public class SimpleCodeEditorTest {
 
 	private static final String IMPORT_PREFIX = "import ";

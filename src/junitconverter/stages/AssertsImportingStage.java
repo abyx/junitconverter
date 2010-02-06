@@ -11,9 +11,6 @@ import org.junit.Assert;
  */
 public class AssertsImportingStage extends AbstractTestConversionStage {
 
-	/**
-	 * @see junitconverter.stages.TestConversionStage#convertClass(junitconverter.testcase.TestCaseClass)
-	 */
 	public void convertClass(TestCaseClass testCase) {
 		codeEditor.importStaticClass(testCase, Assert.class);
 	}

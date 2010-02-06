@@ -8,14 +8,8 @@ import java.util.regex.Pattern;
 import junitconverter.testcase.TestCaseClass;
 import junitconverter.testcase.TestCaseMethod;
 
-/**
- * A simple implementation of {@link CodeEditor}.
- *
- * @author abyx
- */
 public class SimpleCoderEditor implements CodeEditor {
 
-	/** */
 	private static final String PACKAGE_PREFIX = "package ";
 
 	private static final String IMPORT_PREFIX = "import ";
@@ -26,9 +20,6 @@ public class SimpleCoderEditor implements CodeEditor {
 		this.classWriter = classWriter;
 	}
 	
-	/**
-	 * @see junitconverter.CodeEditor#annotateMethod(junitconverter.testcase.TestCaseClass, junitconverter.testcase.TestCaseMethod, java.lang.Class)
-	 */
 	public void annotateMethod(TestCaseClass testCaseClass,
 			TestCaseMethod method, Class<? extends Annotation> annotation) {
 		if (method.hasAnnotation(annotation)) {
@@ -40,17 +31,11 @@ public class SimpleCoderEditor implements CodeEditor {
 
 	}
 	
-	/**
-	 * @see junitconverter.CodeEditor#importClass(junitconverter.testcase.TestCaseClass, java.lang.Class)
-	 */
 	public void importClass(TestCaseClass testCaseClass, Class<?> klass) {
 		classWriter.insertLine(indexForInsertingImports(testCaseClass.getLines()), 
 				IMPORT_PREFIX + klass.getName() + ";");
 	}
 
-	/**
-	 * @see junitconverter.CodeEditor#changeVisiblity(junitconverter.testcase.TestCaseClass, junitconverter.testcase.TestCaseMethod, junitconverter.Visibility)
-	 */
 	public void changeVisiblity(TestCaseClass testCaseClass,
 			TestCaseMethod method, Visibility visibility) {
 		String line = testCaseClass.getLines().get(method.getLine());
@@ -61,17 +46,11 @@ public class SimpleCoderEditor implements CodeEditor {
 				oldVisibility.toString(), visibility.toString()));
 	}
 
-	/**
-	 * @see junitconverter.CodeEditor#importStaticClass(junitconverter.testcase.TestCaseClass, java.lang.Class)
-	 */
 	public void importStaticClass(TestCaseClass testCaseClass, Class<?> klass) {
 		classWriter.insertLine(indexForInsertingImports(testCaseClass.getLines()), 
 				IMPORT_PREFIX + "static " + klass.getName() + ".*;");
 	}
 
-	/**
-	 * @see junitconverter.CodeEditor#removeSuper(junitconverter.testcase.TestCaseClass)
-	 */
 	public void removeSuper(TestCaseClass testCaseClass) {
 		if (hasExtendsClause(testCaseClass)) {
 			removeExtendsClause(testCaseClass);
@@ -122,10 +101,6 @@ public class SimpleCoderEditor implements CodeEditor {
 		return -1;
 	}
 	
-	/**
-	 * @param line The line.
-	 * @return The indentation at the beginning of the line.
-	 */
 	private String extractIndent(String line) {
 		StringBuilder indent = new StringBuilder();
 		for (int i = 0; i < line.length(); i++) {
@@ -163,9 +138,6 @@ public class SimpleCoderEditor implements CodeEditor {
 		throw new IllegalArgumentException("Couldn't find a visibility");
 	}
 
-	/**
-	 * @return The pattern for matching a visibility.
-	 */
 	private String visibilityPattern() {
 		StringBuilder patternBuilder = new StringBuilder();
 		for (Visibility visibility : Visibility.values()) {
