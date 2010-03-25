@@ -74,6 +74,9 @@
 				<exclude name="**/*ECLIPSE*"/>
 			</zipfileset>
 			<fileset dir="${build}"/>
+                        <manifest>
+				<attribute name="Main-Class" value="junitconverter.TestClassConverter"/>
+			</manifest>
 		</jar>
 	</target>
 </project>
