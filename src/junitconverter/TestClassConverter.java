@@ -1,6 +1,8 @@
 package junitconverter;
 
 import java.io.*;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.*;
 
 import junit.framework.TestCase;
@@ -13,6 +15,8 @@ import org.antlr.runtime.RecognitionException;
 
 public class TestClassConverter {
 
+	private static final String STATS_URL = "http://codelord.net/stats.php";
+	private static final String NOSTATS_FLAG = "--nostats";
 	private final List<TestConversionStage> stages = 
 		new ArrayList<TestConversionStage>();
 	
@@ -168,14 +172,29 @@ public class TestClassConverter {
 		}
 	}
 	
-	public static void main(String[] args) throws IOException, RecognitionException {
-		if (args.length != 1) {
-			System.err.println("Usage: java " + 
-					TestClassConverter.class.getName() + " <src dir>");
-			System.exit(-1);
+	public static void main(String[] args) 
+			throws IOException, RecognitionException {
+		boolean sendStats = true;
+		File rootFile;
+		
+		if (args.length < 1 || args.length > 2) {
+			usage();
+		}
+		if (args.length == 2) {
+			if (! NOSTATS_FLAG.equals(args[0])) {
+				usage();
+			}
+			
+			sendStats = false;
+			rootFile = new File(args[1]);
+		} else {
+			rootFile = new File(args[0]);
 		}
 		
-		File rootFile = new File(args[0]);
+		if (sendStats) {
+			sendStats();
+		}
+		
 		
 		List<File> files = new LinkedList<File>();
 		if (rootFile.isDirectory()) {
@@ -187,5 +206,23 @@ public class TestClassConverter {
 		for (File file : files) {
 			testClassConverter.convert(file, file);
 		}
+	}
+
+	private static void sendStats() {
+		try {
+			URLConnection connection = new URL(STATS_URL).openConnection();
+			connection.setReadTimeout(1000);
+			connection.setConnectTimeout(1000);
+			connection.connect();
+		} catch (IOException e) {
+			// Too bad.
+		}
+	}
+
+	private static void usage() {
+		System.err.println("Usage: java " + 
+				TestClassConverter.class.getName() + 
+				" [" + NOSTATS_FLAG + "] <src dir>");
+		System.exit(1);
 	}
 }
